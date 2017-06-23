@@ -1,0 +1,16 @@
+IPCFILE=ipc:./testchain/geth.ipc
+PASSWORD=testtest
+
+DAOCASINOICOSOL=../contracts/DaoCasinoICO.sol
+DAOCASINOICOTEMPSOL=DaoCasinoICO.sol
+DAOCASINOICOJS=DaoCasinoICO.js
+
+TOKENEMISSIONSOL=../contracts/TokenEmission.sol
+TOKENEMISSIONTEMPSOL=TokenEmission.sol
+TOKENEMISSIONJS=TokenEmission.js
+
+DEPLOYMENTDATA=deploymentData.txt
+
+INCLUDEJS=./include.js
+TEST1OUTPUT=test1output.txt
+TEST1RESULTS=test1results.txt
