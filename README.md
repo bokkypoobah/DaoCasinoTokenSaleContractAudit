@@ -57,6 +57,13 @@ Comments on the source code can be found in [DaoCasinoICO.md](DaoCasinoICO.md).
 
 **NOTE** that the convention for token symbols and names is for uppercase characters to be used in the symbol ("BET") and for title case characters to be used in the name ("DAO.Casino") - refer to the list of ERC20 tokens at [https://cryptoderivatives.market/](https://cryptoderivatives.market/).
 
+<br />
+
+<hr />
+
+# Recommendation
+
+* MEDIUM IMPORTANCE - As found by Darryl Morris, `Token.totalSupply` will hide `ERC20.totalSupply` and should be removed.
 
 <br />
 

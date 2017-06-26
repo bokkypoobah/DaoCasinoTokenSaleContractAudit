@@ -201,18 +201,34 @@ function failIfGasEqualsGasUsedOrContractAddressNull(contractAddress, tx, msg) {
 var dciContractAddress = null;
 var dciContractAbi = null;
 
-function adddciContractAddressAndAbi(address, abi) {
+function addDciContractAddressAndAbi(address, abi) {
   dciContractAddress = address;
   dciContractAbi = abi;
 }
 
-function printdciContractDetails() {
+function printDciContractDetails() {
   console.log("RESULT: dciContractAddress=" + dciContractAddress);
-  console.log("RESULT: dciContractAbi=" + JSON.stringify(dciContractAbi));
+  // console.log("RESULT: dciContractAbi=" + JSON.stringify(dciContractAbi));
   if (dciContractAddress != null && dciContractAbi != null) {
     var contract = eth.contract(dciContractAbi).at(dciContractAddress);
     console.log("RESULT: dci.owner=" + contract.owner());
-    console.log("RESULT: dci.config=" + JSON.stringify(contract.config()));
+    console.log("RESULT: dci.hammer=" + contract.hammer());
+    console.log("RESULT: dci.minDonation=" + contract.minDonation().shift(-18));
+    console.log("RESULT: dci.BLOCKS_IN_DAY=" + contract.BLOCKS_IN_DAY());
+    console.log("RESULT: dci.cf.fund=" + contract.fund());
+    console.log("RESULT: dci.cf.bounty=" + contract.bounty());
+    console.log("RESULT: dci.cf.totalFunded=" + contract.totalFunded().shift(-18));
+    console.log("RESULT: dci.cf.reference=" + contract.reference());
+    console.log("RESULT: dci.cf.config=" + JSON.stringify(contract.config()));
+    var config = contract.config();
+    console.log("RESULT: dci.cf.config[startBlock]=" + config[0]);
+    console.log("RESULT: dci.cf.config[stopBlock]=" + config[1]);
+    console.log("RESULT: dci.cf.config[minValue]=" + config[2].shift(-18));
+    console.log("RESULT: dci.cf.config[maxValue]=" + config[3].shift(-18));
+    console.log("RESULT: dci.cf.config[bountyScale]=" + config[4]);
+    console.log("RESULT: dci.cf.config[startRatio]=" + config[5]);
+    console.log("RESULT: dci.cf.config[reductionStep]=" + config[6]);
+    console.log("RESULT: dci.cf.config[reductionValue]=" + config[7]);
   }
 }
 
@@ -229,21 +245,19 @@ function addTeContractAddressAndAbi(address, abi) {
   teContractAbi = abi;
 }
 
-function printteContractDetails() {
-console.log("RESULT: teContractAddress=" + teContractAddress);
-console.log("RESULT: teContractAbi=" + JSON.stringify(teContractAbi));
-if (teContractAddress != null && teContractAbi != null) {
- var contract = eth.contract(teContractAbi).at(teContractAddress);
- console.log("RESULT: te.owner=" + contract.owner());
- // NOT PUBLIC console.log("RESULT: te.newOwner=" + contract.newOwner());
- var startTime = contract.startTime();
- console.log("RESULT: te.startTime=" + startTime + " " + new Date(startTime * 1000).toUTCString()  + 
-     " / " + new Date(startTime * 1000).toGMTString());
- var deadline = contract.deadline();
- console.log("RESULT: te.deadline=" + deadline + " " + new Date(deadline * 1000).toUTCString() + 
-     " / " + new Date(deadline * 1000).toGMTString());
- console.log("RESULT: te.capAmount=" + contract.capAmount().shift(-18));
-}
+function printTeContractDetails() {
+  console.log("RESULT: teContractAddress=" + teContractAddress);
+  // console.log("RESULT: teContractAbi=" + JSON.stringify(teContractAbi));
+  if (teContractAddress != null && teContractAbi != null) {
+    var contract = eth.contract(teContractAbi).at(teContractAddress);
+    console.log("RESULT: te.owner=" + contract.owner());
+    console.log("RESULT: te.hammer=" + contract.hammer());
+    console.log("RESULT: token.symbol=" + contract.symbol());
+    console.log("RESULT: token.name=" + contract.name());
+    console.log("RESULT: token.decimals=" + decimals);
+    console.log("RESULT: token.totalSupply=" + contract.totalSupply());
+    console.log("RESULT: token.overloadedTotalSupply=" + contract.overloadedTotalSupply());
+  }
 }
 
 
@@ -259,16 +273,7 @@ function printTokenContractStaticDetails() {
     console.log("RESULT: token.symbol=" + contract.symbol());
     console.log("RESULT: token.name=" + contract.name());
     console.log("RESULT: token.decimals=" + decimals);
-    console.log("RESULT: token.DECIMALSFACTOR=" + contract.DECIMALSFACTOR());
-    var startDate = contract.START_DATE();
-    console.log("RESULT: token.START_DATE=" + startDate + " " + new Date(startDate * 1000).toUTCString()  + 
-        " / " + new Date(startDate * 1000).toGMTString());
-    var endDate = contract.END_DATE();
-    console.log("RESULT: token.END_DATE=" + endDate + " " + new Date(endDate * 1000).toUTCString() + 
-        " / " + new Date(endDate * 1000).toGMTString());
-    console.log("RESULT: token.TOKENS_SOFT_CAP=" + contract.TOKENS_SOFT_CAP().shift(-decimals));
-    console.log("RESULT: token.TOKENS_HARD_CAP=" + contract.TOKENS_HARD_CAP().shift(-decimals));
-    console.log("RESULT: token.TOKENS_TOTAL=" + contract.TOKENS_TOTAL().shift(-decimals));
+    console.log("RESULT: token.totalSupply=" + contract.totalSupply());
   }
 }
 

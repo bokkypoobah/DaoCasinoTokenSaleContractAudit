@@ -56,22 +56,15 @@ printf "ENDTIME              = '$ENDTIME' '$ENDTIME_S'\n"
 
 # Make copy of SOL file and modify start and end times ---
 `cp $DAOCASINOICOSOL $DAOCASINOICOTEMPSOL`
-# `cp $TOKENEMISSIONSOL $TOKENEMISSIONTEMPSOL`
 
 # --- Modify dates ---
 #`perl -pi -e "s/startTime \= 1498140000;.*$/startTime = $STARTTIME; \/\/ $STARTTIME_S/" $FUNFAIRSALETEMPSOL`
 #`perl -pi -e "s/deadline \=  1499436000;.*$/deadline = $ENDTIME; \/\/ $ENDTIME_S/" $FUNFAIRSALETEMPSOL`
-#`perl -pi -e "s/capAmount \= 125000000 ether;.*$/capAmount \= 1000 ether;/" $FUNFAIRSALETEMPSOL`
-
-
+`perl -pi -e "s/\/\/\/ \@return total amount of tokens.*$/function overloadedTotalSupply() constant returns (uint256) \{ return totalSupply; \}/" $DAOCASINOICOTEMPSOL`
 
 DIFFS1=`diff $DAOCASINOICOSOL $DAOCASINOICOTEMPSOL`
 echo "--- Differences $DAOCASINOICOTEMPSOL ---"
 echo "$DIFFS1"
-
-#DIFFS2=`diff $TOKENEMISSIONSOL $TOKENEMISSIONTEMPSOL`
-#echo "--- Differences $TOKENEMISSIONTEMPSOL ---"
-#echo "$DIFFS2"
 
 echo "var dciOutput=`solc --optimize --combined-json abi,bin,interface $DAOCASINOICOTEMPSOL`;" > $DAOCASINOICOJS
 #echo "var teOutput=`solc --optimize --combined-json abi,bin,interface $TOKENEMISSIONTEMPSOL`;" > $TOKENEMISSIONJS
@@ -103,14 +96,15 @@ var dciTx = null;
 var dciAddress = null;
 var startBlock = parseInt(eth.blockNumber) + 5;
 var stopBlock = parseInt(eth.blockNumber) + 10;
-var minValue = 123;
-var maxValue = 456;
-var scale = 789;
-var startRatio = 11;
-var reductionStep = 22;
-var reductionValue = 33;
+var minValue = 10000000000000000000; // 10 ETH
+var maxValue = 100000000000000000000; // 100 ETH
+var scale = 1;
+var startRatio = 1;
+var reductionStep = 1;
+var reductionValue = 1;
+var minDonation = 100000000000000000; // 0.1 ETH
 var dci = dciContract.new(fundAccount, bountyAccount, "Reference", startBlock, stopBlock, 
-    minValue, maxValue, scale, startRatio, reductionStep, reductionValue, {from: contractOwnerAccount, data: dciBin, gas: 6000000},
+    minValue, maxValue, scale, startRatio, reductionStep, reductionValue, minDonation, {from: contractOwnerAccount, data: dciBin, gas: 6000000},
   function(e, contract) {
     if (!e) {
       if (!contract.address) {
@@ -167,6 +161,23 @@ printDciContractDetails();
 printTeContractDetails();
 console.log("RESULT: ");
 console.log(JSON.stringify(dci));
+
+
+// -----------------------------------------------------------------------------
+var linkMessage = "Link TokenEmission With DaoCasinoICO";
+console.log("RESULT: " + linkMessage);
+var link1Tx = te.setOwner(dciAddress, {from: contractOwnerAccount, gas: 400000});
+var link2Tx = te.setHammer(dciAddress, {from: contractOwnerAccount, gas: 400000});
+while (txpool.status.pending > 0) {
+}
+printTxData("link1Tx", link1Tx);
+printTxData("link2Tx", link2Tx);
+printBalances();
+passIfGasEqualsGasUsed(link1Tx, linkMessage);
+passIfGasEqualsGasUsed(link2Tx, linkMessage);
+printDciContractDetails();
+printTeContractDetails();
+console.log("RESULT: ");
 
 
 exit;

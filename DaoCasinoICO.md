@@ -82,6 +82,7 @@ contract Destroyable {
 /**
  * @title Generic owned destroyable contract
  */
+// BK Ok
 contract Object is Owned, Destroyable {
     function Object() {
         owner  = msg.sender;
@@ -91,20 +92,24 @@ contract Object is Owned, Destroyable {
 
 // Standard token interface (ERC 20)
 // https://github.com/ethereum/EIPs/issues/20
+// BK Ok
 contract ERC20 
 {
 // Functions:
     /// @return total amount of tokens
+    // BK Ok - Note that this is duplicated in Token and Token.totalSupply should be removed
     uint256 public totalSupply;
 
     /// @param _owner The address from which the balance will be retrieved
     /// @return The balance
+    // BK Ok
     function balanceOf(address _owner) constant returns (uint256);
 
     /// @notice send `_value` token to `_to` from `msg.sender`
     /// @param _to The address of the recipient
     /// @param _value The amount of token to be transferred
     /// @return Whether the transfer was successful or not
+    // BK Ok
     function transfer(address _to, uint256 _value) returns (bool);
 
     /// @notice send `_value` token to `_to` from `_from` on the condition it is approved by `_from`
@@ -112,21 +117,26 @@ contract ERC20
     /// @param _to The address of the recipient
     /// @param _value The amount of token to be transferred
     /// @return Whether the transfer was successful or not
+    // BK Ok
     function transferFrom(address _from, address _to, uint256 _value) returns (bool);
 
     /// @notice `msg.sender` approves `_addr` to spend `_value` tokens
     /// @param _spender The address of the account able to transfer the tokens
     /// @param _value The amount of wei to be approved for transfer
     /// @return Whether the approval was successful or not
+    // BK Ok
     function approve(address _spender, uint256 _value) returns (bool);
 
     /// @param _owner The address of the account owning tokens
     /// @param _spender The address of the account able to transfer the tokens
     /// @return Amount of remaining tokens allowed to spent
+    // BK Ok
     function allowance(address _owner, address _spender) constant returns (uint256);
 
 // Events:
+    // BK Ok
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
+    // BK Ok
     event Approval(address indexed _owner, address indexed _spender, uint256 _value);
 }
 
@@ -137,20 +147,27 @@ contract ERC20
  */
 contract Token is Object, ERC20 {
     /* Short description of token */
+    // BK Ok
     string public name;
+    // BK Ok
     string public symbol;
 
     /* Total count of tokens exist */
+    // BK NOTE As found by Darryl Morris, this variable will hide ERC20.totalSupply and should be removed
     uint256 public totalSupply;
 
     /* Fixed point position */
+    // BK Ok
     uint8 public decimals;
 
     /* Token approvement system */
+    // BK Ok
     mapping(address => uint256) balances;
+    // BK Ok
     mapping(address => mapping(address => uint256)) allowances;
 
     /* Token constructor */
+    // BK Ok
     function Token(string _name, string _symbol, uint8 _decimals, uint256 _count) {
         name        = _name;
         symbol      = _symbol;
@@ -164,6 +181,7 @@ contract Token is Object, ERC20 {
      * @param _owner is a target address
      * @return amount of tokens on balance
      */
+    // BK Ok
     function balanceOf(address _owner) constant returns (uint256)
     { return balances[_owner]; }
 
@@ -173,6 +191,7 @@ contract Token is Object, ERC20 {
      * @param _spender The address of the account able to transfer the tokens
      * @return Amount of remaining tokens allowed to spent
      */
+    // BK Ok
     function allowance(address _owner, address _spender) constant returns (uint256)
     { return allowances[_owner][_spender]; }
 
@@ -183,7 +202,11 @@ contract Token is Object, ERC20 {
      * @notice `_value` tokens will be sended to `_to`
      * @return `true` when transfer done
      */
+    // BK NOTE - The following function does not have overflow protection. In this case where total supply is way way less than 2^256 / 2, there is no ability for the user
+    //    to cause an maths overflow anyway
+    // BK NOTE - This function will also allow an account to transfer 0 tokens 
     function transfer(address _to, uint256 _value) returns (bool) {
+        // BK account's balance >= value
         if (balances[msg.sender] >= _value) {
             balances[msg.sender] -= _value;
             balances[_to]        += _value;
@@ -201,6 +224,9 @@ contract Token is Object, ERC20 {
      * @notice from `_from` will be sended `_value` tokens to `_to`
      * @return `true` when transfer is done
      */
+    // BK NOTE - The following function does not have overflow protection. In this case where total supply is way way less than 2^256 / 2, there is no ability for the user
+    //    to cause an maths overflow anyway
+    // BK NOTE - This function will also allow an account to transfer 0 tokens 
     function transferFrom(address _from, address _to, uint256 _value) returns (bool) {
         var avail = allowances[_from][msg.sender]
                   > balances[_from] ? balances[_from]
@@ -220,7 +246,11 @@ contract Token is Object, ERC20 {
      * @param _spender target address (future requester)
      * @param _value amount of token values for approving
      */
+    // BK NOTE - An account will have to call `unapprove(...)` below to reduce their allowance (to 0)
+    // BK NOTE - This is a different behaviour to most other tokens, with the aim to mitigate the double spending attack
+    // BK NOTE - User's should be made aware of this difference if they are used to the normal behaviour of `approve(...)`
     function approve(address _spender, uint256 _value) returns (bool) {
+        // BK NOTE - += instead of =
         allowances[msg.sender][_spender] += _value;
         Approval(msg.sender, _spender, _value);
         return true;
@@ -230,6 +260,7 @@ contract Token is Object, ERC20 {
      * @dev Reset count of tokens approved for given address
      * @param _spender target address (future requester)
      */
+    // BK NOTE - This function is required as `approve(...)` has no way to reduce the allowance
     function unapprove(address _spender)
     { allowances[msg.sender][_spender] = 0; }
 }
@@ -245,12 +276,17 @@ contract TokenEmission is Token {
      * @param _value amount of token values to emit
      * @notice owner balance will be increased by `_value`
      */
+    // BK NOTE - Owner can create any number of tokens up to (2^256 - 1)/10^18
+    // BK NOTE - In the deployment notes, the owner of this contract is the DaoCasinoICO contract. Once the owner is set to the DaoCasinoICO contract address, it cannot be changed
+    // BK NOTE - If this is the intended behaviour, this function should log an event so token holders can monitor this operation
     function emission(uint _value) onlyOwner {
         // Overflow check
         if (_value + totalSupply < totalSupply) throw;
 
         totalSupply     += _value;
         balances[owner] += _value;
+        // BK NOTE - Suggested logging of this operation
+        // Transfer(0x0, owner, _value);
     }
  
     /**
@@ -258,10 +294,14 @@ contract TokenEmission is Token {
      * @param _value amount of token values for burn 
      * @notice sender balance will be decreased by `_value`
      */
+    // BK NOTE - Accounts can burn their own tokens
+    // BK NOTE - This function should log an event so token holders can monitor this operation
     function burn(uint _value) {
         if (balances[msg.sender] >= _value) {
             balances[msg.sender] -= _value;
             totalSupply      -= _value;
+            // BK NOTE - Suggested logging of this operation
+            // Transfer(msg.sender, 0x0, _value);
         }
     }
 }
@@ -297,6 +337,7 @@ contract Recipient {
      * @param _token ERC20 token contract address
      * @param _extraData Custom additional data
      */
+    // BK TOCHECK - How will this work?
     function receiveApproval(address _from, uint256 _value,
                              ERC20 _token, bytes _extraData) {
         if (!_token.transferFrom(_from, this, _value)) throw;
@@ -306,6 +347,7 @@ contract Recipient {
     /**
      * @dev Catch sended to contract ethers
      */
+    // BK TOCHECK - Does this contract have the ability to withdraw sent ETH?
     function () payable
     { ReceivedEther(msg.sender, msg.value); }
 }
@@ -375,6 +417,7 @@ contract Crowdfunding is Object, Recipient {
      * @param _block Input block number
      * @return Bounty value
      */
+    // BK TOCHECK - This function will be overloaded
     function bountyValue(uint256 _value, uint256 _block) constant returns (uint256) {
         if (_block < config.startBlock || _block > config.stopBlock)
             return 0;
@@ -383,6 +426,8 @@ contract Crowdfunding is Object, Recipient {
         var B = config.startBlock;
         var S = config.reductionStep;
         var V = config.reductionValue;
+        // BK NOTE - For better accuracy:
+        //    uint256 ratio = R - ((_block - B) * V / S);
         uint256 ratio = R - (_block - B) / S * V; 
         return _value * ratio / config.bountyScale; 
     }
@@ -411,6 +456,7 @@ contract Crowdfunding is Object, Recipient {
     /**
      * @dev Crowdfunding success checks
      */
+    // BK TOCHECK - This modifier will be overloaded
     modifier onlySuccess {
         bool isSuccess = totalFunded >= config.minValue
                       && block.number > config.stopBlock;
@@ -463,6 +509,7 @@ contract Crowdfunding is Object, Recipient {
     /**
      * @dev Receive Ether token and send bounty
      */
+    // BK TOCHECK - This function is overloaded and not used
     function () payable onlyRunning {
         ReceivedEther(msg.sender, msg.value);
 
@@ -479,12 +526,14 @@ contract Crowdfunding is Object, Recipient {
     /**
      * @dev Withdrawal balance on successfull finish
      */
+    // BK TOCHECK - This function is overloaded
     function withdraw() onlySuccess
     { if (!fund.send(this.balance)) throw; }
 
     /**
      * @dev Refund donations when no minimal value achieved
      */
+    // BK NOTE - Investors may not be able to withdraw their refunds if the owner has withdrawn the ETH
     function refund() onlyFailure {
         var donation = donations[msg.sender];
         donations[msg.sender] = 0;
@@ -494,6 +543,7 @@ contract Crowdfunding is Object, Recipient {
     /**
      * @dev Disable receive another tokens
      */
+    // BK NOTE - This will not stop the sending of ERC20 tokens that do not implement the `receiveApproval(...)` check
     function receiveApproval(address _from, uint256 _value,
                              ERC20 _token, bytes _extraData)
     { throw; }
@@ -622,6 +672,7 @@ contract DaoCasinoICO is Crowdfunding {
     /**
      * @dev Withdrawal Ethereum balance
      */
+    // BK NOTE - Owner will be able to withdraw ETH at any time, even if the crowdsale does not reach the minimum funding level and investors are due for refunds
     function withdrawEth() onlyOwner {
         if (!fund.send(this.balance)) throw;
     }

@@ -63,7 +63,7 @@ contract Object is Owned, Destroyable {
 contract ERC20 
 {
 // Functions:
-    /// @return total amount of tokens
+    function overloadedTotalSupply() constant returns (uint256) { return totalSupply; }
     uint256 public totalSupply;
 
     /// @param _owner The address from which the balance will be retrieved
