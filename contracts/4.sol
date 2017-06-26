@@ -1,7 +1,3 @@
-# TokenEmission
-
-```javascript
-// BK The minimum compiler version should be updated to 0.4.11
 pragma solidity ^0.4.4;
 
 /**
@@ -237,4 +233,3 @@ contract TokenEmission is Token {
         }
     }
 }
-```

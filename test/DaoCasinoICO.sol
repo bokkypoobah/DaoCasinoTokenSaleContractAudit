@@ -1,7 +1,5 @@
-pragma solidity ^0.4.4;
-
-
-
+pragma solidity ^0.4.11;
+/* compiled from  https://github.com/airalab/dao.casino/blob/master/contracts/DaoCasinoICO.sol */
 /**
  * @title Contract for object that have an owner
  */
@@ -24,6 +22,44 @@ contract Owned {
     modifier onlyOwner { if (msg.sender != owner) throw; _; }
 }
 
+/**
+ * @title Common pattern for destroyable contracts 
+ */
+contract Destroyable {
+    address public hammer;
+
+    /**
+     * @dev Hammer setter
+     * @param _hammer New hammer address
+     */
+    function setHammer(address _hammer) onlyHammer
+    { hammer = _hammer; }
+
+    /**
+     * @dev Destroy contract and scrub a data
+     * @notice Only hammer can call it 
+     */
+    function destroy() onlyHammer
+    { suicide(msg.sender); }
+
+    /**
+     * @dev Hammer check modifier
+     */
+    modifier onlyHammer { if (msg.sender != hammer) throw; _; }
+}
+
+/**
+ * @title Generic owned destroyable contract
+ */
+contract Object is Owned, Destroyable {
+    function Object() {
+        owner  = msg.sender;
+        hammer = msg.sender;
+    }
+}
+
+// Standard token interface (ERC 20)
+// https://github.com/ethereum/EIPs/issues/20
 contract ERC20 
 {
 // Functions:
@@ -64,40 +100,6 @@ contract ERC20
 }
 
 
-/**
- * @title Common pattern for destroyable contracts 
- */
-contract Destroyable {
-    address public hammer;
-
-    /**
-     * @dev Hammer setter
-     * @param _hammer New hammer address
-     */
-    function setHammer(address _hammer) onlyHammer
-    { hammer = _hammer; }
-
-    /**
-     * @dev Destroy contract and scrub a data
-     * @notice Only hammer can call it 
-     */
-    function destroy() onlyHammer
-    { suicide(msg.sender); }
-
-    /**
-     * @dev Hammer check modifier
-     */
-    modifier onlyHammer { if (msg.sender != hammer) throw; _; }
-}
-/**
- * @title Generic owned destroyable contract
- */
-contract Object is Owned, Destroyable {
-    function Object() {
-        owner  = msg.sender;
-        hammer = msg.sender;
-    }
-}
 
 /**
  * @title Token contract represents any asset in digital economy
@@ -232,11 +234,6 @@ contract TokenEmission is Token {
         }
     }
 }
-
-
-
-
-
 
 /**
  * @title Asset recipient interface
@@ -498,11 +495,46 @@ contract DaoCasinoICO is Crowdfunding {
         uint256 _scale,
         uint256 _startRatio,
         uint256 _reductionStep,
-        uint256 _reductionValue
-    ) Crowdfunding(_fund, _bounty, _reference, _startBlock, _stopBlock, _minValue, _maxValue, _scale, _startRatio, _reductionStep, _reductionValue) {}
+        uint256 _reductionValue,
+        uint256 _minDonation
+    ) Crowdfunding(_fund, _bounty, _reference, _startBlock, _stopBlock, _minValue, _maxValue, _scale, _startRatio, _reductionStep, _reductionValue) {
+        minDonation = _minDonation;
+    }
+
+    /**
+     * @dev Receive Ether token and charge bounty
+     */
+    function () payable onlyRunning {
+        // Minimal donation check
+        if (msg.value < minDonation) throw;
+
+        ReceivedEther(msg.sender, msg.value);
+
+        totalFunded           += msg.value;
+        donations[msg.sender] += msg.value;
+
+        var bountyVal = bountyValue(msg.value, block.number);
+        var bountySupply = bounty.totalSupply();
+
+        // Bounty emission for crowdfunding contract
+        //   is needed for bounty totalSupply accounting
+        bounty.emission(bountyVal);
+
+        // Correct emission check, result should be more
+        if (bountySupply == bounty.totalSupply()) throw;
+
+        // Append new participant
+        if (bounties[msg.sender] == 0)
+            participants.push(msg.sender);
+
+        // Charge bounties
+        bounties[msg.sender] += bountyVal;
+    }
 
     // ONLY FOR 16.44s block time
     uint256 public constant BLOCKS_IN_DAY = 5256;
+
+    uint256 public minDonation;
 
     /**
      * @dev Calculate bounty value by static equation
@@ -567,12 +599,32 @@ contract DaoCasinoICO is Crowdfunding {
      * @dev 30% emission on success
      */
     function withdraw() onlySuccess {
+        if (withdrawDone) throw;
         withdrawDone = true;
 
-        var bountyVal = bounty.totalSupply() / 70 * 30; 
+        var bountyVal = bounty.totalSupply() * 30 / 70;
         bounty.emission(bountyVal);
         if (!bounty.transfer(fund, bountyVal)) throw;
     }
 
     bool withdrawDone = false;
+    mapping(address => uint256) public bounties;
+    address[] public participants;
+
+    /**
+     * @dev Transfer paritication bounty for account
+     * @param _participant Account address
+     */
+    function getBounty(address _participant) onlySuccess {
+        var bountyVal = bounties[_participant];
+        if (bountyVal == 0) throw;
+
+        bounties[_participant] = 0;
+        if (!bounty.transfer(_participant, bountyVal)) throw;
+    }
+
+    /**
+     * @dev Simple way to get sender account bounty
+     */
+    function getMyBounty() { getBounty(msg.sender); }
 }

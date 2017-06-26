@@ -13,9 +13,9 @@ PASSWORD=`grep ^PASSWORD= settings.txt | sed "s/^.*=//"`
 DAOCASINOICOSOL=`grep ^DAOCASINOICOSOL= settings.txt | sed "s/^.*=//"`
 DAOCASINOICOTEMPSOL=`grep ^DAOCASINOICOTEMPSOL= settings.txt | sed "s/^.*=//"`
 DAOCASINOICOJS=`grep ^DAOCASINOICOJS= settings.txt | sed "s/^.*=//"`
-TOKENEMISSIONSOL=`grep ^TOKENEMISSIONSOL= settings.txt | sed "s/^.*=//"`
-TOKENEMISSIONTEMPSOL=`grep ^TOKENEMISSIONTEMPSOL= settings.txt | sed "s/^.*=//"`
-TOKENEMISSIONJS=`grep ^TOKENEMISSIONJS= settings.txt | sed "s/^.*=//"`
+# TOKENEMISSIONSOL=`grep ^TOKENEMISSIONSOL= settings.txt | sed "s/^.*=//"`
+# TOKENEMISSIONTEMPSOL=`grep ^TOKENEMISSIONTEMPSOL= settings.txt | sed "s/^.*=//"`
+# TOKENEMISSIONJS=`grep ^TOKENEMISSIONJS= settings.txt | sed "s/^.*=//"`
 
 DEPLOYMENTDATA=`grep ^DEPLOYMENTDATA= settings.txt | sed "s/^.*=//"`
 
@@ -43,9 +43,9 @@ printf "PASSWORD             = '$PASSWORD'\n"
 printf "DAOCASINOICOSOL      = '$DAOCASINOICOSOL'\n"
 printf "DAOCASINOICOTEMPSOL  = '$DAOCASINOICOTEMPSOL'\n"
 printf "DAOCASINOICOJS       = '$DAOCASINOICOJS'\n"
-printf "TOKENEMISSIONSOL     = '$TOKENEMISSIONSOL'\n"
-printf "TOKENEMISSIONTEMPSOL = '$TOKENEMISSIONTEMPSOL'\n"
-printf "TOKENEMISSIONJS      = '$TOKENEMISSIONJS'\n"
+# printf "TOKENEMISSIONSOL     = '$TOKENEMISSIONSOL'\n"
+# printf "TOKENEMISSIONTEMPSOL = '$TOKENEMISSIONTEMPSOL'\n"
+# printf "TOKENEMISSIONJS      = '$TOKENEMISSIONJS'\n"
 printf "DEPLOYMENTDATA       = '$DEPLOYMENTDATA'\n"
 printf "INCLUDEJS            = '$INCLUDEJS'\n"
 printf "TEST1OUTPUT          = '$TEST1OUTPUT'\n"
@@ -56,7 +56,7 @@ printf "ENDTIME              = '$ENDTIME' '$ENDTIME_S'\n"
 
 # Make copy of SOL file and modify start and end times ---
 `cp $DAOCASINOICOSOL $DAOCASINOICOTEMPSOL`
-`cp $TOKENEMISSIONSOL $TOKENEMISSIONTEMPSOL`
+# `cp $TOKENEMISSIONSOL $TOKENEMISSIONTEMPSOL`
 
 # --- Modify dates ---
 #`perl -pi -e "s/startTime \= 1498140000;.*$/startTime = $STARTTIME; \/\/ $STARTTIME_S/" $FUNFAIRSALETEMPSOL`
