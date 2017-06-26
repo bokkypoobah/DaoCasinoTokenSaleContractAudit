@@ -17,28 +17,39 @@ DaoCasinoICO.sol:467:44: Warning: Unused local variable
                                            ^--------------^
 ```
 
+Notes:
+
+* The overall code is very neatly formatted and readable.
+
+
 ```javascript
+// BK Ok
 pragma solidity ^0.4.11;
 /* compiled from  https://github.com/airalab/dao.casino/blob/master/contracts/DaoCasinoICO.sol */
 /**
  * @title Contract for object that have an owner
  */
+// BK Ok - Recommended to add the `acceptOwnership` function to reduce the chance of changing ownership of the contracts to an invalid address. See
+//    https://github.com/openanx/OpenANXToken/blob/master/contracts/Owned.sol#L48-L55
 contract Owned {
     /**
      * Contract owner address
      */
+    // BK Ok
     address public owner;
 
     /**
      * @dev Delegate contract to another person
      * @param _owner New owner address 
      */
+    // BK Ok
     function setOwner(address _owner) onlyOwner
     { owner = _owner; }
 
     /**
      * @dev Owner check modifier
      */
+    // BK Ok
     modifier onlyOwner { if (msg.sender != owner) throw; _; }
 }
 

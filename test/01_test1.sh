@@ -124,12 +124,47 @@ var dci = dciContract.new(fundAccount, bountyAccount, "Reference", startBlock, s
     }
   }
 );
+
+
+// -----------------------------------------------------------------------------
+var teMessage = "Deploy TokenEmission Contract";
+console.log("RESULT: " + teMessage);
+var teContract = web3.eth.contract(teAbi);
+console.log(JSON.stringify(teContract));
+var teTx = null;
+var teAddress = null;
+
+var name = "DAO.Casino";
+var symbol = "BET";
+var decimals = 18;
+var startCount = 0;
+var te = teContract.new(name, symbol, decimals, startCount, {from: contractOwnerAccount, data: teBin, gas: 6000000},
+  function(e, contract) {
+    if (!e) {
+      if (!contract.address) {
+        teTx = contract.transactionHash;
+      } else {
+        teAddress = contract.address;
+        addAccount(teAddress, "TokenEmission");
+        addTeContractAddressAndAbi(teAddress, teAbi);
+        console.log("DATA: teAddress=" + teAddress);
+      }
+    }
+  }
+);
+
+
 while (txpool.status.pending > 0) {
 }
+
+
 printTxData("dciAddress=" + dciAddress, dciTx);
+printTxData("teAddress=" + teAddress, teTx);
 printBalances();
 failIfGasEqualsGasUsed(dciTx, dciMessage);
-printFfsContractDetails();
+failIfGasEqualsGasUsed(teTx, teMessage);
+printDciContractDetails();
+printTeContractDetails();
 console.log("RESULT: ");
 console.log(JSON.stringify(dci));
 

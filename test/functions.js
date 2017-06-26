@@ -196,31 +196,54 @@ function failIfGasEqualsGasUsedOrContractAddressNull(contractAddress, tx, msg) {
 
 
 //-----------------------------------------------------------------------------
-// FFS Contract
+// dci Contract
 //-----------------------------------------------------------------------------
-var ffsContractAddress = null;
-var ffsContractAbi = null;
+var dciContractAddress = null;
+var dciContractAbi = null;
 
-function addFfsContractAddressAndAbi(address, abi) {
-  ffsContractAddress = address;
-  ffsContractAbi = abi;
+function adddciContractAddressAndAbi(address, abi) {
+  dciContractAddress = address;
+  dciContractAbi = abi;
 }
 
-function printFfsContractDetails() {
-  console.log("RESULT: ffsContractAddress=" + ffsContractAddress);
-  console.log("RESULT: ffsContractAbi=" + JSON.stringify(ffsContractAbi));
-  if (ffsContractAddress != null && ffsContractAbi != null) {
-    var contract = eth.contract(ffsContractAbi).at(ffsContractAddress);
-    console.log("RESULT: ffs.owner=" + contract.owner());
-    // NOT PUBLIC console.log("RESULT: ffs.newOwner=" + contract.newOwner());
-    var startTime = contract.startTime();
-    console.log("RESULT: ffs.startTime=" + startTime + " " + new Date(startTime * 1000).toUTCString()  + 
-        " / " + new Date(startTime * 1000).toGMTString());
-    var deadline = contract.deadline();
-    console.log("RESULT: ffs.deadline=" + deadline + " " + new Date(deadline * 1000).toUTCString() + 
-        " / " + new Date(deadline * 1000).toGMTString());
-    console.log("RESULT: ffs.capAmount=" + contract.capAmount().shift(-18));
+function printdciContractDetails() {
+  console.log("RESULT: dciContractAddress=" + dciContractAddress);
+  console.log("RESULT: dciContractAbi=" + JSON.stringify(dciContractAbi));
+  if (dciContractAddress != null && dciContractAbi != null) {
+    var contract = eth.contract(dciContractAbi).at(dciContractAddress);
+    console.log("RESULT: dci.owner=" + contract.owner());
+    console.log("RESULT: dci.config=" + JSON.stringify(contract.config()));
   }
+}
+
+
+
+//-----------------------------------------------------------------------------
+//te Contract
+//-----------------------------------------------------------------------------
+var teContractAddress = null;
+var teContractAbi = null;
+
+function addTeContractAddressAndAbi(address, abi) {
+  teContractAddress = address;
+  teContractAbi = abi;
+}
+
+function printteContractDetails() {
+console.log("RESULT: teContractAddress=" + teContractAddress);
+console.log("RESULT: teContractAbi=" + JSON.stringify(teContractAbi));
+if (teContractAddress != null && teContractAbi != null) {
+ var contract = eth.contract(teContractAbi).at(teContractAddress);
+ console.log("RESULT: te.owner=" + contract.owner());
+ // NOT PUBLIC console.log("RESULT: te.newOwner=" + contract.newOwner());
+ var startTime = contract.startTime();
+ console.log("RESULT: te.startTime=" + startTime + " " + new Date(startTime * 1000).toUTCString()  + 
+     " / " + new Date(startTime * 1000).toGMTString());
+ var deadline = contract.deadline();
+ console.log("RESULT: te.deadline=" + deadline + " " + new Date(deadline * 1000).toUTCString() + 
+     " / " + new Date(deadline * 1000).toGMTString());
+ console.log("RESULT: te.capAmount=" + contract.capAmount().shift(-18));
+}
 }
 
 
