@@ -10,7 +10,7 @@ var accountNames = {};
 addAccount(eth.accounts[0], "Account #0 - Miner");
 addAccount(eth.accounts[1], "Account #1 - Contract Owner");
 addAccount(eth.accounts[2], "Account #2 - Fund");
-addAccount(eth.accounts[3], "Account #3 - Bounty");
+addAccount(eth.accounts[3], "Account #3");
 addAccount(eth.accounts[4], "Account #4");
 addAccount(eth.accounts[5], "Account #5");
 addAccount(eth.accounts[6], "Account #6");
@@ -31,7 +31,7 @@ addAccount(eth.accounts[8], "Account #8");
 var minerAccount = eth.accounts[0];
 var contractOwnerAccount = eth.accounts[1];
 var fundAccount = eth.accounts[2];
-var bountyAccount = eth.accounts[3];
+var account3 = eth.accounts[3];
 var account4 = eth.accounts[4];
 var account5 = eth.accounts[5];
 var account6 = eth.accounts[6];
@@ -65,12 +65,10 @@ function addAccount(account, accountName) {
 // -----------------------------------------------------------------------------
 var tokenContractAddress = null;
 var tokenContractAbi = null;
-var lockedTokenContractAbi = null;
 
-function addTokenContractAddressAndAbi(address, tokenAbi, lockedTokenAbi) {
+function addTokenContractAddressAndAbi(address, tokenAbi) {
   tokenContractAddress = address;
   tokenContractAbi = tokenAbi;
-  lockedTokenContractAbi = lockedTokenAbi;
 }
 
 
@@ -85,12 +83,12 @@ function printBalances() {
   console.log("RESULT:  # Account                                             EtherBalanceChange                          Token Name");
   console.log("RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------");
   accounts.forEach(function(e) {
-    i++;
     var etherBalanceBaseBlock = eth.getBalance(e, baseBlock);
     var etherBalance = web3.fromWei(eth.getBalance(e).minus(etherBalanceBaseBlock), "ether");
     var tokenBalance = token == null ? new BigNumber(0) : token.balanceOf(e).shift(-decimals);
     totalTokenBalance = totalTokenBalance.add(tokenBalance);
     console.log("RESULT: " + pad2(i) + " " + e  + " " + pad(etherBalance) + " " + padToken(tokenBalance, decimals) + " " + accountNames[e]);
+    i++;
   });
   console.log("RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------");
   console.log("RESULT:                                                                           " + padToken(totalTokenBalance, decimals) + " Total Token Balances");
@@ -206,6 +204,7 @@ function addDciContractAddressAndAbi(address, abi) {
   dciContractAbi = abi;
 }
 
+var dciFromBlock = 0;
 function printDciContractDetails() {
   console.log("RESULT: dciContractAddress=" + dciContractAddress);
   // console.log("RESULT: dciContractAbi=" + JSON.stringify(dciContractAbi));
@@ -229,6 +228,19 @@ function printDciContractDetails() {
     console.log("RESULT: dci.cf.config[startRatio]=" + config[5]);
     console.log("RESULT: dci.cf.config[reductionStep]=" + config[6]);
     console.log("RESULT: dci.cf.config[reductionValue]=" + config[7]);
+    
+    var latestBlock = eth.blockNumber;
+    var i;
+
+    var receivedEtherEvents = contract.ReceivedEther({}, { fromBlock: dciFromBlock, toBlock: latestBlock });
+    i = 0;
+    receivedEtherEvents.watch(function (error, result) {
+      console.log("RESULT: ReceivedEther " + i++ + " #" + result.blockNumber + " sender=" + result.args.sender + " amount=" + result.args.amount + " " +
+        result.args.amount.shift(-decimals));
+    });
+    receivedEtherEvents.stopWatching();
+
+    dciFromBlock = latestBlock + 1;
   }
 }
 
@@ -245,6 +257,7 @@ function addTeContractAddressAndAbi(address, abi) {
   teContractAbi = abi;
 }
 
+var teFromBlock = 0;
 function printTeContractDetails() {
   console.log("RESULT: teContractAddress=" + teContractAddress);
   // console.log("RESULT: teContractAbi=" + JSON.stringify(teContractAbi));
@@ -257,125 +270,26 @@ function printTeContractDetails() {
     console.log("RESULT: token.decimals=" + decimals);
     console.log("RESULT: token.totalSupply=" + contract.totalSupply());
     console.log("RESULT: token.overloadedTotalSupply=" + contract.overloadedTotalSupply());
-  }
-}
-
-
-
-
-// -----------------------------------------------------------------------------
-// Token Contract details
-// -----------------------------------------------------------------------------
-function printTokenContractStaticDetails() {
-  if (tokenContractAddress != null && tokenContractAbi != null) {
-    var contract = eth.contract(tokenContractAbi).at(tokenContractAddress);
-    var decimals = contract.decimals();
-    console.log("RESULT: token.symbol=" + contract.symbol());
-    console.log("RESULT: token.name=" + contract.name());
-    console.log("RESULT: token.decimals=" + decimals);
-    console.log("RESULT: token.totalSupply=" + contract.totalSupply());
-  }
-}
-
-var dynamicDetailsFromBlock = 0;
-function printTokenContractDynamicDetails() {
-  if (tokenContractAddress != null && tokenContractAbi != null && lockedTokenContractAbi != null) {
-    var contract = eth.contract(tokenContractAbi).at(tokenContractAddress);
-    var lockedTokenContract = eth.contract(lockedTokenContractAbi).at(contract.lockedTokens());
-    var decimals = contract.decimals();
-    console.log("RESULT: token.finalised=" + contract.finalised());
-    console.log("RESULT: token.tokensPerKEther=" + contract.tokensPerKEther());
-    console.log("RESULT: token.totalSupply=" + contract.totalSupply().shift(-decimals));
-    console.log("RESULT: token.totalSupplyLocked(1Y/2Y)=" + contract.totalSupplyLocked1Y().shift(-decimals) + " / " + contract.totalSupplyLocked2Y().shift(-decimals));
-    console.log("RESULT: token.totalSupplyLocked=" + contract.totalSupplyLocked().shift(-decimals));
-    console.log("RESULT: token.totalSupplyUnlocked=" + contract.totalSupplyUnlocked().shift(-decimals));
-    console.log("RESULT: token.balanceOfLocked(earlyBackersAccount)(1Y/2Y)=" + contract.balanceOfLocked1Y(earlyBackersAccount).shift(-decimals) + " / " + 
-        contract.balanceOfLocked2Y(earlyBackersAccount).shift(-decimals));
-    console.log("RESULT: token.balanceOfLocked(developersAccount)(1Y/2Y)=" + contract.balanceOfLocked1Y(developersAccount).shift(-decimals) + " / " + 
-        contract.balanceOfLocked2Y(developersAccount).shift(-decimals));
-    var locked1YDate = contract.LOCKED_1Y_DATE();
-    console.log("RESULT: token.LOCKED_1Y_DATE=" + locked1YDate + " " + new Date(locked1YDate * 1000).toUTCString()  + 
-        " / " + new Date(locked1YDate * 1000).toGMTString());
-    var locked2YDate = contract.LOCKED_2Y_DATE();
-    console.log("RESULT: token.LOCKED_2Y_DATE=" + locked2YDate + " " + new Date(locked2YDate * 1000).toUTCString() + 
-        " / " + new Date(locked2YDate * 1000).toGMTString());
-    console.log("RESULT: lockedToken.TOKENS_LOCKED_1Y_TOTAL=" + lockedTokenContract.TOKENS_LOCKED_1Y_TOTAL().shift(-decimals));
-    console.log("RESULT: lockedToken.TOKENS_LOCKED_2Y_TOTAL=" + lockedTokenContract.TOKENS_LOCKED_2Y_TOTAL().shift(-decimals));
-    console.log("RESULT: lockedToken.totalSupplyLocked1Y=" + lockedTokenContract.totalSupplyLocked1Y().shift(-decimals));
-    console.log("RESULT: lockedToken.totalSupplyLocked2Y=" + lockedTokenContract.totalSupplyLocked2Y().shift(-decimals));
-    console.log("RESULT: lockedToken.totalSupplyLocked=" + lockedTokenContract.totalSupplyLocked().shift(-decimals));
-    console.log("RESULT: token.owner=" + contract.owner());
-    console.log("RESULT: token.newOwner=" + contract.newOwner());
 
     var latestBlock = eth.blockNumber;
     var i;
 
-    var ownershipTransferredEvent = contract.OwnershipTransferred({}, { fromBlock: dynamicDetailsFromBlock, toBlock: latestBlock });
+    var approvalEvents = contract.Approval({}, { fromBlock: teFromBlock, toBlock: latestBlock });
     i = 0;
-    ownershipTransferredEvent.watch(function (error, result) {
-      console.log("RESULT: OwnershipTransferred Event " + i++ + ": from=" + result.args._from + " to=" + result.args._to + " " +
-        result.blockNumber);
+    approvalEvents.watch(function (error, result) {
+      console.log("RESULT: Approval " + i++ + " #" + result.blockNumber + " _owner=" + result.args._owner + " _spender=" + result.args._spender + " _value=" +
+        result.args._value.shift(-decimals));
     });
-    ownershipTransferredEvent.stopWatching();
+    approvalEvents.stopWatching();
 
-    var tokensPerKEtherUpdatedEvent = contract.TokensPerKEtherUpdated({}, { fromBlock: dynamicDetailsFromBlock, toBlock: latestBlock });
+    var transferEvents = contract.Transfer({}, { fromBlock: teFromBlock, toBlock: latestBlock });
     i = 0;
-    tokensPerKEtherUpdatedEvent.watch(function (error, result) {
-      console.log("RESULT: TokensPerKEtherUpdated Event " + i++ + ": tokensPerKEther=" + result.args.tokensPerKEther + " block=" + result.blockNumber);
+    transferEvents.watch(function (error, result) {
+      console.log("RESULT: Transfer " + i++ + " #" + result.blockNumber + ": _from=" + result.args._from + " _to=" + result.args._to +
+        " value=" + result.args._value.shift(-decimals));
     });
-    tokensPerKEtherUpdatedEvent.stopWatching();
+    transferEvents.stopWatching();
 
-    var walletUpdatedEvent = contract.WalletUpdated({}, { fromBlock: dynamicDetailsFromBlock, toBlock: latestBlock });
-    i = 0;
-    walletUpdatedEvent.watch(function (error, result) {
-      console.log("RESULT: WalletUpdated Event " + i++ + ": from=" + result.args.newWallet + " block=" + result.blockNumber);
-    });
-    walletUpdatedEvent.stopWatching();
-
-    var precommitmentAddedEvent = contract.PrecommitmentAdded({}, { fromBlock: dynamicDetailsFromBlock, toBlock: latestBlock });
-    i = 0;
-    precommitmentAddedEvent.watch(function (error, result) {
-      console.log("RESULT: PrecommitmentAdded Event " + i++ + ": participant=" + result.args.participant + 
-        " balance=" + result.args.balance.shift(-decimals) + 
-        " block=" + result.blockNumber);
-    });
-    precommitmentAddedEvent.stopWatching();
-
-    var tokensBoughtEvent = contract.TokensBought({}, { fromBlock: dynamicDetailsFromBlock, toBlock: latestBlock });
-    i = 0;
-    tokensBoughtEvent.watch(function (error, result) {
-      console.log("RESULT: TokensBought Event " + i++ + ": buyer=" + result.args.buyer + 
-        " ethers=" + web3.fromWei(result.args.ethers, "ether") +
-        " newEtherBalance=" + web3.fromWei(result.args.newEtherBalance, "ether") + 
-        " tokens=" + result.args.tokens.shift(-decimals) + 
-        " newTotalSupply=" + result.args.newTotalSupply.shift(-decimals) + 
-        " tokensPerKEther=" + result.args.tokensPerKEther + 
-        " block=" + result.blockNumber);
-    });
-    tokensBoughtEvent.stopWatching();
-
-    var kycVerifiedEvent = contract.KycVerified({}, { fromBlock: dynamicDetailsFromBlock, toBlock: latestBlock });
-    i = 0;
-    kycVerifiedEvent.watch(function (error, result) {
-      console.log("RESULT: KycVerified Event " + i++ + ": participant=" + result.args.participant + " block=" + result.blockNumber);
-    });
-    kycVerifiedEvent.stopWatching();
-
-    var approvalEvent = contract.Approval({}, { fromBlock: dynamicDetailsFromBlock, toBlock: latestBlock });
-    i = 0;
-    approvalEvent.watch(function (error, result) {
-      console.log("RESULT: Approval Event " + i++ + ": owner=" + result.args._owner + " spender=" + result.args._spender + " " +
-        result.args._value.shift(-decimals) + " block=" + result.blockNumber);
-    });
-    approvalEvent.stopWatching();
-
-    var transferEvent = contract.Transfer({}, { fromBlock: dynamicDetailsFromBlock, toBlock: latestBlock });
-    i = 0;
-    transferEvent.watch(function (error, result) {
-      console.log("RESULT: Transfer Event " + i++ + ": from=" + result.args._from + " to=" + result.args._to +
-        " value=" + result.args._value.shift(-decimals) + " block=" + result.blockNumber);
-    });
-    transferEvent.stopWatching();
-    dynamicDetailsFromBlock = latestBlock + 1;
+    teFromBlock = latestBlock + 1;
   }
 }

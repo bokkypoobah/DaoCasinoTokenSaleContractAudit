@@ -19,7 +19,7 @@ DaoCasinoICO.sol:467:44: Warning: Unused local variable
 
 Notes:
 
-* The overall code is very neatly formatted and readable.
+* The overall code is very neatly formatted and readable. The relationship between the contracts are a bit convoluted, as the **TokenEmission** must have the `owner` and `hammer` set to the **DaoCasinoICO** contract.
 
 
 ```javascript
@@ -277,16 +277,13 @@ contract TokenEmission is Token {
      * @notice owner balance will be increased by `_value`
      */
     // BK NOTE - Owner can create any number of tokens up to (2^256 - 1)/10^18
-    // BK NOTE - In the deployment notes, the owner of this contract is the DaoCasinoICO contract. Once the owner is set to the DaoCasinoICO contract address, it cannot be changed
-    // BK NOTE - If this is the intended behaviour, this function should log an event so token holders can monitor this operation
+    // BK NOTE - The owner is set to the DaoCasinoICO contract, so this emission() functionality is controlled by the code
     function emission(uint _value) onlyOwner {
         // Overflow check
         if (_value + totalSupply < totalSupply) throw;
 
         totalSupply     += _value;
         balances[owner] += _value;
-        // BK NOTE - Suggested logging of this operation
-        // Transfer(0x0, owner, _value);
     }
  
     /**

@@ -532,7 +532,7 @@ contract DaoCasinoICO is Crowdfunding {
     }
 
     // ONLY FOR 16.44s block time
-    uint256 public constant BLOCKS_IN_DAY = 5256;
+    uint256 public constant BLOCKS_IN_DAY = 10;
 
     uint256 public minDonation;
 
