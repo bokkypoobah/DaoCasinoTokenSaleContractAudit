@@ -32,6 +32,7 @@ this crowdsale has the following parameters:
 * [Recommendations](#recommendations)
 * [TODO](#todo)
 * [Crowdsale Contract Source Code](#crowdsale-contract-source-code)
+* [References](#references)
 
 <br />
 
@@ -631,6 +632,14 @@ contract DaoCasinoToken is ERC20Token {
     }
 }
 ```
+
+<br />
+
+<hr />
+
+## References
+
+* [Ethereum Contract Security Techniques and Tips](https://github.com/ConsenSys/smart-contract-best-practices)
 
 <br />
 
