@@ -1,6 +1,6 @@
  # Account                                             EtherBalanceChange                          Token Name
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
- 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        5.000000000000000000           0.000000000000000000 Account #0 - Miner
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       25.000000000000000000           0.000000000000000000 Account #0 - Miner
  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433        0.000000000000000000           0.000000000000000000 Account #1 - Contract Owner
  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2 - Fund
  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000 Account #3
@@ -15,11 +15,11 @@
 
 
 Deploy TokenEmission Contract
-teAddress=0x90d8927407c79c4a28ee879b821c76fc9bcc2688 gas=6000000 gasUsed=869995 costETH=0.01565991 costUSD=5.9568731649 @ ETH/USD=380.39 gasPrice=18000000000 block=3 txId=0x6f3b3978c93b9289e1ec08b1f6dc5830f7d7cafd46926676bdddfe6d24bd7672
+teAddress=0x90d8927407c79c4a28ee879b821c76fc9bcc2688 gas=6000000 gasUsed=869931 costETH=0.015658758 costUSD=5.95643495562 @ ETH/USD=380.39 gasPrice=18000000000 block=7 txId=0xe81da49f6fbaca1ff43d6de9fe2f3ad1b1291b2e704c11c6caf020758534901e
  # Account                                             EtherBalanceChange                          Token Name
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
- 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       15.015659910000000000           0.000000000000000000 Account #0 - Miner
- 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.015659910000000000           0.000000000000000000 Account #1 - Contract Owner
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       35.015658758000000000           0.000000000000000000 Account #0 - Miner
+ 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.015658758000000000           0.000000000000000000 Account #1 - Contract Owner
  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2 - Fund
  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000 Account #3
  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000 Account #4
@@ -43,11 +43,11 @@ token.totalSupply=0
 token.overloadedTotalSupply=0
 
 Deploy DaoCasinoIco Contract
-dciAddress=0x0e946b999033257976aa5cbe0e3530618ca1582d gas=6000000 gasUsed=1396354 costETH=0.025134372 costUSD=9.56086376508 @ ETH/USD=380.39 gasPrice=18000000000 block=5 txId=0x75ee7456e7673ffb57ac98a70406306ac10a6497762d7573ed62d445e69d2d67
+dciAddress=0x0e946b999033257976aa5cbe0e3530618ca1582d gas=6000000 gasUsed=1395818 costETH=0.025124724 costUSD=9.55719376236 @ ETH/USD=380.39 gasPrice=18000000000 block=10 txId=0xaa16ee439e0b02ebee657076d2048732fec9386238c29aa40e4d10c05589286e
  # Account                                             EtherBalanceChange                          Token Name
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
- 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       30.040794282000000000           0.000000000000000000 Account #0 - Miner
- 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.040794282000000000           0.000000000000000000 Account #1 - Contract Owner
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       50.040783482000000000           0.000000000000000000 Account #0 - Miner
+ 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.040783482000000000           0.000000000000000000 Account #1 - Contract Owner
  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2 - Fund
  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000 Account #3
  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000 Account #4
@@ -66,14 +66,14 @@ dciContractAddress=0x0e946b999033257976aa5cbe0e3530618ca1582d
 dci.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
 dci.hammer=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
 dci.minDonation=0.1
-dci.BLOCKS_IN_DAY=10
+dci.BLOCKS_IN_DAY=1
 dci.cf.fund=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976
 dci.cf.bounty=0x90d8927407c79c4a28ee879b821c76fc9bcc2688
 dci.cf.totalFunded=0
 dci.cf.reference=Reference
-dci.cf.config=["4","103","10000000000000000000","1e+21","1","1","1","1"]
-dci.cf.config[startBlock]=4
-dci.cf.config[stopBlock]=103
+dci.cf.config=["9","37","10000000000000000000","1e+21","1","1","1","1"]
+dci.cf.config[startBlock]=9
+dci.cf.config[stopBlock]=37
 dci.cf.config[minValue]=10
 dci.cf.config[maxValue]=1000
 dci.cf.config[bountyScale]=1
@@ -82,12 +82,12 @@ dci.cf.config[reductionStep]=1
 dci.cf.config[reductionValue]=1
 
 Link TokenEmission With DaoCasinoICO
-link1Tx gas=400000 gasUsed=28141 costETH=0.000506538 costUSD=0.19268198982 @ ETH/USD=380.39 gasPrice=18000000000 block=9 txId=0x55b287a0603ff4f47a0dc0ef92f00cc1e5028ac306fd9eaac8180ecc4abfe905
-link2Tx gas=400000 gasUsed=28405 costETH=0.00051129 costUSD=0.1944896031 @ ETH/USD=380.39 gasPrice=18000000000 block=9 txId=0x2106226b23857b133b300f3492524625ab89881aac4e667749aba7717374f5f7
+link1Tx gas=400000 gasUsed=28141 costETH=0.000506538 costUSD=0.19268198982 @ ETH/USD=380.39 gasPrice=18000000000 block=12 txId=0x55b287a0603ff4f47a0dc0ef92f00cc1e5028ac306fd9eaac8180ecc4abfe905
+link2Tx gas=400000 gasUsed=28405 costETH=0.00051129 costUSD=0.1944896031 @ ETH/USD=380.39 gasPrice=18000000000 block=12 txId=0x2106226b23857b133b300f3492524625ab89881aac4e667749aba7717374f5f7
  # Account                                             EtherBalanceChange                          Token Name
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
- 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       45.041812110000000000           0.000000000000000000 Account #0 - Miner
- 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.041812110000000000           0.000000000000000000 Account #1 - Contract Owner
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       60.041801310000000000           0.000000000000000000 Account #0 - Miner
+ 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.041801310000000000           0.000000000000000000 Account #1 - Contract Owner
  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2 - Fund
  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000 Account #3
  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000 Account #4
@@ -107,14 +107,14 @@ dciContractAddress=0x0e946b999033257976aa5cbe0e3530618ca1582d
 dci.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
 dci.hammer=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
 dci.minDonation=0.1
-dci.BLOCKS_IN_DAY=10
+dci.BLOCKS_IN_DAY=1
 dci.cf.fund=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976
 dci.cf.bounty=0x90d8927407c79c4a28ee879b821c76fc9bcc2688
 dci.cf.totalFunded=0
 dci.cf.reference=Reference
-dci.cf.config=["4","103","10000000000000000000","1e+21","1","1","1","1"]
-dci.cf.config[startBlock]=4
-dci.cf.config[stopBlock]=103
+dci.cf.config=["9","37","10000000000000000000","1e+21","1","1","1","1"]
+dci.cf.config[startBlock]=9
+dci.cf.config[stopBlock]=37
 dci.cf.config[minValue]=10
 dci.cf.config[maxValue]=1000
 dci.cf.config[bountyScale]=1
@@ -134,8 +134,8 @@ Send Valid Contribution - 100 ETH From Account4
 sendValidContribution1Tx gas=400000 gasUsed=167259 costETH=0.003010662 costUSD=1.14522571818 @ ETH/USD=380.39 gasPrice=18000000000 block=14 txId=0xb9a7c32f71242f741fe8f3ea145530e0c7aaf319b6388c20a0eabb5f4de10fd7
  # Account                                             EtherBalanceChange                          Token Name
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
- 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       70.044822772000000000           0.000000000000000000 Account #0 - Miner
- 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.041812110000000000           0.000000000000000000 Account #1 - Contract Owner
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       70.044811972000000000           0.000000000000000000 Account #0 - Miner
+ 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.041801310000000000           0.000000000000000000 Account #1 - Contract Owner
  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2 - Fund
  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000 Account #3
  4 0xa44a08d3f6933c69212114bb66e2df1813651844     -100.003010662000000000           0.000000000000000000 Account #4
@@ -154,14 +154,14 @@ dciContractAddress=0x0e946b999033257976aa5cbe0e3530618ca1582d
 dci.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
 dci.hammer=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
 dci.minDonation=0.1
-dci.BLOCKS_IN_DAY=10
+dci.BLOCKS_IN_DAY=1
 dci.cf.fund=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976
 dci.cf.bounty=0x90d8927407c79c4a28ee879b821c76fc9bcc2688
 dci.cf.totalFunded=100
 dci.cf.reference=Reference
-dci.cf.config=["4","103","10000000000000000000","1e+21","1","1","1","1"]
-dci.cf.config[startBlock]=4
-dci.cf.config[stopBlock]=103
+dci.cf.config=["9","37","10000000000000000000","1e+21","1","1","1","1"]
+dci.cf.config[startBlock]=9
+dci.cf.config[stopBlock]=37
 dci.cf.config[minValue]=10
 dci.cf.config[maxValue]=1000
 dci.cf.config[bountyScale]=1
@@ -178,25 +178,25 @@ token.decimals=18
 token.totalSupply=1.8e+23
 token.overloadedTotalSupply=0
 
-Waiting until day 2 #14 currentBlock=15
-Waited until day 2 #14 currentBlock=15
+Waiting until day 2 #21 currentBlock=15
+Waited until day 2 #21 currentBlock=22
 Send Valid Contribution - 200 ETH From Account5 - Day2
-sendValidContribution2Tx gas=400000 gasUsed=107259 costETH=0.001930662 costUSD=0.73440451818 @ ETH/USD=380.39 gasPrice=18000000000 block=17 txId=0x37680cda0d943c483404c91c97bea9f3547f34f7f4637219d92ca3bf6a5a4aff
+sendValidContribution2Tx gas=400000 gasUsed=107276 costETH=0.001930968 costUSD=0.73452091752 @ ETH/USD=380.39 gasPrice=18000000000 block=24 txId=0x37680cda0d943c483404c91c97bea9f3547f34f7f4637219d92ca3bf6a5a4aff
  # Account                                             EtherBalanceChange                          Token Name
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
- 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       85.046753434000000000           0.000000000000000000 Account #0 - Miner
- 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.041812110000000000           0.000000000000000000 Account #1 - Contract Owner
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e      120.046742940000000000           0.000000000000000000 Account #0 - Miner
+ 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.041801310000000000           0.000000000000000000 Account #1 - Contract Owner
  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2 - Fund
  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000 Account #3
  4 0xa44a08d3f6933c69212114bb66e2df1813651844     -100.003010662000000000           0.000000000000000000 Account #4
- 5 0xa55a151eb00fded1634d27d1127b4be4627079ea     -200.001930662000000000           0.000000000000000000 Account #5
+ 5 0xa55a151eb00fded1634d27d1127b4be4627079ea     -200.001930968000000000           0.000000000000000000 Account #5
  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
  9 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000 TokenEmission
-10 0x0e946b999033257976aa5cbe0e3530618ca1582d      300.000000000000000000      540000.000000000000000000 DaoCasinoIco
+10 0x0e946b999033257976aa5cbe0e3530618ca1582d      300.000000000000000000      520000.000000000000000000 DaoCasinoIco
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
-                                                                               540000.000000000000000000 Total Token Balances
+                                                                               520000.000000000000000000 Total Token Balances
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
 
 PASS Send Valid Contribution - 200 ETH From Account5 - Day2
@@ -204,27 +204,80 @@ dciContractAddress=0x0e946b999033257976aa5cbe0e3530618ca1582d
 dci.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
 dci.hammer=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
 dci.minDonation=0.1
-dci.BLOCKS_IN_DAY=10
+dci.BLOCKS_IN_DAY=1
 dci.cf.fund=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976
 dci.cf.bounty=0x90d8927407c79c4a28ee879b821c76fc9bcc2688
 dci.cf.totalFunded=300
 dci.cf.reference=Reference
-dci.cf.config=["4","103","10000000000000000000","1e+21","1","1","1","1"]
-dci.cf.config[startBlock]=4
-dci.cf.config[stopBlock]=103
+dci.cf.config=["9","37","10000000000000000000","1e+21","1","1","1","1"]
+dci.cf.config[startBlock]=9
+dci.cf.config[stopBlock]=37
 dci.cf.config[minValue]=10
 dci.cf.config[maxValue]=1000
 dci.cf.config[bountyScale]=1
 dci.cf.config[startRatio]=1
 dci.cf.config[reductionStep]=1
 dci.cf.config[reductionValue]=1
-ReceivedEther 0 #17 sender=0xa55a151eb00fded1634d27d1127b4be4627079ea amount=200000000000000000000 200
+ReceivedEther 0 #24 sender=0xa55a151eb00fded1634d27d1127b4be4627079ea amount=200000000000000000000 200
 teContractAddress=0x90d8927407c79c4a28ee879b821c76fc9bcc2688
 te.owner=0x0e946b999033257976aa5cbe0e3530618ca1582d
 te.hammer=0x0e946b999033257976aa5cbe0e3530618ca1582d
 token.symbol=BET
 token.name=DAO.Casino
 token.decimals=18
-token.totalSupply=5.4e+23
+token.totalSupply=5.2e+23
 token.overloadedTotalSupply=0
+
+Waiting until stopBlock #37 currentBlock=27
+Waited until stopBlock #37 currentBlock=38
+Get My Bounty - Account4 and Account5 - After stop block
+getMyBounty1Tx gas=400000 gasUsed=27697 costETH=0.000498546 costUSD=0.18964191294 @ ETH/USD=380.39 gasPrice=18000000000 block=40 txId=0x42706011ad90297737b96162a09e03dddc71d26d7d902535a5ee33662fa61e66
+getMyBounty2Tx gas=400000 gasUsed=40394 costETH=0.000727092 costUSD=0.27657852588 @ ETH/USD=380.39 gasPrice=18000000000 block=40 txId=0x5c290b561439ff04f6228aabad585d36710dc9d227be13e37409b0c829428d55
+ # Account                                             EtherBalanceChange                          Token Name
+-- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e      200.047968578000000000           0.000000000000000000 Account #0 - Miner
+ 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.041801310000000000           0.000000000000000000 Account #1 - Contract Owner
+ 2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2 - Fund
+ 3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000 Account #3
+ 4 0xa44a08d3f6933c69212114bb66e2df1813651844     -100.003509208000000000      180000.000000000000000000 Account #4
+ 5 0xa55a151eb00fded1634d27d1127b4be4627079ea     -200.002658060000000000      340000.000000000000000000 Account #5
+ 6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
+ 7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
+ 8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
+ 9 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000 TokenEmission
+10 0x0e946b999033257976aa5cbe0e3530618ca1582d      300.000000000000000000           0.000000000000000000 DaoCasinoIco
+-- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+                                                                               520000.000000000000000000 Total Token Balances
+-- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+
+PASS Get My Bounty - Account4 and Account5 - After stop block
+PASS Get My Bounty - Account4 and Account5 - After stop block
+dciContractAddress=0x0e946b999033257976aa5cbe0e3530618ca1582d
+dci.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+dci.hammer=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+dci.minDonation=0.1
+dci.BLOCKS_IN_DAY=1
+dci.cf.fund=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976
+dci.cf.bounty=0x90d8927407c79c4a28ee879b821c76fc9bcc2688
+dci.cf.totalFunded=300
+dci.cf.reference=Reference
+dci.cf.config=["9","37","10000000000000000000","1e+21","1","1","1","1"]
+dci.cf.config[startBlock]=9
+dci.cf.config[stopBlock]=37
+dci.cf.config[minValue]=10
+dci.cf.config[maxValue]=1000
+dci.cf.config[bountyScale]=1
+dci.cf.config[startRatio]=1
+dci.cf.config[reductionStep]=1
+dci.cf.config[reductionValue]=1
+teContractAddress=0x90d8927407c79c4a28ee879b821c76fc9bcc2688
+te.owner=0x0e946b999033257976aa5cbe0e3530618ca1582d
+te.hammer=0x0e946b999033257976aa5cbe0e3530618ca1582d
+token.symbol=BET
+token.name=DAO.Casino
+token.decimals=18
+token.totalSupply=5.2e+23
+token.overloadedTotalSupply=0
+Transfer 0 #40: _from=0x0e946b999033257976aa5cbe0e3530618ca1582d _to=0xa55a151eb00fded1634d27d1127b4be4627079ea value=340000
+Transfer 1 #40: _from=0x0e946b999033257976aa5cbe0e3530618ca1582d _to=0xa44a08d3f6933c69212114bb66e2df1813651844 value=180000
 

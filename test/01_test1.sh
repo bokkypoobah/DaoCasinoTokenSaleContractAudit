@@ -23,7 +23,8 @@ TEST1RESULTS=`grep ^TEST1RESULTS= settings.txt | sed "s/^.*=//"`
 CURRENTTIME=`date +%s`
 CURRENTTIMES=`date -r $CURRENTTIME -u`
 
-BLOCKSINDAY=10
+# Setting time to be a block representing one day
+BLOCKSINDAY=1
 
 if [ "$MODE" == "dev" ]; then
   # Start time now
@@ -130,10 +131,10 @@ console.log(JSON.stringify(dciContract));
 var dciTx = null;
 var dciAddress = null;
 var startBlock = parseInt(eth.blockNumber) + 1;
-var stopBlock = parseInt(eth.blockNumber) + 100;
-var day1Block = parseInt(startBlock) + $BLOCKSINDAY;
-var day2Block = parseInt(startBlock) + $BLOCKSINDAY * 2;
-var day3Block = parseInt(startBlock) + $BLOCKSINDAY * 3;
+var stopBlock = parseInt(eth.blockNumber) + 29;
+var day1Block = parseInt(startBlock) + $BLOCKSINDAY * 12; // Day 13 2,000 BET = 1 ETH
+var day2Block = parseInt(startBlock) + $BLOCKSINDAY * 16; // Day 16 1,700 BET = 1 ETH
+var day3Block = parseInt(startBlock) + $BLOCKSINDAY * 21; // Day 21 1,500 BET = 1 ETH
 var minValue = 10000000000000000000; // 10 ETH
 var maxValue = 1000000000000000000000; // 1000 ETH
 var scale = 1;
@@ -215,6 +216,28 @@ failIfGasEqualsGasUsed(sendValidContribution2Tx, validContribution2Message);
 printDciContractDetails();
 printTeContractDetails();
 console.log("RESULT: ");
+
+console.log("RESULT: Waiting until stopBlock #" + stopBlock + " currentBlock=" + eth.blockNumber);
+while (eth.blockNumber <= stopBlock) {
+}
+console.log("RESULT: Waited until stopBlock #" + stopBlock + " currentBlock=" + eth.blockNumber);
+
+// -----------------------------------------------------------------------------
+var getMyBountyMessage = "Get My Bounty - Account4 and Account5 - After stop block";
+console.log("RESULT: " + getMyBountyMessage);
+var getMyBounty1Tx = dci.getMyBounty({from: account4, to: dciAddress, gas: 400000});
+var getMyBounty2Tx = dci.getMyBounty({from: account5, to: dciAddress, gas: 400000});
+while (txpool.status.pending > 0) {
+}
+printTxData("getMyBounty1Tx", getMyBounty1Tx);
+printTxData("getMyBounty2Tx", getMyBounty2Tx);
+printBalances();
+failIfGasEqualsGasUsed(getMyBounty1Tx, getMyBountyMessage);
+failIfGasEqualsGasUsed(getMyBounty2Tx, getMyBountyMessage);
+printDciContractDetails();
+printTeContractDetails();
+console.log("RESULT: ");
+
 
 
 exit;
