@@ -1,14 +1,13 @@
-# Dao.Casino Crowdsale Contract Audit (Work In Progress)
+# Dao.Casino Crowdsale Contract Audit (First Draft Version)
 
-Bok Consulting Pty Ltd has been retained by [Dao.Casino](https://dao.casino/) to audit the Ethereum contract to be used in Dao.Casino's upcoming crowdsale. 
-The [audit of Dao.Casino's original contracts](README-Original.md) found quite few issues to do with convoluted nature of the code, making it harder to verify the correctness of
-the algorithm. Note that no bugs were found in the original contract. There were also some conflicting functionality
+Bok Consulting Pty Ltd has been retained by [Dao.Casino](https://dao.casino/) to audit the Ethereum contracts for use in Dao.Casino's upcoming crowdsale. 
+The [audit of Dao.Casino's original contracts](README-Original.md) found a few issues described in more detail in the [Summary](#summary) section below.
 
 A [new crowdsale contract](contracts/DaoCasinoToken.sol) was proposed by Bok Consulting Pty Ltd and this contract will be used for Dao.Casino's 
 crowdsale. This report is a self-audit of the new contracts.
 
 From [DAO.Casino Announces Terms of its Token Sale to be held June 29](https://medium.com/@dao.casino/dao-casino-announces-terms-of-its-token-sale-to-be-held-june-29-5125375f4aeb), 
-this crowdsale has the following parameters:
+Dao.Casino's crowdsale has the following parameters:
 
 <kbd><img src="images/Dao.CasinoCrowdsaleParameters-20170628-022847.png" /></kbd>
 
@@ -34,33 +33,37 @@ this crowdsale has the following parameters:
 
 ## Summary
 
-Dao.Casino originally presented the [**DaoCasinoICO**](contracts/DaoCasinoICO.sol) and the included **TokenEmission** contracts for it's crowdsale. An audit of these contract found
-several issues.
+Dao.Casino originally requested for an audit of [**DaoCasinoICO**](contracts/DaoCasinoICO.sol) (which includes the **TokenEmission** contract) for it's crowdsale. 
+An audit of these contract found several issues.
 
 The first issue with the **DaoCasinoICO** and **TokenEmission** contracts is that they were written with a convoluted relationship with each other, with a number of overloaded
-variables, modifiers, functions and unused code. This made the understanding of these contracts difficult, making it harder for potential participants and other interested parties
-to understand the nature of these contracts. While no bugs were found in these contracts, it was difficult to verify the functionality.
+variables, modifiers, functions and some unused code. The convoluted nature of these contracts made it difficult to understand these contracts, thus making it harder for potential
+participants and other interested parties to understand the nature of these contracts. While no bugs were found in these contracts, it was difficult to verify the functionality
+would work in all cases.
 
-The second issue was the coding for a minimum funding goal and a refund mechanism but these these would be ineffective as a function `withdrawEth()` existed that would
-allow the owner to withdraw the funds at anytime, leaving insufficient funds to support any refunds. In discussions with Dao.Casino, this minimum funding goal was going to be set to
-0, and was documented in the blog post. In this case, the refund mechanism would have been ineffective and the `withdrawEth()` function could be used by the owner without further issues.
-The combination of having the code with a minimum funding goal, a refund mechanism and the ability for the owner to withdraw the funds broke the trustless nature of this 
+The second issue was the presence of code for a minimum funding goal and a refund mechanism but these these would be ineffective due to the presence of a `withdrawEth()` function 
+that would allow the owner to withdraw the crowdsale funds at any time, leaving insufficient funds to support any refunds. In discussions with Dao.Casino and as documented in the
+blog post, this minimum funding goal was to be set to 0. In this case, the refund mechanism would have been ineffective and the `withdrawEth()` function could be used by the owner
+without further issues.
+
+The combination of presence of the code with a minimum funding goal, a refund mechanism and the ability for the owner to withdraw the funds broke the trustless nature of this 
 crowdfunding contract.
 
 The third issue was that the [blog post](https://medium.com/@dao.casino/dao-casino-announces-terms-of-its-token-sale-to-be-held-june-29-5125375f4aeb) included a statement on the
-vesting schedule of BET tokens for the founders and early adopters. This was not programmed into the crowdsale contracts as has been in some other crowdsales contracts.
+vesting schedule of BET tokens for the founders and early adopters. This functionality was not programmed into the crowdsale contracts as has been in some other crowdsales contracts.
 
 This auditor proposed an alternative simpler crowdsale contract with the same functionality, and Dao.Casino decided to proceed with the crowdsale using this new contract.
 
-This new **DaoCasinoToken** contract has 346 lines of code, compared to the original contract's 630 lines of code. There is only one token contract with the crowdsale 
-functionality built on top of it, reducing the need for a convoluted relationship between the two functionalities.
+This new [**DaoCasinoToken** contract](contracts/DaoCasinoToken.sol) has 346 lines of code, compared to the [original contract](contracts/DaoCasinoICO.sol)'s 630 lines of code. 
+In the new contract, there is only one token contract with the crowdsale functionality built on top of it, reducing the need for a convoluted relationship between the two
+functions.
 
 Compared to the old contracts, this new contract has a lower risk of loss of funds in the case of an attack or bugs as participant's ether contributions are immediately directed
-into the owner's multisig wallet, and the main multisig wallets in Ethereum have had with a longer history of resisting attacks compared to this crowdsale contract.
+into the owner's multisig wallet, and the main multisig wallets in Ethereum have a longer history of resisting attacks compared to this crowdsale contract.
 
 **Note** that due to the lack of time available, the vesting of the founders and early adopters tokens has not been implemented in this new crowdsale contract. Ideally the crowdsale
-should be delayed until a vesting contract is developed and tested, but Dao.Casino would like to remain on the original crowdsale schedule and have stated to me that they will be
-documenting this clearly in their communication to potential participants. There is also the option to build a separate contract after the crowdsale to enforce this vesting schedule
+should be delayed until a vesting contract is developed and tested, but Dao.Casino prefers remain on the original crowdsale schedule and have stated to me that they will
+document this clearly in their communication to potential participants. They also the option to build a separate vesting contract after the crowdsale to enforce this vesting schedule
 programatically.
 
 <br />
@@ -167,6 +170,8 @@ and test the vesting contract, this functionality is not available for this crow
 * [x] The test results can be found in [testNew/test1results.txt](testNew/test1results.txt) for the results and [testNew/test1output.txt](testNew/test1output.txt) for the full output
 * [x] There is no switch to pause and then restart the contract being able to receive contributions
 * [x] The `transfer(...)` call is the last statements in the control flow of `proxyPayment(...)` to prevent the hijacking of the control flow
+* NOTE that this contract does not implement the check for the number of bytes sent to functions to reject errors from the "short address attack"
+* NOTE that this contract does not implement the modified `approve(...)` and `approveAnCall(...)` functions to mitigate the risk of double spending in the `approve(...)` and `transferFrom(...)` calls
 
 <br />
 
