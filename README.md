@@ -1,7 +1,8 @@
 # Dao.Casino Crowdsale Contract Audit (Work In Progress)
 
 Bok Consulting Pty Ltd has been retained by [Dao.Casino](https://dao.casino/) to audit the Ethereum contract to be used in Dao.Casino's upcoming crowdsale. 
-The [audit of Dao.Casino's original contracts](README-Original.md) found quite a few issues to do with trustlessness and the convoluted nature of the code.
+The [audit of Dao.Casino's original contracts](README-Original.md) found quite few issues to do with convoluted nature of the code, making it harder to verify the correctness of
+the algorithm. Note that no bugs were found in the original contract. There were also some conflicting functionality
 
 A [new crowdsale contract](contracts/DaoCasinoToken.sol) was proposed by Bok Consulting Pty Ltd and this contract will be used for Dao.Casino's 
 crowdsale. This report is a self-audit of the new contracts.
@@ -18,19 +19,12 @@ this crowdsale has the following parameters:
 ## Table Of Contents
 
 * [Summary](#summary)
-  * [Crowdsale Source Code](#crowdsale-source-code)
-  * [Trustlessness?](#trustlessness)
-  * [No Security Risk Identifier Yet](#no-security-risk-identified-yet)
-  * [Tokens](#tokens)
-  * [Vesting?](#vesting)
-  * [Due Diligence Required](#due-diligence-required)
-  * [Recommendation](#recommendation)
 * [Scope](#scope)
 * [Limitations](#limitations)
 * [Due Diligence](#due-diligence)
 * [Risks](#risks)
 * [Recommendations](#recommendations)
-* [TODO](#todo)
+* [Crowdsale Contract Overview](#crowdsale-contract-overview)
 * [Crowdsale Contract Source Code](#crowdsale-contract-source-code)
 * [References](#references)
 
@@ -40,48 +34,44 @@ this crowdsale has the following parameters:
 
 ## Summary
 
-### Crowdsale Source Code
-The **DaoCasinoICO** and **TokenEmission** contracts are well formatted and set out, but there is an unnecessary convoluted relationship between these two contracts.
-There is also some unnecessary overloading of data (`totalSupply`), modifiers (`onlySuccess`) and functions (`bountyValue(...)`, `withdraw()`) that makes understanding 
-these contracts a little bit harder.
+Dao.Casino originally presented the [**DaoCasinoICO**](contracts/DaoCasinoICO.sol) and the included **TokenEmission** contracts for it's crowdsale. An audit of these contract found
+several issues.
 
-### Trustlessness?
-These contracts were not designed with trustlessness as a primary aim. This is highlighted by the ability to premine tokens after deployment of **TokenEmission** and 
-before **TokenEmission** is linked to **DaoCasinoICO**, and the inclusion of the refund facility (but inactive because of the lack of a minimum funding goal) while at
-the same time allowing the owners to withdraw funds from the **DaoCasinoICO** using the `withdrawEth()` function.
+The first issue with the **DaoCasinoICO** and **TokenEmission** contracts is that they were written with a convoluted relationship with each other, with a number of overloaded
+variables, modifiers, functions and unused code. This made the understanding of these contracts difficult, making it harder for potential participants and other interested parties
+to understand the nature of these contracts. While no bugs were found in these contracts, it was difficult to verify the functionality.
 
-Additionally the parameters used in the deployment of this contract will need to be confirmed.
+The second issue was the coding for a minimum funding goal and a refund mechanism but these these would be ineffective as a function `withdrawEth()` existed that would
+allow the owner to withdraw the funds at anytime, leaving insufficient funds to support any refunds. In discussions with Dao.Casino, this minimum funding goal was going to be set to
+0, and was documented in the blog post. In this case, the refund mechanism would have been ineffective and the `withdrawEth()` function could be used by the owner without further issues.
+The combination of having the code with a minimum funding goal, a refund mechanism and the ability for the owner to withdraw the funds broke the trustless nature of this 
+crowdfunding contract.
 
-### No Security Risk Identified Yet
-No serious security risk has been identified in the contracts yet. It is however recommended that the owner of the contracts frequently drain the ethers from the 
-**DaoCasinoICO** contract into a more secure external `fund` wallet using the `withdrawEth()` function. This is to avoid **DaoCasinoICO** from being an attractive attack target.
+The third issue was that the [blog post](https://medium.com/@dao.casino/dao-casino-announces-terms-of-its-token-sale-to-be-held-june-29-5125375f4aeb) included a statement on the
+vesting schedule of BET tokens for the founders and early adopters. This was not programmed into the crowdsale contracts as has been in some other crowdsales contracts.
 
-### Tokens
-These contracts could have been designed to deliver the tokens directly after participants send their ETH, thus keeping participants wondering what number of tokens they
-"bought" with their ethers. Instead participants will be able to query the non-standard `bounties` field (when the source code is verified on EtherScan) to determine the 
-number of tokens they have bought.
+This auditor proposed an alternative simpler crowdsale contract with the same functionality, and Dao.Casino decided to proceed with the crowdsale using this new contract.
 
-### Vesting?
-From the blog post [DAO.Casino Announces Terms of its Token Sale to be held June 29](https://medium.com/@dao.casino/dao-casino-announces-terms-of-its-token-sale-to-be-held-june-29-5125375f4aeb):
+This new **DaoCasinoToken** contract has 346 lines of code, compared to the original contract's 630 lines of code. There is only one token contract with the crowdsale 
+functionality built on top of it, reducing the need for a convoluted relationship between the two functionalities.
 
-<kbd><img src="images/Dao.CasinoCrowdsaleVesting-20170628-161331.png" /></kbd>
+Compared to the old contracts, this new contract has a lower risk of loss of funds in the case of an attack or bugs as participant's ether contributions are immediately directed
+into the owner's multisig wallet, and the main multisig wallets in Ethereum have had with a longer history of resisting attacks compared to this crowdsale contract.
 
-Note that there is **NO** vesting built into any of the **DaoCasinoICO** or **TokenEmission** contracts audited.
-
-### Due Diligence Required
-As always, potential participants should perform their [due diligence](#due-diligence) before investing into any crowdsale, including this one.
-
-### Recommendation
-The crowdsale should be delayed until the vesting functionality is written into the crowdsale contracts. Other issues identified in this report should also be addressed at the same time.
-Or that the blog post be updated clearly stating that there is no vesting built into the contracts.
+**Note** that due to the lack of time available, the vesting of the founders and early adopters tokens has not been implemented in this new crowdsale contract. Ideally the crowdsale
+should be delayed until a vesting contract is developed and tested, but Dao.Casino would like to remain on the original crowdsale schedule and have stated to me that they will be
+documenting this clearly in their communication to potential participants. There is also the option to build a separate contract after the crowdsale to enforce this vesting schedule
+programatically.
 
 <br />
 
 <hr />
 
 ## Scope
+
 This audit is into the technical aspects of the crowdsale contracts. The primary aim of this audit is to ensure that funds contributed to these contracts are not easily attacked or stolen by third parties. 
-The secondary aim of this audit is that ensure the coded algorithms work as expected. This audit does not guarantee that that the code is bugfree, but intends to highlight any areas of weaknesses.
+The secondary aim of this audit is that ensure the coded algorithms work as expected. This audit does not guarantee that that the code is bugfree, but intends to highlight any areas of
+weaknesses.
 
 <br />
 
@@ -90,6 +80,8 @@ The secondary aim of this audit is that ensure the coded algorithms work as expe
 ## Limitations
 This audit makes no statements or warranties about the viability of the Dao.Casino's business proposition, the individuals involved in this business or the regulatory regime for the business model.
 
+This report is a self-audit of the crowdsale written by the auditor. This author will attempt to seek an independent code review of this crowdsale contract.
+
 <br />
 
 <hr />
@@ -97,10 +89,15 @@ This audit makes no statements or warranties about the viability of the Dao.Casi
 ## Due Diligence
 As always, potential participants in any crowdsale are encouraged to perform their due diligence on the business proposition before funding the crowdsale.
 
-Potential participants are also encouraged to only send their funds to the official crowdsale Ethereum address, as scammers have been publishing phishing address in the Slacks, Subreddits, Twitter and other communication channels. 
-Potential participants should also confirm that the verified source code on EtherScan.io for the published crowdsale address matches the audited source code audited, and that the deployment parameters are correctly set, including the constant parameters.
+Potential participants are also encouraged to only send their funds to the official crowdsale Ethereum address, published on Dao.Casino's official communication channel.
 
-Potential participants should note that there is no minimum funding goal in this crowdsale.
+Scammers have been publishing phishing address in the forums, twitter and other communication channels, and some go as far as duplicating crowdsale websites.
+ 
+Potential participants should also confirm that the verified source code on EtherScan.io for the published crowdsale address matches the audited source code audited, and that 
+the deployment parameters are correctly set, including the constant parameters.
+
+Potential participants should note that there is no minimum funding goal in this crowdsale and there is no refunds. Dao.Casino have stated that they will enforce the vesting of
+tokens internally, but will communicate this decision to potential participants.
 
 <br />
 
@@ -108,7 +105,8 @@ Potential participants should note that there is no minimum funding goal in this
 
 ## Risks
 
-This crowdfunding contract has a low risk of being attacked, as funds contributed are directed immediately into a multisig wallet.
+This crowdfunding contract has a relatively low risk of losing large amounts of ethers in an attack or a bug, as funds contributed by participants are immediately transferred
+into a multisig wallet.
 
 The flow of funds from this crowdsale contract should be monitored using a script and visually through EtherScan. Should there be any abnormal 
 gaps in the crowdfunding contracts, potential participants should be informed to stop contributing to this crowdsale contract. Most of the funds
@@ -117,9 +115,11 @@ will be held in the multisig wallet, so any potential losses due to flaws in the
 In the case of the crowdfunding contract allocating an incorrect number of tokens for each contribution, the token numbers can be manually
 recalculated and a new token contract can be deployed at a new address.
 
-Following is a sample chart showing the continuous flow of funds into the crowdsale contract, and these funds should be monitored on the multisig wallet as well:
+Following is a sample chart showing the continuous flow of funds into another (currently ongoing) crowdsale contract:
 
 <kbd><img src="images/SampleCrowdsaleContributions-20170629-025846.png" /></kbd>
+
+Dao.Casino's crowdsale contract and multisig wallet should be monitored in the same manner to detect any abnormalities in the flow of funds.
 
 <br />
 
@@ -127,7 +127,7 @@ Following is a sample chart showing the continuous flow of funds into the crowds
 
 ## Potential Vulnerabilities
 
-
+No potential vulnerabilities have been identified in the crowdsale contract.
 
 <br />
 
@@ -135,44 +135,38 @@ Following is a sample chart showing the continuous flow of funds into the crowds
 
 ## Recommendations
 
-* **HIGH IMPORTANCE** - The crowdsale should be delayed until the crowdsale contracts are re-written to reflect the offering described in the [blog post](https://medium.com/@dao.casino/dao-casino-announces-terms-of-its-token-sale-to-be-held-june-29-5125375f4aeb), 
-and this is primarily the vesting of the tokens. Or that the blog post be updated clearly stating that there is no vesting built into the contracts.
+* HIGH IMPORTANCE - This new crowdfunding contract should have been written with the vesting of the foundation's BET tokens built in. As there was insufficient time to write
+and test the vesting contract, this functionality is not available for this crowdsale. The alternative was to delay the commencement of the crowdsale to build in this vesting contract.
 
-* LOW IMPORTANCE - As found by Darryl Morris, `Token.totalSupply` will hide `ERC20.totalSupply` and should be removed. This variable is unused in the **ERC20** contract, will always be set to 0. The **TokenEmission** version of `totalSupply` will be used to record the total supply of tokens
-
-* LOW IMPORTANCE - Add a function for the owner to transfer out any other ERC20 tokens from the TokenEmission contract - see the example [`transferAnyERC20Token(...)`](https://github.com/openanx/OpenANXToken/blob/master/contracts/OpenANXToken.sol#L451-L458)
-
-* LOW IMPORTANCE - The relationship between the **TokenEmission** contract and the **DaoCasinoICO** contract requires that the **TokenEmission** `owner` and `hammer` variables point to the **DaoCasinoICO** contract address. If the `owner` variable is not correctly set, the **TokenEmission** contract will fail to create the tokens for the accounts sending ETH to the **DaoCasinoICO** contract 
-
-* NOTE - When an account sends ETH to the **DaoCasinoICO** contract, the tokens are created in the **TokenEmission** contract, but assigned to the address of the **DaoCasinoICO** in the **TokenEmission** contract. The participant's account, or the owner of the contracts will have to call `getBounty(...)` for the tokens to be transferred to the participant's account, and this can only be executed if the crowdsale is successful
-
-* NOTE - For the crowdsale `onlySuccess` modifier to indicate a successful status, the funding has to **EXACTLY** match the crowdsale maximum cap in ETH (as `totalFunded == config.maxValue` in `DaoCasinoICO.onlySuccess`), or the current time has to be past the crowdsale closing date. If the funding is close to the cap, anyone including the owner will have the ability to top up the crowdsale funds for this match to occur for this crowdsale to end earlier than the intended closing date 
-
-* The **DaoCasinoICO** contract has several constructor parameters that are unused in any calculations: `_reference`, `_startRatio`, `_reductionStep` and `_reductionValue`. Ideally these should be removed to make the code more easily readable
-
-* The **DaoCasinoICO** contract has several functions and modifiers that overload the **Crowdfunding** contract functions and modifiers: `bountyValue(...)`, `onlySuccess`, `withdraw()`. Ideally these should be removed from the **Crowdfunding** contract to make the code more easily readable
-
-* The **TokenEmission** contract should implement the `function () payable { throw; }` function to reject any ETH being sent to it, as there will be no ability to withdraw these ETH from this token contract
-
-* LOW IMPORTANCE - There is no easy way to work out whether these contracts are computing the correct number of tokens for the ETH that participants send. It is easy to log an event that will help keep track of the calculations. Example [`TokensBought(...)`](https://github.com/openanx/OpenANXToken/blob/master/contracts/OpenANXToken.sol#L260-L261) that can easily be extracted to create a near-realtime [report](https://github.com/openanx/OpenANXToken/blob/master/scripts/TokensBought_20170625_015900.tsv)
- 
 <br />
 
-## TODO
+<hr />
 
-* Overview comments on the source code
+## Crowdsale Contract Overview
 
-* Overflow
-
-* Underflow
-
-* Logic hijacking
-
-* This contract uses block numbers to determine the start, end and token rate changed in the crowdsale. As these block numbers are variable and increasing, only approximate times can be published for these dates. Expect some of the transactions to throw errors due to unexpected block numbers.
-
-* An unlimited number of tokens can be created during the deployment of **TokenEmission**
-
-* As there are quite a parameters that interlink the **DaoCasinoICO* and **TokenEmission** contracts together, it is recommended that a script be created to easily display these parameters and check for correctness 
+* [x] This token contract is of low-moderate complexity
+* [x] The code has been tested for the normal [ERC20](https://github.com/ethereum/EIPs/issues/20) use cases, and around some of the boundary cases
+  * [x] Deployment, with correct `symbol()`, `name()`, `decimals()` and `totalSupply()`
+  * [x] `transfer(...)` from one account to another
+  * [x] `approve(...)` and `transferFrom(...)` from one account to another
+  * While the `transfer(...)` and `transferFrom(...)` uses safe maths, there are checks so the function is able to return **true** and **false** instead of throwing an error
+* `transfer(...)` and `transferFrom(...)` is only enabled when the crowdsale is finalised, when either the funds raised matches the cap, or the current time is beyond the crowdsale end date
+* [x] `transferOwnership(...)` and `acceptOwnership()` of the token contract
+* [x] ETH contributed to this contract is immediately moved to a separate wallet
+* [x] ETH cannot be trapped in this contract due to the logic preventing ETH being sent to this contract outside the crowdfunding dates
+* [x] The testing has been done using geth v1.6.5-stable-cf87713d/darwin-amd64/go1.8.3 and solc 0.4.11+commit.68ef5810.Darwin.appleclang instead of one of the testing frameworks and JavaScript VMs to simulate the live environment as closely as possible
+* [x] There is only one statement with a division, and the divisor is a non-zero constant, so there should be no division by zero errors
+  * `uint multisigTokens = tokens * 3 / 7;`
+* [x] All numbers used are **uint** (which is **uint256**), with the exception of `decimals`, reducing the risk of errors from type conversions
+* [x] Areas with potential overflow errors in `transfer(...)`, `transferFrom(...)`, `proxyPayment(...)` and `addPrecommitment(...)` have the logic to prevent overflows
+* [x] Areas with potential underflow errors in `transfer(...)` and `transferFrom(...)` have the logic to prevent underflows
+* [x] Function and event names are differentiated by case - function names begin with a lowercase character and event names begin with an uppercase character
+* [x] The default function will receive contributions during the crowdsale phase and mint tokens. Users can also directly call `proxyPayment(...)` to purchase tokens on behalf of another account
+* [x] The function `transferAnyERC20Token(...)` has been added in case the owner has to free any accidentally trapped ERC20 tokens
+* [x] The test scripts can be found in [testNew/01_test1.sh](testNew/01_test1.sh)
+* [x] The test results can be found in [testNew/test1results.txt](testNew/test1results.txt) for the results and [testNew/test1output.txt](testNew/test1output.txt) for the full output
+* [x] There is no switch to pause and then restart the contract being able to receive contributions
+* [x] The `transfer(...)` call is the last statements in the control flow of `proxyPayment(...)` to prevent the hijacking of the control flow
 
 <br />
 
