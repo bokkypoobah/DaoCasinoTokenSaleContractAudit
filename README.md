@@ -184,7 +184,7 @@ On Jun 23 2017 Ilya Tarutov provided links to the first version of the source co
 > * TokenEmission [2.sol](contracts/2.sol) - [https://gist.github.com/davy42/e0416a14a6a2d1927a07d574d310f294](https://gist.github.com/davy42/e0416a14a6a2d1927a07d574d310f294)
   Note that the TokenEmission code is included in the DaoCasinoICO code.
 
-On Jun 26 2017 Ilya Tarutov provided links to the updated version of the source code:
+On Jun 26 2017 11:04 AEST Ilya Tarutov provided links to the updated version of the source code and gave the go ahead to commence on this audit:
 
 > 1. ERC20 contract with emission
 >   * Github: [3.sol](contracts/3.sol) [https://github.com/airalab/core/blob/ffe24a8b9361fa7635adefb98f1ed8bdd8e2a775/contracts/token/TokenEmission.sol](https://github.com/airalab/core/blob/ffe24a8b9361fa7635adefb98f1ed8bdd8e2a775/contracts/token/TokenEmission.sol)
