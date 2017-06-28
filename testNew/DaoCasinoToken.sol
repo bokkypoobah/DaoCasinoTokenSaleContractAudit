@@ -183,11 +183,11 @@ contract DaoCasinoToken is ERC20Token {
     // > new Date("2017-06-29T13:00:00").getTime()/1000
     // 1498741200
     // Do not use `now` here
-    uint256 public constant STARTDATE = 1498648621; // Wed 28 Jun 2017 11:17:01 UTC
+    uint256 public constant STARTDATE = 1498659124; // Wed 28 Jun 2017 14:12:04 UTC
     uint256 public constant ENDDATE = STARTDATE + 5 minutes;
 
     // Cap USD 25mil @ 296.1470 ETH/USD
-    uint256 public constant CAP = 84417 ether;
+    uint256 public constant CAP = 100 ether;
 
     // Cannot have a constant address here - Solidity bug
     // https://github.com/ethereum/solidity/issues/2441
@@ -258,7 +258,7 @@ contract DaoCasinoToken is ERC20Token {
         // Add ETH raised to total
         totalEthers = totalEthers.add(msg.value);
         // Cannot exceed cap
-        require(totalEthers < CAP);
+        require(totalEthers <= CAP);
 
         // What is the BET to ETH rate
         uint256 _buyPrice = buyPrice();
@@ -305,6 +305,33 @@ contract DaoCasinoToken is ERC20Token {
         balances[participant] = balances[participant].add(balance);
         _totalSupply = _totalSupply.add(balance);
         Transfer(0x0, participant, balance);
+    }
+
+
+    // ------------------------------------------------------------------------
+    // Transfer the balance from owner's account to another account, with a
+    // check that the crowdsale is finalised
+    // ------------------------------------------------------------------------
+    function transfer(address _to, uint _amount) returns (bool success) {
+        // Cannot transfer before crowdsale ends or cap reached
+        require(now > ENDDATE || totalEthers == CAP);
+        // Standard transfer
+        return super.transfer(_to, _amount);
+    }
+
+
+    // ------------------------------------------------------------------------
+    // Spender of tokens transfer an amount of tokens from the token owner's
+    // balance to another account, with a check that the crowdsale is
+    // finalised
+    // ------------------------------------------------------------------------
+    function transferFrom(address _from, address _to, uint _amount) 
+        returns (bool success)
+    {
+        // Cannot transfer before crowdsale ends or cap reached
+        require(now > ENDDATE || totalEthers == CAP);
+        // Standard transferFrom
+        return super.transferFrom(_from, _to, _amount);
     }
 
 

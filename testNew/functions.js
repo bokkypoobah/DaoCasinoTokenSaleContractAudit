@@ -194,59 +194,6 @@ function failIfGasEqualsGasUsedOrContractAddressNull(contractAddress, tx, msg) {
 
 
 //-----------------------------------------------------------------------------
-// dci Contract
-//-----------------------------------------------------------------------------
-var dciContractAddress = null;
-var dciContractAbi = null;
-
-function addDciContractAddressAndAbi(address, abi) {
-  dciContractAddress = address;
-  dciContractAbi = abi;
-}
-
-var dciFromBlock = 0;
-function printDciContractDetails() {
-  console.log("RESULT: dciContractAddress=" + dciContractAddress);
-  // console.log("RESULT: dciContractAbi=" + JSON.stringify(dciContractAbi));
-  if (dciContractAddress != null && dciContractAbi != null) {
-    var contract = eth.contract(dciContractAbi).at(dciContractAddress);
-    console.log("RESULT: dci.owner=" + contract.owner());
-    console.log("RESULT: dci.hammer=" + contract.hammer());
-    console.log("RESULT: dci.minDonation=" + contract.minDonation().shift(-18));
-    console.log("RESULT: dci.BLOCKS_IN_DAY=" + contract.BLOCKS_IN_DAY());
-    console.log("RESULT: dci.cf.fund=" + contract.fund());
-    console.log("RESULT: dci.cf.bounty=" + contract.bounty());
-    console.log("RESULT: dci.cf.totalFunded=" + contract.totalFunded().shift(-18));
-    console.log("RESULT: dci.cf.reference=" + contract.reference());
-    console.log("RESULT: dci.cf.config=" + JSON.stringify(contract.config()));
-    var config = contract.config();
-    console.log("RESULT: dci.cf.config[startBlock]=" + config[0]);
-    console.log("RESULT: dci.cf.config[stopBlock]=" + config[1]);
-    console.log("RESULT: dci.cf.config[minValue]=" + config[2].shift(-18));
-    console.log("RESULT: dci.cf.config[maxValue]=" + config[3].shift(-18));
-    console.log("RESULT: dci.cf.config[bountyScale]=" + config[4]);
-    console.log("RESULT: dci.cf.config[startRatio]=" + config[5]);
-    console.log("RESULT: dci.cf.config[reductionStep]=" + config[6]);
-    console.log("RESULT: dci.cf.config[reductionValue]=" + config[7]);
-    
-    var latestBlock = eth.blockNumber;
-    var i;
-
-    var receivedEtherEvents = contract.ReceivedEther({}, { fromBlock: dciFromBlock, toBlock: latestBlock });
-    i = 0;
-    receivedEtherEvents.watch(function (error, result) {
-      console.log("RESULT: ReceivedEther " + i++ + " #" + result.blockNumber + " sender=" + result.args.sender + " amount=" + result.args.amount + " " +
-        result.args.amount.shift(-decimals));
-    });
-    receivedEtherEvents.stopWatching();
-
-    dciFromBlock = latestBlock + 1;
-  }
-}
-
-
-
-//-----------------------------------------------------------------------------
 // Dct Contract
 //-----------------------------------------------------------------------------
 var dctContractAddress = null;
@@ -269,6 +216,8 @@ function printDctContractDetails() {
     console.log("RESULT: dct.decimals=" + decimals);
     console.log("RESULT: dct.totalSupply=" + contract.totalSupply().shift(-18));
     var startDate = contract.STARTDATE();
+    console.log("RESULT: dct.totalEthers=" + contract.totalEthers().shift(-18));
+    console.log("RESULT: dct.CAP=" + contract.CAP().shift(-18));
     console.log("RESULT: dct.STARTDATE=" + startDate + " " + new Date(startDate * 1000).toUTCString()  + 
         " / " + new Date(startDate * 1000).toGMTString());
     var endDate = contract.ENDDATE();
@@ -285,6 +234,7 @@ function printDctContractDetails() {
         " ethers=" + web3.fromWei(result.args.ethers, "ether") +
         " newEtherBalance=" + web3.fromWei(result.args.newEtherBalance, "ether") + 
         " tokens=" + result.args.tokens.shift(-decimals) + 
+        " multisigTokens=" + result.args.multisigTokens.shift(-decimals) + 
         " newTotalSupply=" + result.args.newTotalSupply.shift(-decimals) + 
         " tokensPerKEther=" + result.args.tokensPerKEther);
     });
