@@ -1,4 +1,4 @@
-# Dao.Casino Presale Contract Audit (Work In Progress)
+# Dao.Casino Crowdsale Contract Audit (Work In Progress)
 
 Bok Consulting Pty Ltd has been retained by [Dao.Casino](https://dao.casino/) to audit the Ethereum contract to be used in Dao.Casino's upcoming crowdsale. 
 The [audit of Dao.Casino's original contracts](README-Original.md) found quite a few issues to do with trustlessness and the convoluted nature of the code.
@@ -98,10 +98,9 @@ This audit makes no statements or warranties about the viability of the Dao.Casi
 As always, potential participants in any crowdsale are encouraged to perform their due diligence on the business proposition before funding the crowdsale.
 
 Potential participants are also encouraged to only send their funds to the official crowdsale Ethereum address, as scammers have been publishing phishing address in the Slacks, Subreddits, Twitter and other communication channels. 
-Potential participants should also confirm that the verified source code on EtherScan.io for the published crowdsale address matches the audited source code audited, and that the deployment parameters are correctly set.
+Potential participants should also confirm that the verified source code on EtherScan.io for the published crowdsale address matches the audited source code audited, and that the deployment parameters are correctly set, including the constant parameters.
 
-Potential participants should note that there is no minimum funding goal in this crowdsale. The `Crowdfunding.refund()` function that **DaoCasinoICO** inherits will be ineffective in this crowdsale due to the lack of a minimum funding goal. The owner of the contracts also has the ability 
-to withdraw any funds using the `DaoCasinoICO.withdrawEth()` function at any time during the crowdsale, rendering the refund functionality ineffective IF a minimum funding goal was set.
+Potential participants should note that there is no minimum funding goal in this crowdsale.
 
 <br />
 
@@ -109,6 +108,7 @@ to withdraw any funds using the `DaoCasinoICO.withdrawEth()` function at any tim
 
 ## Risks
 
+This crowdfunding contract has a low risk of being attacked, as the 
 The primary risk of crowdfunding contracts is that the high value of ethers held by a newly designed un-battle tested contract is a target for attack.
 
 While this crowdsale contract will accumulate ethers during the crowdsale. The owner of the contracts is advised to periodically withdraw ETH from the crowdsale contracts to reduce the risk of attacks on the contract.
