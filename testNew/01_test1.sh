@@ -10,9 +10,9 @@ MODE=${1:-test}
 GETHATTACHPOINT=`grep ^IPCFILE= settings.txt | sed "s/^.*=//"`
 PASSWORD=`grep ^PASSWORD= settings.txt | sed "s/^.*=//"`
 
-DAOCASINOICOSOL=`grep ^DAOCASINOICOSOL= settings.txt | sed "s/^.*=//"`
-DAOCASINOICOTEMPSOL=`grep ^DAOCASINOICOTEMPSOL= settings.txt | sed "s/^.*=//"`
-DAOCASINOICOJS=`grep ^DAOCASINOICOJS= settings.txt | sed "s/^.*=//"`
+DAOCASINOTOKENSOL=`grep ^DAOCASINOTOKENSOL= settings.txt | sed "s/^.*=//"`
+DAOCASINOTOKENTEMPSOL=`grep ^DAOCASINOTOKENTEMPSOL= settings.txt | sed "s/^.*=//"`
+DAOCASINOTOKENJS=`grep ^DAOCASINOTOKENJS= settings.txt | sed "s/^.*=//"`
 
 DEPLOYMENTDATA=`grep ^DEPLOYMENTDATA= settings.txt | sed "s/^.*=//"`
 
@@ -36,48 +36,44 @@ STARTTIME_S=`date -r $STARTTIME -u`
 ENDTIME=`echo "$CURRENTTIME+60*3" | bc`
 ENDTIME_S=`date -r $ENDTIME -u`
 
-printf "MODE                 = '$MODE'\n"
-printf "GETHATTACHPOINT      = '$GETHATTACHPOINT'\n"
-printf "PASSWORD             = '$PASSWORD'\n"
-printf "DAOCASINOICOSOL      = '$DAOCASINOICOSOL'\n"
-printf "DAOCASINOICOTEMPSOL  = '$DAOCASINOICOTEMPSOL'\n"
-printf "DAOCASINOICOJS       = '$DAOCASINOICOJS'\n"
-printf "DEPLOYMENTDATA       = '$DEPLOYMENTDATA'\n"
-printf "INCLUDEJS            = '$INCLUDEJS'\n"
-printf "TEST1OUTPUT          = '$TEST1OUTPUT'\n"
-printf "TEST1RESULTS         = '$TEST1RESULTS'\n"
-printf "CURRENTTIME          = '$CURRENTTIME' '$CURRENTTIMES'\n"
-printf "STARTTIME            = '$STARTTIME' '$STARTTIME_S'\n"
-printf "ENDTIME              = '$ENDTIME' '$ENDTIME_S'\n"
+printf "MODE                  = '$MODE'\n"
+printf "GETHATTACHPOINT       = '$GETHATTACHPOINT'\n"
+printf "PASSWORD              = '$PASSWORD'\n"
+printf "DAOCASINOTOKENSOL     = '$DAOCASINOTOKENSOL'\n"
+printf "DAOCASINOTOKENTEMPSOL = '$DAOCASINOTOKENTEMPSOL'\n"
+printf "DAOCASINOTOKENJS      = '$DAOCASINOTOKENJS'\n"
+printf "DEPLOYMENTDATA        = '$DEPLOYMENTDATA'\n"
+printf "INCLUDEJS             = '$INCLUDEJS'\n"
+printf "TEST1OUTPUT           = '$TEST1OUTPUT'\n"
+printf "TEST1RESULTS          = '$TEST1RESULTS'\n"
+printf "CURRENTTIME           = '$CURRENTTIME' '$CURRENTTIMES'\n"
+printf "STARTTIME             = '$STARTTIME' '$STARTTIME_S'\n"
+printf "ENDTIME               = '$ENDTIME' '$ENDTIME_S'\n"
 
 # Make copy of SOL file and modify start and end times ---
-`cp $DAOCASINOICOSOL $DAOCASINOICOTEMPSOL`
+`cp $DAOCASINOTOKENSOL $DAOCASINOTOKENTEMPSOL`
 
 # --- Modify dates ---
-#`perl -pi -e "s/startTime \= 1498140000;.*$/startTime = $STARTTIME; \/\/ $STARTTIME_S/" $FUNFAIRSALETEMPSOL`
-#`perl -pi -e "s/deadline \=  1499436000;.*$/deadline = $ENDTIME; \/\/ $ENDTIME_S/" $FUNFAIRSALETEMPSOL`
-`perl -pi -e "s/\/\/\/ \@return total amount of tokens.*$/function overloadedTotalSupply() constant returns (uint256) \{ return totalSupply; \}/" $DAOCASINOICOTEMPSOL`
-`perl -pi -e "s/BLOCKS_IN_DAY \= 5256;*$/BLOCKS_IN_DAY \= $BLOCKSINDAY;/" $DAOCASINOICOTEMPSOL`
+`perl -pi -e "s/STARTDATE \= 1498741200;.*$/STARTDATE \= $STARTTIME; \/\/ $STARTTIME_S/" $DAOCASINOTOKENTEMPSOL`
+`perl -pi -e "s/ENDDATE \= STARTDATE \+ 28 days;.*$/ENDDATE \= STARTDATE \+ 5 minutes;/" $DAOCASINOTOKENTEMPSOL`
+#`perl -pi -e "s/\/\/\/ \@return total amount of tokens.*$/function overloadedTotalSupply() constant returns (uint256) \{ return totalSupply; \}/" $DAOCASINOICOTEMPSOL`
+#`perl -pi -e "s/BLOCKS_IN_DAY \= 5256;*$/BLOCKS_IN_DAY \= $BLOCKSINDAY;/" $DAOCASINOICOTEMPSOL`
 
-DIFFS1=`diff $DAOCASINOICOSOL $DAOCASINOICOTEMPSOL`
-echo "--- Differences $DAOCASINOICOTEMPSOL ---"
+DIFFS1=`diff $DAOCASINOTOKENSOL $DAOCASINOTOKENTEMPSOL`
+echo "--- Differences $DAOCASINOTOKENSOL $DAOCASINOTOKENTEMPSOL ---"
 echo "$DIFFS1"
 
-echo "var dciOutput=`solc --optimize --combined-json abi,bin,interface $DAOCASINOICOTEMPSOL`;" > $DAOCASINOICOJS
+echo "var dctOutput=`solc --optimize --combined-json abi,bin,interface $DAOCASINOTOKENTEMPSOL`;" > $DAOCASINOTOKENJS
 
 
 geth --verbosity 3 attach $GETHATTACHPOINT << EOF | tee $TEST1OUTPUT
-loadScript("$DAOCASINOICOJS");
-// loadScript("$TOKENEMISSIONJS");
+loadScript("$DAOCASINOTOKENJS");
 loadScript("functions.js");
 
-var dciAbi = JSON.parse(dciOutput.contracts["$DAOCASINOICOTEMPSOL:DaoCasinoICO"].abi);
-var dciBin = "0x" + dciOutput.contracts["$DAOCASINOICOTEMPSOL:DaoCasinoICO"].bin;
-var teAbi = JSON.parse(dciOutput.contracts["$DAOCASINOICOTEMPSOL:TokenEmission"].abi);
-var teBin = "0x" + dciOutput.contracts["$DAOCASINOICOTEMPSOL:TokenEmission"].bin;
+var dctAbi = JSON.parse(dctOutput.contracts["$DAOCASINOTOKENTEMPSOL:DaoCasinoToken"].abi);
+var dctBin = "0x" + dctOutput.contracts["$DAOCASINOTOKENTEMPSOL:DaoCasinoToken"].bin;
 
-console.log("DATA: dciAbi=" + JSON.stringify(dciAbi));
-console.log("DATA: teAbi=" + JSON.stringify(teAbi));
+console.log("DATA: dctAbi=" + JSON.stringify(dctAbi));
 
 unlockAccounts("$PASSWORD");
 printBalances();
@@ -85,28 +81,24 @@ console.log("RESULT: ");
 
 
 // -----------------------------------------------------------------------------
-var teMessage = "Deploy TokenEmission Contract";
+var dctMessage = "Deploy Token Contract";
 console.log("RESULT: " + teMessage);
-var teContract = web3.eth.contract(teAbi);
-console.log(JSON.stringify(teContract));
-var teTx = null;
-var teAddress = null;
+var dctContract = web3.eth.contract(dctAbi);
+console.log(JSON.stringify(dctContract));
+var dctTx = null;
+var dctAddress = null;
 
-var name = "DAO.Casino";
-var symbol = "BET";
-var decimals = 18;
-var startCount = 0;
-var te = teContract.new(name, symbol, decimals, startCount, {from: contractOwnerAccount, data: teBin, gas: 6000000},
+var dct = dctContract.new({from: contractOwnerAccount, data: dctBin, gas: 6000000},
   function(e, contract) {
     if (!e) {
       if (!contract.address) {
-        teTx = contract.transactionHash;
+        dctTx = contract.transactionHash;
       } else {
-        teAddress = contract.address;
-        addAccount(teAddress, "TokenEmission");
-        addTeContractAddressAndAbi(teAddress, teAbi);
-        addTokenContractAddressAndAbi(teAddress, teAbi);
-        console.log("DATA: teAddress=" + teAddress);
+        dctAddress = contract.address;
+        addAccount(dctAddress, "BET Token Contract");
+        addDctContractAddressAndAbi(dctAddress, dctAbi);
+        addTokenContractAddressAndAbi(dctAddress, dctAbi);
+        console.log("DATA: dctAddress=" + dctAddress);
       }
     }
   }
@@ -115,12 +107,59 @@ var te = teContract.new(name, symbol, decimals, startCount, {from: contractOwner
 while (txpool.status.pending > 0) {
 }
 
-printTxData("teAddress=" + teAddress, teTx);
+printTxData("dctAddress=" + dctAddress, dctTx);
 printBalances();
-failIfGasEqualsGasUsed(teTx, teMessage);
-printTeContractDetails();
+failIfGasEqualsGasUsed(dctTx, dctMessage);
+printDctContractDetails();
 console.log("RESULT: ");
 
+
+// -----------------------------------------------------------------------------
+var preCommitMessage = "Add PreCommitments - 1000 BET Acc3, 10000 BET Acc4";
+console.log("RESULT: " + preCommitMessage);
+var preCommit1Tx = dct.addPrecommitment(preCommitAccount1, "1000000000000000000000", {from: contractOwnerAccount, gas: 400000});
+var preCommit2Tx = dct.addPrecommitment(preCommitAccount2, "10000000000000000000000", {from: contractOwnerAccount, gas: 400000});
+while (txpool.status.pending > 0) {
+}
+printTxData("preCommit1Tx", preCommit1Tx);
+printTxData("preCommit2Tx", preCommit2Tx);
+printBalances();
+failIfGasEqualsGasUsed(preCommit1Tx, preCommitMessage);
+failIfGasEqualsGasUsed(preCommit2Tx, preCommitMessage);
+printDctContractDetails();
+console.log("RESULT: ");
+
+
+// -----------------------------------------------------------------------------
+// Wait for crowdsale start
+// -----------------------------------------------------------------------------
+var startTime = dct.STARTDATE();
+var startTimeDate = new Date(startTime * 1000);
+console.log("RESULT: Waiting until startTime at " + startTime + " " + startTimeDate +
+  " currentDate=" + new Date());
+while ((new Date()).getTime() <= startTimeDate.getTime()) {
+}
+console.log("RESULT: Waited until startTime at " + startTime + " " + startTimeDate +
+  " currentDate=" + new Date());
+
+
+// -----------------------------------------------------------------------------
+var validContribution1Message = "Send Valid Contribution - 7 ETH From Account5, 14 ETH From Account6";
+console.log("RESULT: " + validContribution1Message);
+var sendValidContribution1Tx = eth.sendTransaction({from: account5, to: dctAddress, gas: 400000, value: web3.toWei("7", "ether")});
+var sendValidContribution2Tx = eth.sendTransaction({from: account6, to: dctAddress, gas: 400000, value: web3.toWei("14", "ether")});
+while (txpool.status.pending > 0) {
+}
+printTxData("sendValidContribution1Tx", sendValidContribution1Tx);
+printTxData("sendValidContribution2Tx", sendValidContribution2Tx);
+printBalances();
+failIfGasEqualsGasUsed(sendValidContribution1Tx, validContribution1Message);
+failIfGasEqualsGasUsed(sendValidContribution2Tx, validContribution1Message);
+printDctContractDetails();
+console.log("RESULT: ");
+
+
+exit;
 
 // -----------------------------------------------------------------------------
 var dciMessage = "Deploy DaoCasinoIco Contract";
