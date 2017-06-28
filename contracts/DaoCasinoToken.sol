@@ -186,8 +186,8 @@ contract DaoCasinoToken is ERC20Token {
     uint256 public constant STARTDATE = 1498741200000;
     uint256 public constant ENDDATE = STARTDATE + 28 days;
 
-    // Cap
-    uint256 public constant CAP = 102635 ether;
+    // Cap USD 25mil @ 296.1470 ETH/USD
+    uint256 public constant CAP = 84417 ether;
 
     // Cannot have a constant address here - Solidity bug
     // https://github.com/ethereum/solidity/issues/2441
@@ -228,7 +228,7 @@ contract DaoCasinoToken is ERC20Token {
             return 1500;
         } else if (at < (STARTDATE + 27 days)) {
             return 1400;
-        } else if (at < ENDDATE) {
+        } else if (at <= ENDDATE) {
             return 1300;
         } else {
             return 0;
