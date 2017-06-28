@@ -108,13 +108,18 @@ Potential participants should note that there is no minimum funding goal in this
 
 ## Risks
 
-This crowdfunding contract has a low risk of being attacked, as the 
-The primary risk of crowdfunding contracts is that the high value of ethers held by a newly designed un-battle tested contract is a target for attack.
+This crowdfunding contract has a low risk of being attacked, as funds contributed are directed immediately into a multisig wallet.
 
-While this crowdsale contract will accumulate ethers during the crowdsale. The owner of the contracts is advised to periodically withdraw ETH from the crowdsale contracts to reduce the risk of attacks on the contract.
+The flow of funds from this crowdsale contract should be monitored using a script and visually through EtherScan. Should there be any abnormal 
+gaps in the crowdfunding contracts, potential participants should be informed to stop contributing to this crowdsale contract. Most of the funds
+will be held in the multisig wallet, so any potential losses due to flaws in the crowdsale contract should be minimal.
 
-If there is a logic error in the calculations
+In the case of the crowdfunding contract allocating an incorrect number of tokens for each contribution, the token numbers can be manually
+recalculated and a new token contract can be deployed at a new address.
 
+Following is a sample chart showing the continuous flow of funds into the crowdsale contract, and these funds should be monitored on the multisig wallet as well:
+
+<kbd><img src="images/SampleCrowdsaleContributions-20170629-025846.png" /></kbd>
 
 <br />
 
