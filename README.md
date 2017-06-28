@@ -471,7 +471,7 @@ contract DaoCasinoToken is ERC20Token {
     function buyPriceAt(uint256 at) constant returns (uint256) {
         if (at < STARTDATE) {
             return 0;
-        } else if (at < (STARTDATE + 2 days)) {
+        } else if (at < (STARTDATE + 1 days)) {
             return 2000;
         } else if (at < (STARTDATE + 15 days)) {
             return 1800;
