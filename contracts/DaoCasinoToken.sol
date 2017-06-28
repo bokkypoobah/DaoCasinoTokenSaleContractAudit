@@ -258,7 +258,7 @@ contract DaoCasinoToken is ERC20Token {
         // Add ETH raised to total
         totalEthers = totalEthers.add(msg.value);
         // Cannot exceed cap
-        require(totalEthers < CAP);
+        require(totalEthers <= CAP);
 
         // What is the BET to ETH rate
         uint256 _buyPrice = buyPrice();
@@ -305,6 +305,33 @@ contract DaoCasinoToken is ERC20Token {
         balances[participant] = balances[participant].add(balance);
         _totalSupply = _totalSupply.add(balance);
         Transfer(0x0, participant, balance);
+    }
+
+
+    // ------------------------------------------------------------------------
+    // Transfer the balance from owner's account to another account, with a
+    // check that the crowdsale is finalised
+    // ------------------------------------------------------------------------
+    function transfer(address _to, uint _amount) returns (bool success) {
+        // Cannot transfer before crowdsale ends or cap reached
+        require(now > ENDDATE || totalEthers == CAP);
+        // Standard transfer
+        return super.transfer(_to, _amount);
+    }
+
+
+    // ------------------------------------------------------------------------
+    // Spender of tokens transfer an amount of tokens from the token owner's
+    // balance to another account, with a check that the crowdsale is
+    // finalised
+    // ------------------------------------------------------------------------
+    function transferFrom(address _from, address _to, uint _amount) 
+        returns (bool success)
+    {
+        // Cannot transfer before crowdsale ends or cap reached
+        require(now > ENDDATE || totalEthers == CAP);
+        // Standard transferFrom
+        return super.transferFrom(_from, _to, _amount);
     }
 
 
