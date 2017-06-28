@@ -253,7 +253,7 @@ contract DaoCasinoToken is ERC20Token {
         // No contributions after the end of the crowdsale
         require(now <= ENDDATE);
         // No 0 contributions
-        require(msg.value >= 0);
+        require(msg.value > 0);
 
         // Add ETH raised to total
         totalEthers = totalEthers.add(msg.value);
