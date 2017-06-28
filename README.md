@@ -1,9 +1,10 @@
 # Dao.Casino Presale Contract Audit (Work In Progress)
 
-Bok Consulting Pty Ltd has been retained by [Dao.Casino](https://dao.casino/) to audit the Ethereum contract to be used in Dao.Casino's upcoming crowdsale.
+Bok Consulting Pty Ltd has been retained by [Dao.Casino](https://dao.casino/) to audit the Ethereum contract to be used in Dao.Casino's upcoming crowdsale. 
+The [audit of Dao.Casino's original contracts](README-Original.md) found quite a few issues to do with trustlessness and the convoluted nature of the code.
 
-Bok Consulting Pty Ltd commissioned an independent code review by Darryl Morris which can be found at [DarrylMorris-Audit-DaoCasinoICO.md](DarrylMorris-Audit-DaoCasinoICO.md). 
-When reading Darryl's report, please take into account that he did not know there was no minimum funding level for the crowdsale.
+A [new crowdsale contract](contracts/DaoCasinoToken.sol) was proposed by Bok Consulting Pty Ltd and this contract will be used for Dao.Casino's 
+crowdsale. This report is a self-audit of the new contracts.
 
 From [DAO.Casino Announces Terms of its Token Sale to be held June 29](https://medium.com/@dao.casino/dao-casino-announces-terms-of-its-token-sale-to-be-held-june-29-5125375f4aeb), 
 this crowdsale has the following parameters:
@@ -30,7 +31,7 @@ this crowdsale has the following parameters:
 * [Risks](#risks)
 * [Recommendations](#recommendations)
 * [TODO](#todo)
-* [Source Code Audited](#source-code-audited)
+* [Crowdsale Contract Source Code](#crowdsale-contract-source-code)
 
 <br />
 
@@ -171,67 +172,468 @@ and this is primarily the vesting of the tokens. Or that the blog post be update
 
 <hr />
 
-## Source Code Audited
+## Crowdsale Contract Source Code
 
-A version of the audited source code with my commentary can be found in [DaoCasinoICO.md](DaoCasinoICO.md).
+Following is the source code of the [contracts/DaoCasinoToken.sol](contracts/DaoCasinoToken.sol), with my commentary marked with `// BK`.
 
-This is based on the source code in [contracts/DaoCasinoICO.sol](contracts/DaoCasinoICO.sol) that was tested, 
-and is the same source code as listed in [6.sol](contracts/6.sol) below.
+```javascript
+// BK Ok - Recent version
+pragma solidity ^0.4.11;
 
-On Jun 23 2017 Ilya Tarutov provided links to the first version of the source code:
+// ----------------------------------------------------------------------------
+// Dao.Casino Crowdsale Token Contract (Under Consideration)
+//
+// Enjoy. (c) BokkyPooBah / Bok Consulting Pty Ltd 2017
+// The MIT Licence (Under Consideration).
+// ----------------------------------------------------------------------------
 
-> * DaoCasinoICO [1.sol](contracts/1.sol) [https://gist.github.com/davy42/ee6f5152165a6eb487fb6f11153ac2ff](https://gist.github.com/davy42/ee6f5152165a6eb487fb6f11153ac2ff)
-> * TokenEmission [2.sol](contracts/2.sol) - [https://gist.github.com/davy42/e0416a14a6a2d1927a07d574d310f294](https://gist.github.com/davy42/e0416a14a6a2d1927a07d574d310f294)
-  Note that the TokenEmission code is included in the DaoCasinoICO code.
 
-On Jun 26 2017 11:04 AEST Ilya Tarutov provided links to the updated version of the source code and gave the go ahead to commence on this audit:
+// ----------------------------------------------------------------------------
+// Safe maths, borrowed from OpenZeppelin
+// ----------------------------------------------------------------------------
+library SafeMath {
 
-> 1. ERC20 contract with emission
->   * Github: [3.sol](contracts/3.sol) [https://github.com/airalab/core/blob/ffe24a8b9361fa7635adefb98f1ed8bdd8e2a775/contracts/token/TokenEmission.sol](https://github.com/airalab/core/blob/ffe24a8b9361fa7635adefb98f1ed8bdd8e2a775/contracts/token/TokenEmission.sol)
->   * Compiled: [4.sol](contracts/4.sol) [https://gist.github.com/davy42/e0416a14a6a2d1927a07d574d310f294](https://gist.github.com/davy42/e0416a14a6a2d1927a07d574d310f294) (owner must be changed to crowdfunding contract).
->
-> 2. Crowdfunding contract:
->   * Github: [5.sol](contracts/5.sol) [https://github.com/airalab/dao.casino/blob/master/contracts/DaoCasinoICO.sol](https://github.com/airalab/dao.casino/blob/master/contracts/DaoCasinoICO.sol) 
->   * Compiled version: [6.sol](contracts/6.sol) [https://gist.github.com/noxonsu/dd3ea77e3c077389c8b66e0ee358821a](https://gist.github.com/noxonsu/dd3ea77e3c077389c8b66e0ee358821a)
->
-> 3. From "How to" https://github.com/airalab/dao.casino/issues/13
-> 
->     1. deploy erc20 contract with arguments:
-> 
->         * string _name = "dao.casino"
->         * string _symbol = "bet"
->         * uint8 _decimals = 18
->         * uint _start_count = "{}" //amount of tokens sold on presale
-> 
->     2. deploy DaoCasinoICO.sol
-> 
->         * _fund Destination account address (our multisig)
->         * _bounty Bounty token address (erc20 with emission function)
->         * _reference Reference documentation link
->         * _startBlock Funding start block number
->         * _stopBlock Funding stop block nubmer
->         * _minValue Minimal funded value in wei
->         * _maxValue Maximal funded value in wei
->         * _scale = 1; Bounty scaling factor by funded value
->         * _startRatio = 1; not using
->         * _reductionStep = 1; not using
->         * _reductionValue = 1; not using
-> 
->     3. execute function to ERC20 setOwner("address of crowdfunding contract");
-> 
->     4. execute function to ERC20 setHammer("address of crowdfunding contract");
-> 
->     done. now everybody can send Ether to crowdfunding address. But they not recive BETs before crowndfund ends.
-> 
->     5. after crowdsale ends users can execute getMyBounty()
-> 
->     6. or we can bulk execute getBounty(address _participant) where _participant is one by one all our participants.
+    // ------------------------------------------------------------------------
+    // Add a number to another number, checking for overflows
+    // ------------------------------------------------------------------------
+    // BK Ok - Overflow protected
+    function add(uint a, uint b) internal returns (uint) {
+        uint c = a + b;
+        assert(c >= a && c >= b);
+        return c;
+    }
 
-**NOTE** In 3 above, the "erc20" contract does not refer to the **ERC20** contract in the source code as this contract does not implement the functions to operate correctly. 
-The deployed "erc20" token contract required for the **DaoCasinoICO** contract to work correctly is the **TokenEmission** contract.
+    // ------------------------------------------------------------------------
+    // Subtract a number from another number, checking for underflows
+    // ------------------------------------------------------------------------
+    // BK Ok - Underflow protected
+    function sub(uint a, uint b) internal returns (uint) {
+        assert(b <= a);
+        return a - b;
+    }
+}
+
+
+// ----------------------------------------------------------------------------
+// Owned contract
+// ----------------------------------------------------------------------------
+contract Owned {
+    // BK Next 3 lines Ok
+    address public owner;
+    address public newOwner;
+    event OwnershipTransferred(address indexed _from, address indexed _to);
+
+    // BK Ok - Constructor assigns `owner` variable
+    function Owned() {
+        owner = msg.sender;
+    }
+
+    // BK Ok - Only owner can execute function
+    modifier onlyOwner {
+        // BK Ok - Could be replaced with `require(msg.sender == owner);`
+        if (msg.sender != owner) throw;
+        _;
+    }
+
+    // BK Ok - Propose ownership transfer
+    function transferOwnership(address _newOwner) onlyOwner {
+        newOwner = _newOwner;
+    }
+ 
+    // BK Ok - Accept ownership transfer
+    function acceptOwnership() {
+        if (msg.sender == newOwner) {
+            OwnershipTransferred(owner, newOwner);
+            owner = newOwner;
+        }
+    }
+}
+
+
+// ----------------------------------------------------------------------------
+// ERC20 Token, with the addition of symbol, name and decimals
+// https://github.com/ethereum/EIPs/issues/20
+// ----------------------------------------------------------------------------
+contract ERC20Token is Owned {
+    // BK Ok - For overflow and underflow protection
+    using SafeMath for uint;
+
+    // ------------------------------------------------------------------------
+    // Total Supply
+    // ------------------------------------------------------------------------
+    // BK Ok
+    uint256 _totalSupply = 0;
+
+    // ------------------------------------------------------------------------
+    // Balances for each account
+    // ------------------------------------------------------------------------
+    // BK Ok
+    mapping(address => uint256) balances;
+
+    // ------------------------------------------------------------------------
+    // Owner of account approves the transfer of an amount to another account
+    // ------------------------------------------------------------------------
+    // BK Ok
+    mapping(address => mapping (address => uint256)) allowed;
+
+    // ------------------------------------------------------------------------
+    // Get the total token supply
+    // ------------------------------------------------------------------------
+    // BK Ok
+    function totalSupply() constant returns (uint256 totalSupply) {
+        totalSupply = _totalSupply;
+    }
+
+    // ------------------------------------------------------------------------
+    // Get the account balance of another account with address _owner
+    // ------------------------------------------------------------------------
+    // BK Ok
+    function balanceOf(address _owner) constant returns (uint256 balance) {
+        return balances[_owner];
+    }
+
+    // ------------------------------------------------------------------------
+    // Transfer the balance from owner's account to another account
+    // ------------------------------------------------------------------------
+    // BK NOTE - This function will return true/false instead of throwing an
+    //           error, as the conditions protect against overflows and 
+    //           underflows
+    // BK NOTE - This function does not protect against the short address
+    //           bug, but the short address bug is more the responsibility
+    //           of automated processes checking the data sent to this function
+    function transfer(address _to, uint256 _amount) returns (bool success) {
+        // BK Ok - Account has sufficient balance to transfer
+        if (balances[msg.sender] >= _amount                // User has balance
+            // BK Ok - Non-zero amount
+            && _amount > 0                                 // Non-zero transfer
+            // BK Ok - Overflow protection
+            && balances[_to] + _amount > balances[_to]     // Overflow check
+        ) {
+            // BK Ok
+            balances[msg.sender] = balances[msg.sender].sub(_amount);
+            // BK Ok
+            balances[_to] = balances[_to].add(_amount);
+            // BK Ok - Logging
+            Transfer(msg.sender, _to, _amount);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // ------------------------------------------------------------------------
+    // Allow _spender to withdraw from your account, multiple times, up to the
+    // _value amount. If this function is called again it overwrites the
+    // current allowance with _value.
+    // ------------------------------------------------------------------------
+    // BK NOTE - This simpler method of `approve(...)` together with 
+    //           `transferFrom(...)` can be used in the double spending attack, 
+    //           but the risk is low, and can be mitigated by the user setting 
+    //           the approval limit to 0 before changing the limit 
+    function approve(
+        address _spender,
+        uint256 _amount
+    ) returns (bool success) {
+        // BK Ok
+        allowed[msg.sender][_spender] = _amount;
+        Approval(msg.sender, _spender, _amount);
+        return true;
+    }
+
+    // ------------------------------------------------------------------------
+    // Spender of tokens transfer an amount of tokens from the token owner's
+    // balance to the spender's account. The owner of the tokens must already
+    // have approve(...)-d this transfer
+    // ------------------------------------------------------------------------
+    // BK NOTE - This function will return true/false instead of throwing an
+    //           error, as the conditions protect against overflows and 
+    //           underflows
+    // BK NOTE - This simpler method of `transferFrom(...)` together with 
+    //           `approve(...)` can be used in the double spending attack, 
+    //           but the risk is low, and can be mitigated by the user setting 
+    //           the approval limit to 0 before changing the limit 
+    // BK NOTE - This function does not protect against the short address
+    //           bug, but the short address bug is more the responsibility
+    //           of automated processes checking the data sent to this function
+    function transferFrom(
+        address _from,
+        address _to,
+        uint256 _amount
+    ) returns (bool success) {
+        // BK Ok - Account has sufficient balance to transfer
+        if (balances[_from] >= _amount                  // From a/c has balance
+            // BK Ok - Account is authorised to spend at least this amount
+            && allowed[_from][msg.sender] >= _amount    // Transfer approved
+            // BK Ok - Non-zero amount
+            && _amount > 0                              // Non-zero transfer
+            // BK Ok - Overflow protection
+            && balances[_to] + _amount > balances[_to]  // Overflow check
+        ) {
+            // BK Ok
+            balances[_from] = balances[_from].sub(_amount);
+            // BK Ok
+            allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_amount);
+            // BK Ok
+            balances[_to] = balances[_to].add(_amount);
+            // BK Ok
+            Transfer(_from, _to, _amount);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // ------------------------------------------------------------------------
+    // Returns the amount of tokens approved by the owner that can be
+    // transferred to the spender's account
+    // ------------------------------------------------------------------------
+    // BK Ok
+    function allowance(
+        address _owner, 
+        address _spender
+    ) constant returns (uint256 remaining) {
+        return allowed[_owner][_spender];
+    }
+
+    // BK Ok
+    event Transfer(address indexed _from, address indexed _to, uint256 _value);
+    // BK Ok
+    event Approval(address indexed _owner, address indexed _spender,
+        uint256 _value);
+}
+
+
+contract DaoCasinoToken is ERC20Token {
+
+    // ------------------------------------------------------------------------
+    // Token information
+    // ------------------------------------------------------------------------
+    // BK Next 3 lines Ok. Using uint8 for decimals instead of uint256
+    string public constant symbol = "BET";
+    string public constant name = "Dao.Casino";
+    uint8 public constant decimals = 18;
+
+    // > new Date("2017-06-29T13:00:00").getTime()/1000
+    // 1498741200
+    // Do not use `now` here
+    // BK NOTE - This contract uses the date/time instead of blocks to determine
+    //           the start, end and BET/ETH scale. The use of date/time in 
+    //           these contracts can be used by miners to skew the block time.
+    //           This is not a significant risk in a crowdfunding contract.
+    uint256 public constant STARTDATE = 1498741200;
+    // BK Ok
+    uint256 public constant ENDDATE = STARTDATE + 28 days;
+
+    // Cap USD 25mil @ 296.1470 ETH/USD
+    // BK NOTE - The following constant will need to be updated with the correct
+    //           ETH/USD exchange rate. The aim for Dao.Casino is to raise
+    //           USD 25 million, INCLUDING the precommitments. This cap will
+    //           have to take into account the ETH equivalent amount of the
+    //           precommitment 
+    uint256 public constant CAP = 84417 ether;
+
+    // Cannot have a constant address here - Solidity bug
+    // https://github.com/ethereum/solidity/issues/2441
+    // BK Ok
+    address public multisig = 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976;
+
+    // BK Ok - To compare against the `CAP` variable
+    uint256 public totalEthers;
+
+    // BK Ok - Constructor
+    function DaoCasinoToken() {
+    }
+
+
+    // ------------------------------------------------------------------------
+    // Tokens per ETH
+    // Day  1    : 2,000 BET = 1 Ether
+    // Days 2–14 : 1,800 BET = 1 Ether
+    // Days 15–17: 1,700 BET = 1 Ether
+    // Days 18–20: 1,600 BET = 1 Ether
+    // Days 21–23: 1,500 BET = 1 Ether
+    // Days 24–26: 1,400 BET = 1 Ether
+    // Days 27–28: 1,300 BET = 1 Ether
+    // ------------------------------------------------------------------------
+    // BK Ok - Calculate the BET/ETH at this point in time
+    function buyPrice() constant returns (uint256) {
+        return buyPriceAt(now);
+    }
+
+    // BK Ok - Calculate BET/ETH at any point in time. Can be used in EtherScan
+    //         to determine past, current or future BET/ETH rate 
+    // BK NOTE - Scale is continuous
+    function buyPriceAt(uint256 at) constant returns (uint256) {
+        if (at < STARTDATE) {
+            return 0;
+        } else if (at < (STARTDATE + 2 days)) {
+            return 2000;
+        } else if (at < (STARTDATE + 15 days)) {
+            return 1800;
+        } else if (at < (STARTDATE + 18 days)) {
+            return 1700;
+        } else if (at < (STARTDATE + 21 days)) {
+            return 1600;
+        } else if (at < (STARTDATE + 24 days)) {
+            return 1500;
+        } else if (at < (STARTDATE + 27 days)) {
+            return 1400;
+        } else if (at <= ENDDATE) {
+            return 1300;
+        } else {
+            return 0;
+        }
+    }
+
+
+    // ------------------------------------------------------------------------
+    // Buy tokens from the contract
+    // ------------------------------------------------------------------------
+    // BK Ok - Account can send tokens directly to this contract's address
+    function () payable {
+        proxyPayment(msg.sender);
+    }
+
+
+    // ------------------------------------------------------------------------
+    // Exchanges can buy on behalf of participant
+    // ------------------------------------------------------------------------
+    // BK Ok
+    function proxyPayment(address participant) payable {
+        // No contributions before the start of the crowdsale
+        // BK Ok
+        require(now >= STARTDATE);
+        // No contributions after the end of the crowdsale
+        // BK Ok
+        require(now <= ENDDATE);
+        // No 0 contributions
+        // BK Ok
+        require(msg.value > 0);
+
+        // Add ETH raised to total
+        // BK Ok - Overflow protected
+        totalEthers = totalEthers.add(msg.value);
+        // Cannot exceed cap
+        // BK Ok
+        require(totalEthers <= CAP);
+
+        // What is the BET to ETH rate
+        // BK Ok
+        uint256 _buyPrice = buyPrice();
+
+        // Calculate #BET - this is safe as _buyPrice is known
+        // and msg.value is restricted to valid values
+        // BK Ok
+        uint tokens = msg.value * _buyPrice;
+
+        // Check tokens > 0
+        // BK Ok
+        require(tokens > 0);
+        // Compute tokens for foundation 30%
+        // Number of tokens restricted so maths is safe
+        // BK Ok
+        uint multisigTokens = tokens * 3 / 7;
+
+        // Add to total supply
+        // BK Ok
+        _totalSupply = _totalSupply.add(tokens);
+        // BK Ok
+        _totalSupply = _totalSupply.add(multisigTokens);
+
+        // Add to balances
+        // BK Ok
+        balances[participant] = balances[participant].add(tokens);
+        // BK Ok
+        balances[multisig] = balances[multisig].add(multisigTokens);
+
+        // Log events
+        // BK Next 4 lines Ok
+        TokensBought(participant, msg.value, totalEthers, tokens,
+            multisigTokens, _totalSupply, _buyPrice);
+        Transfer(0x0, participant, tokens);
+        Transfer(0x0, multisig, multisigTokens);
+
+        // Move the funds to a safe wallet
+        // https://github.com/ConsenSys/smart-contract-best-practices#be-aware-of-the-tradeoffs-between-send-transfer-and-callvalue
+        multisig.transfer(msg.value);
+    }
+    // BK Ok
+    event TokensBought(address indexed buyer, uint256 ethers, 
+        uint256 newEtherBalance, uint256 tokens, uint256 multisigTokens, 
+        uint256 newTotalSupply, uint256 buyPrice);
+
+
+    // ------------------------------------------------------------------------
+    // Owner to add precommitment funding token balance before the crowdsale
+    // commences
+    // ------------------------------------------------------------------------
+    // BK NOTE - Owner can only execute this before the crowdsale starts
+    // BK NOTE - Owner must add amount * 3 / 7 for the foundation for each
+    //           precommitment amount
+    // BK NOTE - The CAP must take into account the equivalent ETH raised
+    //           for the precommitment amounts
+    function addPrecommitment(address participant, uint balance) onlyOwner {
+        // BK Ok
+        require(now < STARTDATE);
+        // BK Ok
+        require(balance > 0);
+        // BK Ok
+        balances[participant] = balances[participant].add(balance);
+        // BK Ok
+        _totalSupply = _totalSupply.add(balance);
+        // BK Ok
+        Transfer(0x0, participant, balance);
+    }
+
+
+    // ------------------------------------------------------------------------
+    // Transfer the balance from owner's account to another account, with a
+    // check that the crowdsale is finalised
+    // ------------------------------------------------------------------------
+    // BK Ok
+    function transfer(address _to, uint _amount) returns (bool success) {
+        // Cannot transfer before crowdsale ends or cap reached
+        // BK Ok
+        require(now > ENDDATE || totalEthers == CAP);
+        // Standard transfer
+        // BK Ok
+        return super.transfer(_to, _amount);
+    }
+
+
+    // ------------------------------------------------------------------------
+    // Spender of tokens transfer an amount of tokens from the token owner's
+    // balance to another account, with a check that the crowdsale is
+    // finalised
+    // ------------------------------------------------------------------------
+    // BK Ok
+    function transferFrom(address _from, address _to, uint _amount) 
+        returns (bool success)
+    {
+        // Cannot transfer before crowdsale ends or cap reached
+        // BK Ok
+        require(now > ENDDATE || totalEthers == CAP);
+        // Standard transferFrom
+        // BK Ok
+        return super.transferFrom(_from, _to, _amount);
+    }
+
+
+    // ------------------------------------------------------------------------
+    // Owner can transfer out any accidentally sent ERC20 tokens
+    // ------------------------------------------------------------------------
+    // BK Ok - Only owner
+    function transferAnyERC20Token(address tokenAddress, uint amount)
+      onlyOwner returns (bool success) 
+    {
+        // BK Ok
+        return ERC20Token(tokenAddress).transfer(owner, amount);
+    }
+}
+```
 
 <br />
 
 <br />
 
-Enjoy. (c) Dao.Casino and BokkyPooBah / Bok Consulting Pty Ltd for Dao.Casino Jun 28 2017. The MIT Licence.
+Enjoy. (c) Dao.Casino and BokkyPooBah / Bok Consulting Pty Ltd for Dao.Casino Jun 29 2017. The MIT Licence.
