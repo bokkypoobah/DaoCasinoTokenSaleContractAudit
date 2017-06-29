@@ -1,0 +1,23 @@
+token.address=0xe6ada9beed6e24be4c0259383db61b52bfca85f3
+token.multisig=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976
+token.deploymentBlock=3733
+token.multisigBalanceAtTokenDeploymentBlock=10000100
+token.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+token.newOwner=0x0000000000000000000000000000000000000000
+token.symbol=BET
+token.name=Dao.Casino
+token.decimals=18
+token.totalSupply=296714.285714285714285714
+token.totalEthers=100
+token.CAP=100
+currentTime=1498721989.359 Thu, 29 Jun 2017 07:39:49 UTC / Thu, 29 Jun 2017 07:39:49 GMT
+token.STARTDATE=1498720527 Thu, 29 Jun 2017 07:15:27 UTC / Thu, 29 Jun 2017 07:15:27 GMT
+token.ENDDATE=1498720827 Thu, 29 Jun 2017 07:20:27 UTC / Thu, 29 Jun 2017 07:20:27 GMT
+token.timeToStart=-0.487453 hours
+day=1498547727 Tue, 27 Jun 2017 07:15:27 GMT before=0 after=0
+day=1498634127 Wed, 28 Jun 2017 07:15:27 GMT before=0 after=0
+day=1498720527 Thu, 29 Jun 2017 07:15:27 GMT before=0 after=2000
+day=1498806927 Fri, 30 Jun 2017 07:15:27 GMT before=2000 after=1800
+day=1498893327 Sat, 01 Jul 2017 07:15:27 GMT before=1800 after=1800
+Approval Event 0: owner=0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9 spender=0xa88a05d2b88283ce84c8325760b72a64591279a2 0.03 block=3738
+Approval Event 1: owner=0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9 spender=0xa88a05d2b88283ce84c8325760b72a64591279a2 0.03 block=3746

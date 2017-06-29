@@ -2,7 +2,7 @@ Welcome to the Geth JavaScript console!
 
 instance: Geth/v1.6.5-stable-cf87713d/darwin-amd64/go1.8.3
 coinbase: 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e
-at block: 1 (Thu, 29 Jun 2017 10:07:24 AEST)
+at block: 3729 (Thu, 29 Jun 2017 17:14:10 AEST)
  datadir: /Users/bok/Projects/DaoCasinoTokenSaleContractAudit/testNew/testchain
  modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
 
@@ -25,7 +25,7 @@ undefined
 > 
 RESULT:  # Account                                             EtherBalanceChange                          Token Name
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
-RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       40.000000000000000000           0.000000000000000000 Account #0 - Miner
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        0.000000000000000000           0.000000000000000000 Account #0 - Miner
 RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433        0.000000000000000000           0.000000000000000000 Account #1 - Contract Owner
 RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2 - Multisig
 RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000 Account #3 - Precommit #1
@@ -55,7 +55,7 @@ ReferenceError: 'teMessage' is not defined
 > 
 undefined
 > 
-{"abi":[{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_amount","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"totalEthers","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"totalSupply","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"ENDDATE","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_amount","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"participant","type":"address"},{"name":"balance","type":"uint256"}],"name":"addPrecommitment","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"at","type":"uint256"}],"name":"buyPriceAt","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"multisig","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"acceptOwnership","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"STARTDATE","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"buyPrice","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_amount","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"newOwner","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"tokenAddress","type":"address"},{"name":"amount","type":"uint256"}],"name":"transferAnyERC20Token","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"CAP","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"participant","type":"address"}],"name":"proxyPayment","outputs":[],"payable":true,"type":"function"},{"inputs":[],"payable":false,"type":"constructor"},{"payable":true,"type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"buyer","type":"address"},{"indexed":false,"name":"ethers","type":"uint256"},{"indexed":false,"name":"newEtherBalance","type":"uint256"},{"indexed":false,"name":"tokens","type":"uint256"},{"indexed":false,"name":"multisigTokens","type":"uint256"},{"indexed":false,"name":"newTotalSupply","type":"uint256"},{"indexed":false,"name":"buyPrice","type":"uint256"}],"name":"TokensBought","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"}],"name":"OwnershipTransferred","type":"event"}],"eth":{"_requestManager":{"polls":{},"provider":{},"timeout":null},"accounts":["0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e","0xa11aae29840fbb5c86e6fd4cf809eba183aef433","0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976","0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0","0xa44a08d3f6933c69212114bb66e2df1813651844","0xa55a151eb00fded1634d27d1127b4be4627079ea","0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9","0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec","0xa88a05d2b88283ce84c8325760b72a64591279a2","0xa99a0ae3354c06b1459fd441a32a3f71005d7da0","0xaaaa9de1e6c564446ebca0fd102d8bd92093c756","0xabba43e7594e3b76afb157989e93c6621497fd4b","0xacca534c9f62ab495bd986e002ddf0f054caae4f","0xadda9b762a00ff12711113bfdc36958b73d7f915","0xaeea63b5479b50f79583ec49dacdcf86ddeff392","0xaffa4d3a80add8ce4018540e056dacb649589394","0xbbbb34fa53a801b5f298744490a1596438bbbe50"],"blockNumber":9,"coinbase":"0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e","compile":{},"gasPrice":"18000000000","hashrate":20573,"mining":true,"pendingTransactions":[],"protocolVersion":"0x3f","syncing":false}}
+{"abi":[{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_amount","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"totalEthers","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"totalSupply","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"ENDDATE","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_amount","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"participant","type":"address"},{"name":"balance","type":"uint256"}],"name":"addPrecommitment","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"at","type":"uint256"}],"name":"buyPriceAt","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"multisig","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"acceptOwnership","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"STARTDATE","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"buyPrice","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_amount","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"newOwner","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"tokenAddress","type":"address"},{"name":"amount","type":"uint256"}],"name":"transferAnyERC20Token","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"CAP","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"participant","type":"address"}],"name":"proxyPayment","outputs":[],"payable":true,"type":"function"},{"inputs":[],"payable":false,"type":"constructor"},{"payable":true,"type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"buyer","type":"address"},{"indexed":false,"name":"ethers","type":"uint256"},{"indexed":false,"name":"newEtherBalance","type":"uint256"},{"indexed":false,"name":"tokens","type":"uint256"},{"indexed":false,"name":"multisigTokens","type":"uint256"},{"indexed":false,"name":"newTotalSupply","type":"uint256"},{"indexed":false,"name":"buyPrice","type":"uint256"}],"name":"TokensBought","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"}],"name":"OwnershipTransferred","type":"event"}],"eth":{"_requestManager":{"polls":{},"provider":{},"timeout":null},"accounts":["0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e","0xa11aae29840fbb5c86e6fd4cf809eba183aef433","0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976","0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0","0xa44a08d3f6933c69212114bb66e2df1813651844","0xa55a151eb00fded1634d27d1127b4be4627079ea","0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9","0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec","0xa88a05d2b88283ce84c8325760b72a64591279a2","0xa99a0ae3354c06b1459fd441a32a3f71005d7da0","0xaaaa9de1e6c564446ebca0fd102d8bd92093c756","0xabba43e7594e3b76afb157989e93c6621497fd4b","0xacca534c9f62ab495bd986e002ddf0f054caae4f","0xadda9b762a00ff12711113bfdc36958b73d7f915","0xaeea63b5479b50f79583ec49dacdcf86ddeff392","0xaffa4d3a80add8ce4018540e056dacb649589394","0xbbbb34fa53a801b5f298744490a1596438bbbe50"],"blockNumber":3729,"coinbase":"0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e","compile":{},"gasPrice":"18000000000","hashrate":45948,"mining":true,"pendingTransactions":[],"protocolVersion":"0x3f","syncing":false}}
 undefined
 > 
 undefined
@@ -84,14 +84,14 @@ undefined
 undefined
 > 
 > 
-DATA: dctAddress=0x90d8927407c79c4a28ee879b821c76fc9bcc2688
-RESULT: dctAddress=0x90d8927407c79c4a28ee879b821c76fc9bcc2688 gas=6000000 gasUsed=1192267 costETH=0.021460806 costUSD=8.16347599434 @ ETH/USD=380.39 gasPrice=18000000000 block=11 txId=0x70f822c3db016718196b9f49d6829e815c050e8053dfd77b236a3d48bcc2f1a6
+DATA: dctAddress=0xe6ada9beed6e24be4c0259383db61b52bfca85f3
+RESULT: dctAddress=0xe6ada9beed6e24be4c0259383db61b52bfca85f3 gas=6000000 gasUsed=1192331 costETH=0.021461958 costUSD=8.16391420362 @ ETH/USD=380.39 gasPrice=18000000000 block=3731 txId=0x040a97db704cf1fb42a19aaf4b4b8e9bd2ed27ae42e3640013647e12189df28a
 undefined
 > 
 RESULT:  # Account                                             EtherBalanceChange                          Token Name
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
-RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       50.021460806000000000           0.000000000000000000 Account #0 - Miner
-RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.021460806000000000           0.000000000000000000 Account #1 - Contract Owner
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       10.021461958000000000           0.000000000000000000 Account #0 - Miner
+RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.021461958000000000           0.000000000000000000 Account #1 - Contract Owner
 RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2 - Multisig
 RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000 Account #3 - Precommit #1
 RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000 Account #4 - Precommit #2
@@ -99,7 +99,7 @@ RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.00000000000000000
 RESULT:  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
 RESULT:  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
 RESULT:  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
-RESULT:  9 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000 BET Token Contract
+RESULT:  9 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 BET Token Contract
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
 RESULT:                                                                                     0.000000000000000000 Total Token Balances
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
@@ -109,7 +109,7 @@ undefined
 RESULT: PASS Deploy Token Contract
 1
 > 
-RESULT: dctContractAddress=0x90d8927407c79c4a28ee879b821c76fc9bcc2688
+RESULT: dctContractAddress=0xe6ada9beed6e24be4c0259383db61b52bfca85f3
 RESULT: dct.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
 RESULT: dct.symbol=BET
 RESULT: dct.name=Dao.Casino
@@ -117,8 +117,8 @@ RESULT: dct.decimals=18
 RESULT: dct.totalSupply=0
 RESULT: dct.totalEthers=0
 RESULT: dct.CAP=100
-RESULT: dct.STARTDATE=1498694925 Thu, 29 Jun 2017 00:08:45 UTC / Thu, 29 Jun 2017 00:08:45 GMT
-RESULT: dct.ENDDATE=1498695225 Thu, 29 Jun 2017 00:13:45 UTC / Thu, 29 Jun 2017 00:13:45 GMT
+RESULT: dct.STARTDATE=1498720527 Thu, 29 Jun 2017 07:15:27 UTC / Thu, 29 Jun 2017 07:15:27 GMT
+RESULT: dct.ENDDATE=1498720827 Thu, 29 Jun 2017 07:20:27 UTC / Thu, 29 Jun 2017 07:20:27 GMT
 undefined
 > 
 RESULT: 
@@ -140,16 +140,16 @@ undefined
 ... 
 undefined
 > 
-RESULT: preCommit1Tx gas=400000 gasUsed=66226 costETH=0.001192068 costUSD=0.45345074652 @ ETH/USD=380.39 gasPrice=18000000000 block=13 txId=0xb4ef631e845bd0385c36dac5e88f10d9ecf039de13eb241a3562ec02511f6f84
+RESULT: preCommit1Tx gas=400000 gasUsed=66226 costETH=0.001192068 costUSD=0.45345074652 @ ETH/USD=380.39 gasPrice=18000000000 block=3733 txId=0xa529093c8ead1a194da128e88354be06dbe222fb3273d0cbac7a4cce4532021f
 undefined
 > 
-RESULT: preCommit2Tx gas=400000 gasUsed=51290 costETH=0.00092322 costUSD=0.3511836558 @ ETH/USD=380.39 gasPrice=18000000000 block=13 txId=0xac1c9dd174582be3d867747f5be6094c14292641d42d585262459d7365579573
+RESULT: preCommit2Tx gas=400000 gasUsed=51290 costETH=0.00092322 costUSD=0.3511836558 @ ETH/USD=380.39 gasPrice=18000000000 block=3733 txId=0x65a02b90a87d6c490c371047c856f3d829b626df4f8cec2ba3160647c138ee8e
 undefined
 > 
 RESULT:  # Account                                             EtherBalanceChange                          Token Name
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
-RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       60.023576094000000000           0.000000000000000000 Account #0 - Miner
-RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.023576094000000000           0.000000000000000000 Account #1 - Contract Owner
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       20.023577246000000000           0.000000000000000000 Account #0 - Miner
+RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.023577246000000000           0.000000000000000000 Account #1 - Contract Owner
 RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2 - Multisig
 RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000        1000.000000000000000000 Account #3 - Precommit #1
 RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000       10000.000000000000000000 Account #4 - Precommit #2
@@ -157,7 +157,7 @@ RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.00000000000000000
 RESULT:  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
 RESULT:  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
 RESULT:  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
-RESULT:  9 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000 BET Token Contract
+RESULT:  9 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 BET Token Contract
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
 RESULT:                                                                                 11000.000000000000000000 Total Token Balances
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
@@ -170,7 +170,7 @@ RESULT: PASS Add PreCommitments - 1000 BET Acc3, 10000 BET Acc4
 RESULT: PASS Add PreCommitments - 1000 BET Acc3, 10000 BET Acc4
 1
 > 
-RESULT: dctContractAddress=0x90d8927407c79c4a28ee879b821c76fc9bcc2688
+RESULT: dctContractAddress=0xe6ada9beed6e24be4c0259383db61b52bfca85f3
 RESULT: dct.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
 RESULT: dct.symbol=BET
 RESULT: dct.name=Dao.Casino
@@ -178,10 +178,10 @@ RESULT: dct.decimals=18
 RESULT: dct.totalSupply=11000
 RESULT: dct.totalEthers=0
 RESULT: dct.CAP=100
-RESULT: dct.STARTDATE=1498694925 Thu, 29 Jun 2017 00:08:45 UTC / Thu, 29 Jun 2017 00:08:45 GMT
-RESULT: dct.ENDDATE=1498695225 Thu, 29 Jun 2017 00:13:45 UTC / Thu, 29 Jun 2017 00:13:45 GMT
-RESULT: Transfer 0 #13: _from=0x0000000000000000000000000000000000000000 _to=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 value=1000
-RESULT: Transfer 1 #13: _from=0x0000000000000000000000000000000000000000 _to=0xa44a08d3f6933c69212114bb66e2df1813651844 value=10000
+RESULT: dct.STARTDATE=1498720527 Thu, 29 Jun 2017 07:15:27 UTC / Thu, 29 Jun 2017 07:15:27 GMT
+RESULT: dct.ENDDATE=1498720827 Thu, 29 Jun 2017 07:20:27 UTC / Thu, 29 Jun 2017 07:20:27 GMT
+RESULT: Transfer 0 #3733: _from=0x0000000000000000000000000000000000000000 _to=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 value=1000
+RESULT: Transfer 1 #3733: _from=0x0000000000000000000000000000000000000000 _to=0xa44a08d3f6933c69212114bb66e2df1813651844 value=10000
 undefined
 > 
 RESULT: 
@@ -200,14 +200,14 @@ undefined
 undefined
 > 
 ... 
-RESULT: Waiting until startTime at 1498694925 Thu, 29 Jun 2017 10:08:45 AEST currentDate=Thu, 29 Jun 2017 10:08:07 AEST
+RESULT: Waiting until startTime at 1498720527 Thu, 29 Jun 2017 17:15:27 AEST currentDate=Thu, 29 Jun 2017 17:15:19 AEST
 undefined
 > 
 ... 
 undefined
 > 
 ... 
-RESULT: Waited until startTime at 1498694925 Thu, 29 Jun 2017 10:08:45 AEST currentDate=Thu, 29 Jun 2017 10:08:45 AEST
+RESULT: Waited until startTime at 1498720527 Thu, 29 Jun 2017 17:15:27 AEST currentDate=Thu, 29 Jun 2017 17:15:27 AEST
 undefined
 > 
 > 
@@ -226,16 +226,16 @@ undefined
 ... 
 undefined
 > 
-RESULT: sendValidContribution1Tx gas=400000 gasUsed=106509 costETH=0.001917162 costUSD=0.72926925318 @ ETH/USD=380.39 gasPrice=18000000000 block=30 txId=0x2729f744cd801d50bb2377a29a3ed897728c8b996fc18c7c7b51c042a2fe0052
+RESULT: sendValidContribution1Tx gas=400000 gasUsed=106509 costETH=0.001917162 costUSD=0.72926925318 @ ETH/USD=380.39 gasPrice=18000000000 block=3736 txId=0xadf6be3109bb72704f3a1c6ecdbd38dc734098e8f17bb9a89a0a9ef5262b8313
 undefined
 > 
-RESULT: sendValidContribution2Tx gas=400000 gasUsed=76509 costETH=0.001377162 costUSD=0.52385865318 @ ETH/USD=380.39 gasPrice=18000000000 block=30 txId=0x48c3e7ef244d48a1c9e19eaab42d935f15ba68706eb75ee08345c14325c78015
+RESULT: sendValidContribution2Tx gas=400000 gasUsed=76509 costETH=0.001377162 costUSD=0.52385865318 @ ETH/USD=380.39 gasPrice=18000000000 block=3736 txId=0x2a4085d1bd2b09066fa478d50c4249b132cb674a94af3b8398056f3351ed7941
 undefined
 > 
 RESULT:  # Account                                             EtherBalanceChange                          Token Name
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
-RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e      145.026870418000000000           0.000000000000000000 Account #0 - Miner
-RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.023576094000000000           0.000000000000000000 Account #1 - Contract Owner
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       35.026871570000000000           0.000000000000000000 Account #0 - Miner
+RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.023577246000000000           0.000000000000000000 Account #1 - Contract Owner
 RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976       21.000000000000000000       18000.000000000000000000 Account #2 - Multisig
 RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000        1000.000000000000000000 Account #3 - Precommit #1
 RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000       10000.000000000000000000 Account #4 - Precommit #2
@@ -243,7 +243,7 @@ RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea       -7.00191716200000000
 RESULT:  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9      -14.001377162000000000       28000.000000000000000000 Account #6
 RESULT:  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
 RESULT:  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
-RESULT:  9 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000 BET Token Contract
+RESULT:  9 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 BET Token Contract
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
 RESULT:                                                                                 71000.000000000000000000 Total Token Balances
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
@@ -256,7 +256,7 @@ RESULT: PASS Send Valid Contribution - 7 ETH From Account5, 14 ETH From Account6
 RESULT: PASS Send Valid Contribution - 7 ETH From Account5, 14 ETH From Account6
 1
 > 
-RESULT: dctContractAddress=0x90d8927407c79c4a28ee879b821c76fc9bcc2688
+RESULT: dctContractAddress=0xe6ada9beed6e24be4c0259383db61b52bfca85f3
 RESULT: dct.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
 RESULT: dct.symbol=BET
 RESULT: dct.name=Dao.Casino
@@ -264,14 +264,14 @@ RESULT: dct.decimals=18
 RESULT: dct.totalSupply=71000
 RESULT: dct.totalEthers=21
 RESULT: dct.CAP=100
-RESULT: dct.STARTDATE=1498694925 Thu, 29 Jun 2017 00:08:45 UTC / Thu, 29 Jun 2017 00:08:45 GMT
-RESULT: dct.ENDDATE=1498695225 Thu, 29 Jun 2017 00:13:45 UTC / Thu, 29 Jun 2017 00:13:45 GMT
-RESULT: TokensBought 0 #30 buyer=0xa55a151eb00fded1634d27d1127b4be4627079ea ethers=7 newEtherBalance=7 tokens=14000 multisigTokens=6000 newTotalSupply=31000 tokensPerKEther=undefined
-RESULT: TokensBought 1 #30 buyer=0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9 ethers=14 newEtherBalance=21 tokens=28000 multisigTokens=12000 newTotalSupply=71000 tokensPerKEther=undefined
-RESULT: Transfer 0 #30: _from=0x0000000000000000000000000000000000000000 _to=0xa55a151eb00fded1634d27d1127b4be4627079ea value=14000
-RESULT: Transfer 1 #30: _from=0x0000000000000000000000000000000000000000 _to=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976 value=6000
-RESULT: Transfer 2 #30: _from=0x0000000000000000000000000000000000000000 _to=0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9 value=28000
-RESULT: Transfer 3 #30: _from=0x0000000000000000000000000000000000000000 _to=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976 value=12000
+RESULT: dct.STARTDATE=1498720527 Thu, 29 Jun 2017 07:15:27 UTC / Thu, 29 Jun 2017 07:15:27 GMT
+RESULT: dct.ENDDATE=1498720827 Thu, 29 Jun 2017 07:20:27 UTC / Thu, 29 Jun 2017 07:20:27 GMT
+RESULT: TokensBought 0 #3736 buyer=0xa55a151eb00fded1634d27d1127b4be4627079ea ethers=7 newEtherBalance=7 tokens=14000 multisigTokens=6000 newTotalSupply=31000 tokensPerKEther=undefined
+RESULT: TokensBought 1 #3736 buyer=0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9 ethers=14 newEtherBalance=21 tokens=28000 multisigTokens=12000 newTotalSupply=71000 tokensPerKEther=undefined
+RESULT: Transfer 0 #3736: _from=0x0000000000000000000000000000000000000000 _to=0xa55a151eb00fded1634d27d1127b4be4627079ea value=14000
+RESULT: Transfer 1 #3736: _from=0x0000000000000000000000000000000000000000 _to=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976 value=6000
+RESULT: Transfer 2 #3736: _from=0x0000000000000000000000000000000000000000 _to=0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9 value=28000
+RESULT: Transfer 3 #3736: _from=0x0000000000000000000000000000000000000000 _to=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976 value=12000
 undefined
 > 
 RESULT: 
@@ -298,19 +298,19 @@ undefined
 ... 
 undefined
 > 
-RESULT: cannotTransfer1Tx gas=100000 gasUsed=100000 costETH=0.0018 costUSD=0.684702 @ ETH/USD=380.39 gasPrice=18000000000 block=33 txId=0xca6ca23b63553c8ca4498f6c9c8b4735fab5591dfe78f7119a1aeb2d5e044677
+RESULT: cannotTransfer1Tx gas=100000 gasUsed=100000 costETH=0.0018 costUSD=0.684702 @ ETH/USD=380.39 gasPrice=18000000000 block=3738 txId=0x868e834e4880e709b66b985f2af14e07644503503d83505d3661c9a7c42fbd2c
 undefined
 > 
-RESULT: cannotTransfer2Tx gas=100000 gasUsed=45404 costETH=0.000817272 costUSD=0.31088209608 @ ETH/USD=380.39 gasPrice=18000000000 block=33 txId=0x9fcb4865062a5e565b4866ae124ff643336b6e45894833d0535b71ccfc1b646c
+RESULT: cannotTransfer2Tx gas=100000 gasUsed=45404 costETH=0.000817272 costUSD=0.31088209608 @ ETH/USD=380.39 gasPrice=18000000000 block=3738 txId=0xe8029eeb2a5a07b8d54c4efb70b480bd2d269d848f38b6f77b4098f9c21194c9
 undefined
 > 
-RESULT: cannotTransfer3Tx gas=100000 gasUsed=100000 costETH=0.0018 costUSD=0.684702 @ ETH/USD=380.39 gasPrice=18000000000 block=35 txId=0xe3d42575a7ba6152cc082ea650162a824222a60d1fad5ac08f31fae96c78a48b
+RESULT: cannotTransfer3Tx gas=100000 gasUsed=100000 costETH=0.0018 costUSD=0.684702 @ ETH/USD=380.39 gasPrice=18000000000 block=3740 txId=0x09c99f6a973649a1417f725ee15c1b2bffbfe36217be74761a99ed13fa4f9fd3
 undefined
 > 
 RESULT:  # Account                                             EtherBalanceChange                          Token Name
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
-RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e      170.031287690000000000           0.000000000000000000 Account #0 - Miner
-RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.023576094000000000           0.000000000000000000 Account #1 - Contract Owner
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       55.031288842000000000           0.000000000000000000 Account #0 - Miner
+RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.023577246000000000           0.000000000000000000 Account #1 - Contract Owner
 RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976       21.000000000000000000       18000.000000000000000000 Account #2 - Multisig
 RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000        1000.000000000000000000 Account #3 - Precommit #1
 RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000       10000.000000000000000000 Account #4 - Precommit #2
@@ -318,7 +318,7 @@ RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea       -7.00371716200000000
 RESULT:  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9      -14.002194434000000000       28000.000000000000000000 Account #6
 RESULT:  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
 RESULT:  8 0xa88a05d2b88283ce84c8325760b72a64591279a2       -0.001800000000000000           0.000000000000000000 Account #8
-RESULT:  9 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000 BET Token Contract
+RESULT:  9 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 BET Token Contract
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
 RESULT:                                                                                 71000.000000000000000000 Total Token Balances
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
@@ -334,7 +334,7 @@ RESULT: PASS Cannot Move Tokens Without Finalisation - approve 0.03 BET ac6 -> a
 RESULT: PASS Cannot Move Tokens Without Finalisation - transferFrom 0.03 BET ac6 -> ac8. CHECK no movement
 1
 > 
-RESULT: dctContractAddress=0x90d8927407c79c4a28ee879b821c76fc9bcc2688
+RESULT: dctContractAddress=0xe6ada9beed6e24be4c0259383db61b52bfca85f3
 RESULT: dct.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
 RESULT: dct.symbol=BET
 RESULT: dct.name=Dao.Casino
@@ -342,9 +342,9 @@ RESULT: dct.decimals=18
 RESULT: dct.totalSupply=71000
 RESULT: dct.totalEthers=21
 RESULT: dct.CAP=100
-RESULT: dct.STARTDATE=1498694925 Thu, 29 Jun 2017 00:08:45 UTC / Thu, 29 Jun 2017 00:08:45 GMT
-RESULT: dct.ENDDATE=1498695225 Thu, 29 Jun 2017 00:13:45 UTC / Thu, 29 Jun 2017 00:13:45 GMT
-RESULT: Approval 0 #33 _owner=0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9 _spender=0xa88a05d2b88283ce84c8325760b72a64591279a2 _value=0.03
+RESULT: dct.STARTDATE=1498720527 Thu, 29 Jun 2017 07:15:27 UTC / Thu, 29 Jun 2017 07:15:27 GMT
+RESULT: dct.ENDDATE=1498720827 Thu, 29 Jun 2017 07:20:27 UTC / Thu, 29 Jun 2017 07:20:27 GMT
+RESULT: Approval 0 #3738 _owner=0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9 _spender=0xa88a05d2b88283ce84c8325760b72a64591279a2 _value=0.03
 undefined
 > 
 RESULT: 
@@ -364,13 +364,13 @@ undefined
 ... 
 undefined
 > 
-RESULT: sendValidContribution3Tx gas=400000 gasUsed=61509 costETH=0.001107162 costUSD=0.42115335318 @ ETH/USD=380.39 gasPrice=18000000000 block=38 txId=0x49e488fd69f6985d37419a99eb585e574373267fdaa8e522bc1326bf531b4203
+RESULT: sendValidContribution3Tx gas=400000 gasUsed=61509 costETH=0.001107162 costUSD=0.42115335318 @ ETH/USD=380.39 gasPrice=18000000000 block=3742 txId=0x7fdcaa93a36d5fafc152943c059e185d943b7a0e2172dc4e7a184c018484ca50
 undefined
 > 
 RESULT:  # Account                                             EtherBalanceChange                          Token Name
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
-RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e      185.032394852000000000           0.000000000000000000 Account #0 - Miner
-RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.023576094000000000           0.000000000000000000 Account #1 - Contract Owner
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       65.032396004000000000           0.000000000000000000 Account #0 - Miner
+RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.023577246000000000           0.000000000000000000 Account #1 - Contract Owner
 RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976      100.000000000000000000       85714.285714285714285714 Account #2 - Multisig
 RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000        1000.000000000000000000 Account #3 - Precommit #1
 RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000       10000.000000000000000000 Account #4 - Precommit #2
@@ -378,7 +378,7 @@ RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea      -86.00482432400000000
 RESULT:  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9      -14.002194434000000000       28000.000000000000000000 Account #6
 RESULT:  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
 RESULT:  8 0xa88a05d2b88283ce84c8325760b72a64591279a2       -0.001800000000000000           0.000000000000000000 Account #8
-RESULT:  9 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000 BET Token Contract
+RESULT:  9 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 BET Token Contract
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
 RESULT:                                                                                296714.285714285714285714 Total Token Balances
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
@@ -388,7 +388,7 @@ undefined
 RESULT: PASS Send Valid Contribution - 79 ETH From Account5
 1
 > 
-RESULT: dctContractAddress=0x90d8927407c79c4a28ee879b821c76fc9bcc2688
+RESULT: dctContractAddress=0xe6ada9beed6e24be4c0259383db61b52bfca85f3
 RESULT: dct.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
 RESULT: dct.symbol=BET
 RESULT: dct.name=Dao.Casino
@@ -396,11 +396,11 @@ RESULT: dct.decimals=18
 RESULT: dct.totalSupply=296714.285714285714285714
 RESULT: dct.totalEthers=100
 RESULT: dct.CAP=100
-RESULT: dct.STARTDATE=1498694925 Thu, 29 Jun 2017 00:08:45 UTC / Thu, 29 Jun 2017 00:08:45 GMT
-RESULT: dct.ENDDATE=1498695225 Thu, 29 Jun 2017 00:13:45 UTC / Thu, 29 Jun 2017 00:13:45 GMT
-RESULT: TokensBought 0 #38 buyer=0xa55a151eb00fded1634d27d1127b4be4627079ea ethers=79 newEtherBalance=100 tokens=158000 multisigTokens=67714.285714285714285714 newTotalSupply=296714.285714285714285714 tokensPerKEther=undefined
-RESULT: Transfer 0 #38: _from=0x0000000000000000000000000000000000000000 _to=0xa55a151eb00fded1634d27d1127b4be4627079ea value=158000
-RESULT: Transfer 1 #38: _from=0x0000000000000000000000000000000000000000 _to=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976 value=67714.285714285714285714
+RESULT: dct.STARTDATE=1498720527 Thu, 29 Jun 2017 07:15:27 UTC / Thu, 29 Jun 2017 07:15:27 GMT
+RESULT: dct.ENDDATE=1498720827 Thu, 29 Jun 2017 07:20:27 UTC / Thu, 29 Jun 2017 07:20:27 GMT
+RESULT: TokensBought 0 #3742 buyer=0xa55a151eb00fded1634d27d1127b4be4627079ea ethers=79 newEtherBalance=100 tokens=158000 multisigTokens=67714.285714285714285714 newTotalSupply=296714.285714285714285714 tokensPerKEther=undefined
+RESULT: Transfer 0 #3742: _from=0x0000000000000000000000000000000000000000 _to=0xa55a151eb00fded1634d27d1127b4be4627079ea value=158000
+RESULT: Transfer 1 #3742: _from=0x0000000000000000000000000000000000000000 _to=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976 value=67714.285714285714285714
 undefined
 > 
 RESULT: 
@@ -420,13 +420,13 @@ undefined
 ... 
 undefined
 > 
-RESULT: sendInvalidContribution1Tx gas=400000 gasUsed=400000 costETH=0.0072 costUSD=2.738808 @ ETH/USD=380.39 gasPrice=18000000000 block=40 txId=0xd400ebe1e35e7d96b18bc162e521b5649de0ed8c9b339dd2f885943fb7356235
+RESULT: sendInvalidContribution1Tx gas=400000 gasUsed=400000 costETH=0.0072 costUSD=2.738808 @ ETH/USD=380.39 gasPrice=18000000000 block=3744 txId=0x94473a2c628c2cfb28c58ce4fc5c125392276e51ca6c44c37650178d19265f96
 undefined
 > 
 RESULT:  # Account                                             EtherBalanceChange                          Token Name
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
-RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e      195.039594852000000000           0.000000000000000000 Account #0 - Miner
-RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.023576094000000000           0.000000000000000000 Account #1 - Contract Owner
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       75.039596004000000000           0.000000000000000000 Account #0 - Miner
+RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.023577246000000000           0.000000000000000000 Account #1 - Contract Owner
 RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976      100.000000000000000000       85714.285714285714285714 Account #2 - Multisig
 RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000        1000.000000000000000000 Account #3 - Precommit #1
 RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000       10000.000000000000000000 Account #4 - Precommit #2
@@ -434,7 +434,7 @@ RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea      -86.00482432400000000
 RESULT:  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9      -14.002194434000000000       28000.000000000000000000 Account #6
 RESULT:  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec       -0.007200000000000000           0.000000000000000000 Account #7
 RESULT:  8 0xa88a05d2b88283ce84c8325760b72a64591279a2       -0.001800000000000000           0.000000000000000000 Account #8
-RESULT:  9 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000 BET Token Contract
+RESULT:  9 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 BET Token Contract
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
 RESULT:                                                                                296714.285714285714285714 Total Token Balances
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
@@ -444,7 +444,7 @@ undefined
 RESULT: PASS Send Invalid Contribution - 1 ETH From Account7 - Cap Reached
 1
 > 
-RESULT: dctContractAddress=0x90d8927407c79c4a28ee879b821c76fc9bcc2688
+RESULT: dctContractAddress=0xe6ada9beed6e24be4c0259383db61b52bfca85f3
 RESULT: dct.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
 RESULT: dct.symbol=BET
 RESULT: dct.name=Dao.Casino
@@ -452,8 +452,8 @@ RESULT: dct.decimals=18
 RESULT: dct.totalSupply=296714.285714285714285714
 RESULT: dct.totalEthers=100
 RESULT: dct.CAP=100
-RESULT: dct.STARTDATE=1498694925 Thu, 29 Jun 2017 00:08:45 UTC / Thu, 29 Jun 2017 00:08:45 GMT
-RESULT: dct.ENDDATE=1498695225 Thu, 29 Jun 2017 00:13:45 UTC / Thu, 29 Jun 2017 00:13:45 GMT
+RESULT: dct.STARTDATE=1498720527 Thu, 29 Jun 2017 07:15:27 UTC / Thu, 29 Jun 2017 07:15:27 GMT
+RESULT: dct.ENDDATE=1498720827 Thu, 29 Jun 2017 07:20:27 UTC / Thu, 29 Jun 2017 07:20:27 GMT
 undefined
 > 
 RESULT: 
@@ -480,19 +480,19 @@ undefined
 ... 
 undefined
 > 
-RESULT: canTransfer1Tx gas=100000 gasUsed=51815 costETH=0.00093267 costUSD=0.3547783413 @ ETH/USD=380.39 gasPrice=18000000000 block=42 txId=0x678fc011bdad84d9e5e8ea6c13b0d85b05d2e1f42e91b31c481bb2b9d32da60a
+RESULT: canTransfer1Tx gas=100000 gasUsed=51815 costETH=0.00093267 costUSD=0.3547783413 @ ETH/USD=380.39 gasPrice=18000000000 block=3746 txId=0x5f6ea20d3942d36d24f84d32ba9ab9eb33393538930f7a7b2e12bc821429cb50
 undefined
 > 
-RESULT: canTransfer2Tx gas=100000 gasUsed=30404 costETH=0.000547272 costUSD=0.20817679608 @ ETH/USD=380.39 gasPrice=18000000000 block=42 txId=0x04970f12691aa33f72d89afd5adaabe5494c2585a12fd70e485490bc3fddec31
+RESULT: canTransfer2Tx gas=100000 gasUsed=30404 costETH=0.000547272 costUSD=0.20817679608 @ ETH/USD=380.39 gasPrice=18000000000 block=3746 txId=0xa2bff2efb5fec67e0bee7496e49721a3067882ae5281ef1601e1b362595766b3
 undefined
 > 
-RESULT: canTransfer3Tx gas=100000 gasUsed=43818 costETH=0.000788724 costUSD=0.30002272236 @ ETH/USD=380.39 gasPrice=18000000000 block=44 txId=0x0c8c790b9624912772bae2f9f30c4cebe0e5e99977875a1a55d2ad258c9ee2ac
+RESULT: canTransfer3Tx gas=100000 gasUsed=43818 costETH=0.000788724 costUSD=0.30002272236 @ ETH/USD=380.39 gasPrice=18000000000 block=3748 txId=0x0ff860274dbcfd8a529ab8e07ce70f76bc93a027cc6e83e4c6e75eebce259448
 undefined
 > 
 RESULT:  # Account                                             EtherBalanceChange                          Token Name
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
-RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e      215.041863518000000000           0.000000000000000000 Account #0 - Miner
-RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.023576094000000000           0.000000000000000000 Account #1 - Contract Owner
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       95.041864670000000000           0.000000000000000000 Account #0 - Miner
+RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.023577246000000000           0.000000000000000000 Account #1 - Contract Owner
 RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976      100.000000000000000000       85714.285714285714285714 Account #2 - Multisig
 RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000        1000.000000000000000000 Account #3 - Precommit #1
 RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000       10000.000000000000000000 Account #4 - Precommit #2
@@ -500,7 +500,7 @@ RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea      -86.00575699400000000
 RESULT:  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9      -14.002741706000000000       27999.970000000000000000 Account #6
 RESULT:  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec       -0.007200000000000000           0.000001000000000000 Account #7
 RESULT:  8 0xa88a05d2b88283ce84c8325760b72a64591279a2       -0.002588724000000000           0.030000000000000000 Account #8
-RESULT:  9 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000 BET Token Contract
+RESULT:  9 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 BET Token Contract
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
 RESULT:                                                                                296714.285714285714285714 Total Token Balances
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
@@ -516,7 +516,7 @@ RESULT: PASS Can Move Tokens After Cap Reached - approve 0.03 BET ac6 -> ac8
 RESULT: PASS Can Move Tokens After Cap Reached - transferFrom 0.03 BET ac6 -> ac8. CHECK for movement
 1
 > 
-RESULT: dctContractAddress=0x90d8927407c79c4a28ee879b821c76fc9bcc2688
+RESULT: dctContractAddress=0xe6ada9beed6e24be4c0259383db61b52bfca85f3
 RESULT: dct.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
 RESULT: dct.symbol=BET
 RESULT: dct.name=Dao.Casino
@@ -524,11 +524,11 @@ RESULT: dct.decimals=18
 RESULT: dct.totalSupply=296714.285714285714285714
 RESULT: dct.totalEthers=100
 RESULT: dct.CAP=100
-RESULT: dct.STARTDATE=1498694925 Thu, 29 Jun 2017 00:08:45 UTC / Thu, 29 Jun 2017 00:08:45 GMT
-RESULT: dct.ENDDATE=1498695225 Thu, 29 Jun 2017 00:13:45 UTC / Thu, 29 Jun 2017 00:13:45 GMT
-RESULT: Approval 0 #42 _owner=0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9 _spender=0xa88a05d2b88283ce84c8325760b72a64591279a2 _value=0.03
-RESULT: Transfer 0 #42: _from=0xa55a151eb00fded1634d27d1127b4be4627079ea _to=0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec value=0.000001
-RESULT: Transfer 1 #44: _from=0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9 _to=0xa88a05d2b88283ce84c8325760b72a64591279a2 value=0.03
+RESULT: dct.STARTDATE=1498720527 Thu, 29 Jun 2017 07:15:27 UTC / Thu, 29 Jun 2017 07:15:27 GMT
+RESULT: dct.ENDDATE=1498720827 Thu, 29 Jun 2017 07:20:27 UTC / Thu, 29 Jun 2017 07:20:27 GMT
+RESULT: Approval 0 #3746 _owner=0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9 _spender=0xa88a05d2b88283ce84c8325760b72a64591279a2 _value=0.03
+RESULT: Transfer 0 #3746: _from=0xa55a151eb00fded1634d27d1127b4be4627079ea _to=0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec value=0.000001
+RESULT: Transfer 1 #3748: _from=0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9 _to=0xa88a05d2b88283ce84c8325760b72a64591279a2 value=0.03
 undefined
 > 
 RESULT: 

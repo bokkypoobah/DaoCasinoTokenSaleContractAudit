@@ -79,6 +79,7 @@ Dao.Casino's crowdsale has the following parameters:
 * [Risks](#risks)
 * [Recommendations](#recommendations)
 * [Crowdsale Contract Overview](#crowdsale-contract-overview)
+* [Crowdsale Statistics Script](#crowdsale-statistics-script)
 * [Crowdsale Contract Source Code](#crowdsale-contract-source-code)
 * [References](#references)
 
@@ -227,6 +228,25 @@ and test the vesting contract, this functionality is not available for this crow
 * [x] The `transfer(...)` call is the last statements in the control flow of `proxyPayment(...)` to prevent the hijacking of the control flow
 * NOTE that this contract does not implement the check for the number of bytes sent to functions to reject errors from the "short address attack"
 * NOTE that this contract does not implement the modified `approve(...)` and `approveAnCall(...)` functions to mitigate the risk of double spending in the `approve(...)` and `transferFrom(...)` calls
+
+<br />
+
+<hr />
+
+## Crowdsale Statistics Script
+
+The script [scripts/getDaoCasinoTokenDetails.sh](scripts/getDaoCasinoTokenDetails.sh) will generate reports on the transactions and status of this crowdsale report.
+
+The main report that should be viewed is (sample) [scripts/TokensBought_20170629_173948.tsv](scripts/TokensBought_20170629_173948.tsv). A sample of this file loaded in Excel is shown below:
+
+<kbd><img src="images/TokensBoughtSample-20170629-174122.png" /></kbd>
+
+Note last two columns:
+
+* **EtherBalance** lists the accumulation of ethers from each transaction.
+* **MultisigEtherBalance** lists the ether balance of the multisig at the block the transaction is mined in MINUS the ether balance when the DaoCasinoToken contract was deployed.
+
+Both columns should be equals for the last transaction in each block.
 
 <br />
 

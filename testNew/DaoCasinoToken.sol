@@ -183,7 +183,7 @@ contract DaoCasinoToken is ERC20Token {
     // > new Date("2017-06-29T13:00:00").getTime()/1000
     // 1498741200
     // Do not use `now` here
-    uint256 public constant STARTDATE = 1498694925; // Thu 29 Jun 2017 00:08:45 UTC
+    uint256 public constant STARTDATE = 1498720527; // Thu 29 Jun 2017 07:15:27 UTC
     uint256 public constant ENDDATE = STARTDATE + 5 minutes;
 
     // Cap USD 25mil @ 296.1470 ETH/USD
