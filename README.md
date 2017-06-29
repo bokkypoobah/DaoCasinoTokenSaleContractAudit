@@ -21,6 +21,42 @@ The period is calculated as `(new Date(1501074000*1000).getTime()-new Date(14987
 
 At Thu, 29 Jun 2017 00:30:00 UTC, the ETH/USD rate was ~ 328.2950 . `web3.fromWei("83333330000000000000000", "ether")*328.2950` -> `27,357,915.572350003`
 
+Following is a query of the `buyPriceAt(...)` function to determine the BET/ETH rate 1 second before and 1 second after the crowdsale start to the end +/- 2 days:
+
+    day=1498568400 Tue, 27 Jun 2017 13:00:00 GMT before=0 after=0
+    day=1498654800 Wed, 28 Jun 2017 13:00:00 GMT before=0 after=0
+    day=1498741200 Thu, 29 Jun 2017 13:00:00 GMT before=0 after=2000
+    day=1498827600 Fri, 30 Jun 2017 13:00:00 GMT before=2000 after=1800
+    day=1498914000 Sat, 01 Jul 2017 13:00:00 GMT before=1800 after=1800
+    day=1499000400 Sun, 02 Jul 2017 13:00:00 GMT before=1800 after=1800
+    day=1499086800 Mon, 03 Jul 2017 13:00:00 GMT before=1800 after=1800
+    day=1499173200 Tue, 04 Jul 2017 13:00:00 GMT before=1800 after=1800
+    day=1499259600 Wed, 05 Jul 2017 13:00:00 GMT before=1800 after=1800
+    day=1499346000 Thu, 06 Jul 2017 13:00:00 GMT before=1800 after=1800
+    day=1499432400 Fri, 07 Jul 2017 13:00:00 GMT before=1800 after=1800
+    day=1499518800 Sat, 08 Jul 2017 13:00:00 GMT before=1800 after=1800
+    day=1499605200 Sun, 09 Jul 2017 13:00:00 GMT before=1800 after=1800
+    day=1499691600 Mon, 10 Jul 2017 13:00:00 GMT before=1800 after=1800
+    day=1499778000 Tue, 11 Jul 2017 13:00:00 GMT before=1800 after=1800
+    day=1499864400 Wed, 12 Jul 2017 13:00:00 GMT before=1800 after=1800
+    day=1499950800 Thu, 13 Jul 2017 13:00:00 GMT before=1800 after=1800
+    day=1500037200 Fri, 14 Jul 2017 13:00:00 GMT before=1800 after=1700
+    day=1500123600 Sat, 15 Jul 2017 13:00:00 GMT before=1700 after=1700
+    day=1500210000 Sun, 16 Jul 2017 13:00:00 GMT before=1700 after=1700
+    day=1500296400 Mon, 17 Jul 2017 13:00:00 GMT before=1700 after=1600
+    day=1500382800 Tue, 18 Jul 2017 13:00:00 GMT before=1600 after=1600
+    day=1500469200 Wed, 19 Jul 2017 13:00:00 GMT before=1600 after=1600
+    day=1500555600 Thu, 20 Jul 2017 13:00:00 GMT before=1600 after=1500
+    day=1500642000 Fri, 21 Jul 2017 13:00:00 GMT before=1500 after=1500
+    day=1500728400 Sat, 22 Jul 2017 13:00:00 GMT before=1500 after=1500
+    day=1500814800 Sun, 23 Jul 2017 13:00:00 GMT before=1500 after=1400
+    day=1500901200 Mon, 24 Jul 2017 13:00:00 GMT before=1400 after=1400
+    day=1500987600 Tue, 25 Jul 2017 13:00:00 GMT before=1400 after=1400
+    day=1501074000 Wed, 26 Jul 2017 13:00:00 GMT before=1400 after=0
+    day=1501160400 Thu, 27 Jul 2017 13:00:00 GMT before=0 after=0
+    day=1501246800 Fri, 28 Jul 2017 13:00:00 GMT before=0 after=0
+
+
 <br />
 
 ## Published Crowdsale Parameters
