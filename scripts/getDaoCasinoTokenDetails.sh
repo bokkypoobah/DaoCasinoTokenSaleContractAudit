@@ -18,10 +18,11 @@ MAINFILE=Main_$DATE.txt
 TOKENSBOUGHTFILE=TokensBought_$DATE.tsv
 TRANSFERFILE=Transfers_$DATE.tsv
 
-geth --verbosity 3 attach $GETHATTACHPOINT << EOF | tee $TEMPFILE
+# geth --verbosity 3 attach $GETHATTACHPOINT << EOF | tee $TEMPFILE
+geth --verbosity 3 attach $GETHATTACHPOINT << EOF > $TEMPFILE
 
-var tokenAddress="0x2b09b52d42dfb4e0cba43f607dd272ea3fe1fb9f";
-var tokenDeploymentBlock=3945138;
+var tokenAddress="0x725803315519de78D232265A8f1040f054e70B98";
+var tokenDeploymentBlock=3947697;
 // DEV var tokenAddress="0xe6ada9beed6e24be4c0259383db61b52bfca85f3";
 // DEV var tokenDeploymentBlock=3733;
 
@@ -79,16 +80,18 @@ i = 0;
 var lastBlockNumber = 0;
 var lastMultisigBalance = 0;
 var lastTimestamp = 0;
-console.log("TOKENSBOUGHT: No\tBuyer\tEthers\tTokens\tMultisigTokens\tTokenBalance\tTokensPerKEther\tTxIndex\tTxHash\tBlock\tTimestamp\tEtherBalance\tMultisigEtherBalance");
+console.log("TOKENSBOUGHT: No\tBuyer\tEthers\tTokens\tMultisigTokens\tTokenBalance\tTokensPerKEther\tTxIndex\tTxHash\tTimestamp\tBlock\tEtherBalance\tMultisigEtherBalance-"
+  + web3.fromWei(multisigBalanceAtTokenDeploymentBlock, "ether") + " ETH");
 tokensBoughtEvents.watch(function (error, result) {
   if (result.blockNumber != lastBlockNumber) {
     lastTimestamp = eth.getBlock(result.blockNumber).timestamp;
     lastMultisigBalance = eth.getBalance(multisig, result.blockNumber).sub(multisigBalanceAtTokenDeploymentBlock);
+    // lastMultisigBalance = eth.getBalance(multisig, result.blockNumber);
     lastBlockNumber = eth.blockNumber;
   }
   console.log("TOKENSBOUGHT: " + i++ + "\t" + result.args.buyer + "\t" + web3.fromWei(result.args.ethers, "ether") + 
-    "\t" + result.args.tokens.shift(-decimals) + "\t" + result.args.multisigTokens.shift(-decimals) + "\t" + result.args.newTotalSupply.shift(-decimals) + 
-    "\t" + result.args.buyPrice + "\t" + result.transactionIndex + "\t" + result.transactionHash + "\t" + result.blockNumber + "\t" + lastTimestamp + 
+    "\t" + result.args.tokens.shift(-decimals) + "\t" + result.args.multisigTokens.shift(-decimals) + "\t" + result.args.newTotalSupply.shift(-decimals) +
+    "\t" + result.args.buyPrice + "\t" + result.transactionIndex + "\t" + result.transactionHash + "\t" + lastTimestamp + "\t" + result.blockNumber +
     "\t" + web3.fromWei(result.args.newEtherBalance, "ether") + "\t" + web3.fromWei(lastMultisigBalance, "ether"));
 });
 tokensBoughtEvents.stopWatching();
