@@ -1,10 +1,10 @@
 pragma solidity ^0.4.11;
 
 // ----------------------------------------------------------------------------
-// Dao.Casino Crowdsale Token Contract (Under Consideration)
+// Dao.Casino Crowdsale Token Contract
 //
-// Enjoy. (c) BokkyPooBah / Bok Consulting Pty Ltd 2017
-// The MIT Licence (Under Consideration).
+// Enjoy. (c) BokkyPooBah / Bok Consulting Pty Ltd for Dao.Casino 2017
+// The MIT Licence.
 // ----------------------------------------------------------------------------
 
 
@@ -183,7 +183,7 @@ contract DaoCasinoToken is ERC20Token {
     // > new Date("2017-06-29T13:00:00").getTime()/1000
     // 1498741200
     // Do not use `now` here
-    uint256 public constant STARTDATE = 1498659124; // Wed 28 Jun 2017 14:12:04 UTC
+    uint256 public constant STARTDATE = 1498694925; // Thu 29 Jun 2017 00:08:45 UTC
     uint256 public constant ENDDATE = STARTDATE + 5 minutes;
 
     // Cap USD 25mil @ 296.1470 ETH/USD
@@ -216,7 +216,7 @@ contract DaoCasinoToken is ERC20Token {
     function buyPriceAt(uint256 at) constant returns (uint256) {
         if (at < STARTDATE) {
             return 0;
-        } else if (at < (STARTDATE + 2 days)) {
+        } else if (at < (STARTDATE + 1 days)) {
             return 2000;
         } else if (at < (STARTDATE + 15 days)) {
             return 1800;
