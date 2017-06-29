@@ -5,7 +5,7 @@ Dao.Casino's upcoming crowdsale.
 
 This report is a self-audit of the DaoCasinoToken contract.
 
-Darryl Morris also provides an independent [audit](DarrylMorris-Audit2-DaoCasinoICO.md) of the DaoCasinoToken contract.
+Darryl Morris also provided an independent [audit](DarrylMorris-Audit2-DaoCasinoICO.md) of the DaoCasinoToken contract.
 
 <br />
 
@@ -29,19 +29,19 @@ Darryl Morris also provides an independent [audit](DarrylMorris-Audit2-DaoCasino
 
 ## Crowdsale Contract On Mainnet
 
-A slightly modified version of this crowdsale contract has been deployed to [0x2b09b52d42dfb4e0cba43f607dd272ea3fe1fb9f](https://etherscan.io/address/0x2b09b52d42dfb4e0cba43f607dd272ea3fe1fb9f#internaltx),
+A slightly modified version of this crowdsale contract has been deployed to [0x725803315519de78D232265A8f1040f054e70B98](https://etherscan.io/address/0x725803315519de78D232265A8f1040f054e70B98#internaltx),
 with the main source code differences being in the move of `STARTDATE`, `ENDDATE`, `CAP` and `multisig` from predefined constants into parameters configured in the deployment constructor.
 
-From [EtherScan.io](https://etherscan.io/address/0x2b09b52d42dfb4e0cba43f607dd272ea3fe1fb9f#internaltx), the contract has the following parameters:
+From [EtherScan.io](https://etherscan.io/address/0x725803315519de78D232265A8f1040f054e70B98#internaltx), the contract has the following parameters:
 
 * STARTDATE: `1498741200` `new Date(1498741200*1000).toUTCString()` -> `Thu, 29 Jun 2017 13:00:00 UTC`
 * ENDDATE: `1501074000` `new Date(1501074000*1000).toUTCString()` -> `Wed, 26 Jul 2017 13:00:00 UTC`
-* CAP: `83333330000000000000000` `web3.fromWei("83333330000000000000000", "ether")` -> `83333.33`
-* multisig: [0x4938c291ab7e5e51198dfc210824da5d1bd759bf](https://etherscan.io/address/0x4938c291ab7e5e51198dfc210824da5d1bd759bf)
+* CAP: `64542.031`
+* multisig: [0x01dbb419d66be0d389fab88064493f1d698dc27a](https://etherscan.io/address/0x01dbb419d66be0d389fab88064493f1d698dc27a)
 
 The crowdsale period is calculated as `(new Date(1501074000*1000).getTime()-new Date(1498741200*1000).getTime())/1000/60/60/24` -> `27` days. This differs from the 28 days stated in the blog.
 
-At Thu, 29 Jun 2017 00:30:00 UTC, the ETH/USD rate was ~ 328.2950 . `web3.fromWei("83333330000000000000000", "ether")*328.2950` -> `27,357,915.572350003`.
+At Thu, 29 Jun 2017 13:00:00 UTC, the ETH/USD rate was ~ 309.0700 . `64542.031*309.0700` -> `19,948,005.52117`.
 
 Following is a query of the `buyPriceAt(...)` function to determine the BET/ETH rate 1 second before and 1 second after daily points within the crowdsale period +/- 2 days:
 
