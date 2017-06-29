@@ -225,7 +225,7 @@ and test the vesting contract, this functionality is not available for this crow
 * [x] The test scripts can be found in [testNew/01_test1.sh](testNew/01_test1.sh)
 * [x] The test results can be found in [testNew/test1results.txt](testNew/test1results.txt) for the results and [testNew/test1output.txt](testNew/test1output.txt) for the full output
 * [x] There is no switch to pause and then restart the contract being able to receive contributions
-* [x] The `transfer(...)` call is the last statements in the control flow of `proxyPayment(...)` to prevent the hijacking of the control flow
+* [x] The [`transfer(...)`](https://github.com/ConsenSys/smart-contract-best-practices#be-aware-of-the-tradeoffs-between-send-transfer-and-callvalue) call is the last statements in the control flow of `proxyPayment(...)` to prevent the hijacking of the control flow
 * NOTE that this contract does not implement the check for the number of bytes sent to functions to reject errors from the [short address attack](http://vessenes.com/the-erc20-short-address-attack-explained/)
 * NOTE that this contract does not implement the modified `approve(...)` and `approveAnCall(...)` functions to mitigate the risk of [double spending](https://docs.google.com/document/d/1YLPtQxZu1UAvO9cZ1O2RPXBbT0mooh4DYKjA_jp-RLM/edit#) in the `approve(...)` and `transferFrom(...)` calls
 
