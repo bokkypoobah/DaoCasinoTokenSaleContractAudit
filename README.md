@@ -1,10 +1,12 @@
 # Dao.Casino Crowdsale Contract Audit (First Draft Version)
 
-Bok Consulting Pty Ltd has been retained by [Dao.Casino](https://dao.casino/) to audit the Ethereum contracts for use in Dao.Casino's upcoming crowdsale. 
+Bok Consulting Pty Ltd has been retained by [Dao.Casino](https://dao.casino/) to audit the Ethereum contracts for use in Dao.Casino's upcoming crowdsale.
 The [audit of Dao.Casino's original contracts](README-Original.md) found a few issues described in more detail in the [Summary](#summary) section below.
 
-A [new crowdsale contract](contracts/DaoCasinoToken.sol) was proposed by Bok Consulting Pty Ltd and this contract will be used for Dao.Casino's 
-crowdsale. This report is a self-audit of the new contracts. Darryl Morris has provided an independent [audit of of this crowdsale contract](DarrylMorris-Audit2-DaoCasinoICO.md) as well.
+A [new crowdsale contract](contracts/DaoCasinoToken.sol) was proposed by Bok Consulting Pty Ltd and this contract will be used for Dao.Casino's
+crowdsale. This report is a self-audit of the new contracts.
+
+Darryl Morris has also provided an independent [audit of of this crowdsale contract](DarrylMorris-Audit2-DaoCasinoICO.md) as well.
 
 <br />
 
