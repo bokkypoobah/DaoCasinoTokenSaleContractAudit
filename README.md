@@ -1,14 +1,31 @@
 # Dao.Casino Crowdsale Contract Audit
 
-Bok Consulting Pty Ltd has been retained by [Dao.Casino](https://dao.casino/) to audit the Ethereum contracts for use in Dao.Casino's upcoming crowdsale.
-The [audit of Dao.Casino's original contracts](README-Original.md) found a few issues described in more detail in the [Summary](#summary) section below.
+[Dao.Casino](https://dao.casino/) has retained Bok Consulting Pty Ltd to build the [DaoCasinoToken.sol](contracts/DaoCasinoToken.sol) Ethereum smart contract for use in 
+Dao.Casino's upcoming crowdsale.
 
-A [new crowdsale contract](contracts/DaoCasinoToken.sol) was proposed by Bok Consulting Pty Ltd and this contract will be used for Dao.Casino's
-crowdsale. This report is a self-audit of the new contracts.
+This report is a self-audit of the DaoCasinoToken contract.
 
-Darryl Morris has also provided an independent [audit of of this crowdsale contract](DarrylMorris-Audit2-DaoCasinoICO.md) as well.
+Darryl Morris also provides an independent [audit](DarrylMorris-Audit2-DaoCasinoICO.md) of the DaoCasinoToken contract.
 
 <br />
+
+## Table Of Contents
+
+* [Crowdsale Contract On Mainnet](#crowdsale-contract-on-mainnet)
+* [Crowdsale Parameters](#crowdsale-parameters)
+* [Scope](#scope)
+* [Limitations](#limitations)
+* [Due Diligence](#due-diligence)
+* [Risks](#risks)
+* [Recommendations](#recommendations)
+* [Crowdsale Contract Overview](#crowdsale-contract-overview)
+* [Crowdsale Statistics Script](#crowdsale-statistics-script)
+* [Crowdsale Contract Source Code](#crowdsale-contract-source-code)
+* [References](#references)
+
+<br />
+
+<hr />
 
 ## Crowdsale Contract On Mainnet
 
@@ -65,68 +82,12 @@ Again, not that the crowdsale period in the deployed contract is 27 days.
 
 <br />
 
-## Published Crowdsale Parameters
+## Crowdsale Parameters
 
 From [DAO.Casino Announces Terms of its Token Sale to be held June 29](https://medium.com/@dao.casino/dao-casino-announces-terms-of-its-token-sale-to-be-held-june-29-5125375f4aeb), 
 Dao.Casino's crowdsale has the following parameters:
 
 <kbd><img src="images/Dao.CasinoCrowdsaleParameters-20170628-022847.png" /></kbd>
-
-<br />
-
-<hr />
-
-## Table Of Contents
-
-* [Summary](#summary)
-* [Scope](#scope)
-* [Limitations](#limitations)
-* [Due Diligence](#due-diligence)
-* [Risks](#risks)
-* [Recommendations](#recommendations)
-* [Crowdsale Contract Overview](#crowdsale-contract-overview)
-* [Crowdsale Statistics Script](#crowdsale-statistics-script)
-* [Crowdsale Contract Source Code](#crowdsale-contract-source-code)
-* [References](#references)
-
-<br />
-
-<hr />
-
-## Summary
-
-Dao.Casino originally requested for an audit of [**DaoCasinoICO**](contracts/DaoCasinoICO.sol) for it's crowdsale. The source code also includes the **TokenEmission** contract.
-
-An audit of these contract found several issues.
-
-The first issue with the **DaoCasinoICO** and **TokenEmission** contracts is that they were written with a convoluted relationship between each other, with a number of overloaded
-variables, modifiers, functions and some unused code. The convoluted nature of these contracts made it difficult to understand these contracts, thus making it harder for other potential
-participants and interested parties in understanding the nature of these contracts. While no security issues or bugs were found in these contracts, it was difficult to verify the
-functionality would work in all cases.
-
-The second issue was the presence of code for a minimum funding goal and a refund mechanism but these these would be rendered ineffective caused by the presence of a `withdrawEth()`
-function that allows the owner to withdraw the crowdsale funds at any time, resulting in insufficient funds in the contract to support any refunds. In discussions with Dao.Casino
-and as documented in the blog post, this minimum funding goal was to be set to 0 anyway. In this case, the refund mechanism would have been ineffective and the `withdrawEth()`
-function could be used by the owner without further issues.
-
-The combination of the presence of the a minimum funding goal, a refund mechanism and the ability for the owner to withdraw the funds negated the trustless nature of this 
-crowdfunding contract.
-
-The third issue was that the [blog post](https://medium.com/@dao.casino/dao-casino-announces-terms-of-its-token-sale-to-be-held-june-29-5125375f4aeb) included a statement on the
-vesting schedule of BET tokens for the founders and early adopters. This functionality was not programmed into the crowdsale contracts as has been in some other crowdsales contracts.
-
-This auditor proposed an alternative simpler crowdsale contract with the same functionality, and Dao.Casino decided to proceed with the crowdsale using this new contract.
-
-This new [**DaoCasinoToken** contract](contracts/DaoCasinoToken.sol) has 346 lines of code, compared to the [original contract](contracts/DaoCasinoICO.sol)'s 630 lines of code. 
-In the new contract, there is only one token contract with the crowdsale functionality built on top of it, reducing the need for a convoluted relationship between the two
-functions.
-
-Compared to the old contracts, this new contract has a lower risk of loss of funds in the case of an attack or bugs, as participant's ether contributions are immediately directed
-into the owner's multisig wallet. The main multisig wallets in Ethereum have a longer history of resisting attacks compared to this crowdsale contract.
-
-**Note** that due to the lack of time available, the vesting of the founders and early adopters tokens has not been implemented in this new crowdsale contract. Ideally the crowdsale
-should be delayed until a vesting contract is developed and tested, but Dao.Casino preferred to remain on the original crowdsale schedule and stated to me that they will document
-this clearly in their communication to potential participants. They may also build a separate vesting contract after the crowdsale to enforce this vesting schedule programatically.
 
 <br />
 
@@ -200,8 +161,10 @@ No potential vulnerabilities have been identified in the crowdsale contract.
 
 ## Recommendations
 
-* HIGH IMPORTANCE - This new crowdfunding contract should have been written with the vesting of the foundation's BET tokens built in. As there was insufficient time to write
-and test the vesting contract, this functionality is not available for this crowdsale. The alternative was to delay the commencement of the crowdsale to build in this vesting contract.
+* HIGH IMPORTANCE - Due to the lack of time available, the vesting of the founders and early adopters tokens has not been implemented in this new crowdsale contract. Ideally the crowdsale
+should have been delayed until a vesting contract can be developed and tested, but Dao.Casino preferred to remain on the original crowdsale schedule. Dao.Casino stated to me that they
+will document the lack of a smart contract to enforce the vesting the tokens in their communication to potential participants. They may also build a separate vesting contract after the
+crowdsale to enforce this vesting schedule programatically.
 
 <br />
 
