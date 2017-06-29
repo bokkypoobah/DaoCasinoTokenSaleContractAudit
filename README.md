@@ -4,7 +4,7 @@ Bok Consulting Pty Ltd has been retained by [Dao.Casino](https://dao.casino/) to
 The [audit of Dao.Casino's original contracts](README-Original.md) found a few issues described in more detail in the [Summary](#summary) section below.
 
 A [new crowdsale contract](contracts/DaoCasinoToken.sol) was proposed by Bok Consulting Pty Ltd and this contract will be used for Dao.Casino's 
-crowdsale. This report is a self-audit of the new contracts.
+crowdsale. This report is a self-audit of the new contracts. Darryl Morris has provided an independent [audit of of this crowdsale contract](DarrylMorris-Audit2-DaoCasinoICO.md) as well.
 
 <br />
 
@@ -15,6 +15,7 @@ This crowdsale contract has been deployed to [0x2b09b52d42dfb4e0cba43f607dd272ea
 * STARTDATE: `1498741200` `new Date(1498741200*1000).toUTCString()` -> `Thu, 29 Jun 2017 13:00:00 UTC`
 * ENDDATE: `1501074000` `new Date(1501074000*1000).toUTCString()` -> `Wed, 26 Jul 2017 13:00:00 UTC`
 * CAP: `83333330000000000000000` `web3.fromWei("83333330000000000000000", "ether")` -> `83333.33`
+* multisig: [0x4938c291ab7e5e51198dfc210824da5d1bd759bf](https://etherscan.io/address/0x4938c291ab7e5e51198dfc210824da5d1bd759bf)
 
 The period is calculated as `(new Date(1501074000*1000).getTime()-new Date(1498741200*1000).getTime())/1000/60/60/24` -> `27` days. This is different to the 28 days stated in the blog.
 
@@ -101,7 +102,7 @@ weaknesses.
 ## Limitations
 This audit makes no statements or warranties about the viability of the Dao.Casino's business proposition, the individuals involved in this business or the regulatory regime for the business model.
 
-This report is a self-audit of the crowdsale written by the auditor. This author will attempt to seek an independent code review of this crowdsale contract.
+This report is a self-audit of the crowdsale written by the auditor. Darryl Morris has provided an independent [audit of of this crowdsale contract](DarrylMorris-Audit2-DaoCasinoICO.md) as well.
 
 <br />
 
