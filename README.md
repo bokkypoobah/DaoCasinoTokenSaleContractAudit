@@ -6,13 +6,23 @@ The [audit of Dao.Casino's original contracts](README-Original.md) found a few i
 A [new crowdsale contract](contracts/DaoCasinoToken.sol) was proposed by Bok Consulting Pty Ltd and this contract will be used for Dao.Casino's 
 crowdsale. This report is a self-audit of the new contracts.
 
-The crowdsale contract has been deployed to [0x2b09b52d42dfb4e0cba43f607dd272ea3fe1fb9f](https://etherscan.io/address/0x2b09b52d42dfb4e0cba43f607dd272ea3fe1fb9f#internaltx), with the following parameters:
+<br />
+
+## Crowdsale Contract On Mainnet
+
+This crowdsale contract has been deployed to [0x2b09b52d42dfb4e0cba43f607dd272ea3fe1fb9f](https://etherscan.io/address/0x2b09b52d42dfb4e0cba43f607dd272ea3fe1fb9f#internaltx), with the following parameters:
 
 * STARTDATE: `1498741200` `new Date(1498741200*1000).toUTCString()` -> `Thu, 29 Jun 2017 13:00:00 UTC`
 * ENDDATE: `1501074000` `new Date(1501074000*1000).toUTCString()` -> `Wed, 26 Jul 2017 13:00:00 UTC`
 * CAP: `83333330000000000000000` `web3.fromWei("83333330000000000000000", "ether")` -> `83333.33`
 
+The period is calculated as `(new Date(1501074000*1000).getTime()-new Date(1498741200*1000).getTime())/1000/60/60/24` -> `27` days. This is different to the 28 days stated in the blog.
+
 At Thu, 29 Jun 2017 00:30:00 UTC, the ETH/USD rate was ~ 328.2950 . `web3.fromWei("83333330000000000000000", "ether")*328.2950` -> `27,357,915.572350003`
+
+<br />
+
+## Published Crowdsale Parameters
 
 From [DAO.Casino Announces Terms of its Token Sale to be held June 29](https://medium.com/@dao.casino/dao-casino-announces-terms-of-its-token-sale-to-be-held-june-29-5125375f4aeb), 
 Dao.Casino's crowdsale has the following parameters:
