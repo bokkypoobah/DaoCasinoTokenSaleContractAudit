@@ -1,10 +1,10 @@
 pragma solidity ^0.4.11;
 
 // ----------------------------------------------------------------------------
-// Dao.Casino Crowdsale Token Contract (Under Consideration)
+// Dao.Casino Crowdsale Token Contract
 //
-// Enjoy. (c) BokkyPooBah / Bok Consulting Pty Ltd 2017
-// The MIT Licence (Under Consideration).
+// Enjoy. (c) BokkyPooBah / Bok Consulting Pty Ltd for Dao.Casino 2017
+// The MIT Licence.
 // ----------------------------------------------------------------------------
 
 
