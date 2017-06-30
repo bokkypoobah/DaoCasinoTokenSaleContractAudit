@@ -141,11 +141,7 @@ will be held in the multisig wallet, so any potential losses due to flaws in the
 In the case of the crowdfunding contract allocating an incorrect number of tokens for each contribution, the token numbers can be manually
 recalculated and a new token contract can be deployed at a new address.
 
-Following is a sample chart showing the continuous flow of funds into another (currently ongoing) crowdsale contract:
-
-<kbd><img src="images/SampleCrowdsaleContributions-20170629-025846.png" /></kbd>
-
-Dao.Casino's crowdsale contract and multisig wallet should be monitored in the same manner to detect any abnormalities in the flow of funds.
+See [Crowdsale Statistics Script](#crowdsale-statistics-script) for a script that monitors that the flow of funds into the crowdfunding contract flows into the multisig wallet.
 
 <br />
 
@@ -206,9 +202,9 @@ crowdsale to enforce this vesting schedule programatically.
 
 The script [scripts/getDaoCasinoTokenDetails.sh](scripts/getDaoCasinoTokenDetails.sh) will generate reports on the transactions and status of this crowdsale report.
 
-The main report that should be viewed is (sample) [scripts/TokensBought_20170629_173948.tsv](scripts/TokensBought_20170629_173948.tsv). A sample of this file loaded in Excel is shown below:
+The main report that should be viewed is (sample) [scripts/TokensBought_20170630_152556.tsv](scripts/TokensBought_20170630_152556.tsv). A sample of this file loaded in Excel is shown below:
 
-<kbd><img src="images/TokensBoughtSample-20170629-174122.png" /></kbd>
+<kbd><img src="images/Dao.Casino-20170630-1525.png" /></kbd>
 
 Note last two columns:
 
