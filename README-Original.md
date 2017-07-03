@@ -1,4 +1,6 @@
-# Dao.Casino Crowdsale Contract Audit (Work In Progress)
+# Dao.Casino Crowdsale Contract Audit (Not Completed)
+
+**Status**: Not completed as Dao.Casino decided to use the new contracts - see [README.md](README.md).
 
 Bok Consulting Pty Ltd has been retained by [Dao.Casino](https://dao.casino/) to audit the Ethereum contract to be used in Dao.Casino's upcoming crowdsale.
 
