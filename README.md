@@ -11,6 +11,7 @@ Darryl Morris also provided an independent [audit](DarrylMorris-Audit2-DaoCasino
 
 ## Table Of Contents
 
+* [Updates](#updates)
 * [Crowdsale Contract On Mainnet](#crowdsale-contract-on-mainnet)
 * [Crowdsale Parameters](#crowdsale-parameters)
 * [Scope](#scope)
@@ -22,6 +23,17 @@ Darryl Morris also provided an independent [audit](DarrylMorris-Audit2-DaoCasino
 * [Crowdsale Statistics Script](#crowdsale-statistics-script)
 * [Crowdsale Contract Source Code](#crowdsale-contract-source-code)
 * [References](#references)
+
+<br />
+
+<hr />
+
+## Updates
+
+* Jul 10 2017 Dao.Casino were concerned that someone was testing the contract to see if tokens could be issued without ETH payments being made.
+  See [https://etherscan.io/txs?a=0x6a5e0f01f2d1b10e0229c1f53ba701111d4fd6a3](https://etherscan.io/txs?a=0x6a5e0f01f2d1b10e0229c1f53ba701111d4fd6a3) which seems to be testing the contract with increasing levels of gas.
+
+  Testing has confirmed that no tokens will be issued without the ETH payments being made. If there is insufficient gas, the whole transaction is rolled back. Testing script [testNew/02_test2.sh](testNew/02_test2.sh) with results in [testNew/test2results.txt](testNew/test2results.txt).
 
 <br />
 
