@@ -57,6 +57,7 @@ var endDate = contract.ENDDATE();
 console.log("MAIN: token.ENDDATE=" + endDate + " " + new Date(endDate * 1000).toUTCString() + " / " + new Date(endDate * 1000).toGMTString());
 console.log("MAIN: token.timeToStart=" + (new Date(startDate*1000).getTime() - currentTime.getTime())/1000/60/50 + " hours"); 
 
+if (false) {
 for (var day = parseInt(startDate) - parseInt(60*60*24*2); day <= parseInt(endDate) + parseInt(60*60*24*2); day = parseInt(day) + parseInt(60*60*24)) {
   var secondBefore = parseInt(day) - 1;
   var rateSecondBefore = contract.buyPriceAt(secondBefore);
@@ -64,16 +65,19 @@ for (var day = parseInt(startDate) - parseInt(60*60*24*2); day <= parseInt(endDa
   var rateSecondAfter = contract.buyPriceAt(secondAfter);
   console.log("MAIN: day=" + day + " " + new Date(day*1000).toGMTString() + " before=" + rateSecondBefore + " after=" + rateSecondAfter);
 }
+}
 
 var latestBlock = eth.blockNumber;
 var i;
 
+if (false) {
 var ownershipTransferredEvents = contract.OwnershipTransferred({}, { fromBlock: tokenDeploymentBlock, toBlock: latestBlock });
 i = 0;
 ownershipTransferredEvents.watch(function (error, result) {
   console.log("MAIN: OwnershipTransferred Event " + i++ + ": from=" + result.args._from + " to=" + result.args._to + " " + result.blockNumber);
 });
 ownershipTransferredEvents.stopWatching();
+}
 
 var tokensBoughtEvents = contract.TokensBought({}, { fromBlock: tokenDeploymentBlock, toBlock: latestBlock });
 i = 0;
@@ -96,6 +100,7 @@ tokensBoughtEvents.watch(function (error, result) {
 });
 tokensBoughtEvents.stopWatching();
 
+if (false) {
 var approvalEvents = contract.Approval({}, { fromBlock: tokenDeploymentBlock, toBlock: latestBlock });
 i = 0;
 approvalEvents.watch(function (error, result) {
@@ -115,6 +120,7 @@ transferEvents.watch(function (error, result) {
     "\t" + totalTokens.shift(-decimals) + "\t" + result.blockNumber + "\t" + result.transactionIndex + "\t" + result.transactionHash);
 });
 transferEvents.stopWatching();
+}
 
 EOF
 
