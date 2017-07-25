@@ -10,3 +10,7 @@ testNew/testchain/geth
 testNew/testchain/geth.ipc
 testNew/testchain/history
 testNew/contracts
+testToken/testchain/geth
+testToken/testchain/geth.ipc
+testToken/testchain/history
+testToken/contracts
