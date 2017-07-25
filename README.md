@@ -35,13 +35,25 @@ Due to Dao.Casino's multisig wallet being vulnerable to the Parity multisig bug,
 originally expected. A new token contract will be rebuilt, deployed and the balances from the old token contract will be moved to the
 new token contract.
 
+<br />
+
+### Dao.Casino's Old And New Multisig
+
 Dao.Casino's old multisig [0x01dbb419d66be0d389fab88064493f1d698dc27a](https://etherscan.io/address/0x01dbb419d66be0d389fab88064493f1d698dc27a).
 
 Dao.Casino's new multisig [0x1446bf7AF9dF857b23a725646D94f9Ec49802227](https://etherscan.io/address/0x1446bf7AF9dF857b23a725646D94f9Ec49802227).
 
-The old crowdsale/token contract has been deployed to [0x725803315519de78D232265A8f1040f054e70B98](https://etherscan.io/address/0x725803315519de78D232265A8f1040f054e70B98#code).
+<br />
 
-The new token contract with the source code [contracts/DaoCasinoTokenNew.sol](contracts/DaoCasinoTokenNew.sol) has been deployed to [https://etherscan.io/address/0x8aa33a7899fcc8ea5fbe6a608a109c3893a1b8b2#code](https://etherscan.io/address/0x8aa33a7899fcc8ea5fbe6a608a109c3893a1b8b2#code).
+### Dao.Casino's Old And New Crowdsale/Token Contracts
+
+The **old** crowdsale/token contract has been deployed to [0x725803315519de78D232265A8f1040f054e70B98](https://etherscan.io/address/0x725803315519de78D232265A8f1040f054e70B98#code).
+
+The **new** token contract with the source code [contracts/DaoCasinoTokenNew.sol](contracts/DaoCasinoTokenNew.sol) has been deployed to [https://etherscan.io/address/0x8aa33a7899fcc8ea5fbe6a608a109c3893a1b8b2#code](https://etherscan.io/address/0x8aa33a7899fcc8ea5fbe6a608a109c3893a1b8b2#code).
+
+<br />
+
+### Upgrade Process
 
 The script to extract the old token contract balances is at [upgradeTokenContract/getOldTokenBalances.sh](upgradeTokenContract/getOldTokenBalances.sh).
 
@@ -51,18 +63,53 @@ The extracted old token contract balance by account data is at [upgradeTokenCont
 
 The extracted old token contract balances to be loaded into the new contract is at [upgradeTokenContract/oldTokenBalancesData.js](upgradeTokenContract/oldTokenBalancesData.js).
 
-The following steps will be performed:
+<br />
+
+### Reconciliation Of Old And New Token Contract Balances
+
+The reconciliation script can be found at [upgradeTokenContract/reconcile.sh](upgradeTokenContract/reconcile.sh).
+
+The reconciliation results can be found at [upgradeTokenContract/reconcileBalance.tsv](upgradeTokenContract/reconcileBalance.tsv).
+
+A spreadsheet of the reconciliation results can be found at [upgradeTokenContract/reconcileBalance.xls](upgradeTokenContract/reconcileBalance.xls).
+
+The differences in the old and new contracts balances are:
+
+<kbd><img src="images/reconciliationDifferences-20170725-225844.png" /></kbd>
+
+These differences are explained by:
+
+* Contract upgrade transfer of 95,280,363.808372574069801786 BET from the old attacked multisig address
+  [0x01dbb419d66be0d389fab88064493f1d698dc27a](https://etherscan.io/address/0x01dbb419d66be0d389fab88064493f1d698dc27a#tokentxns)
+  to the new multisig address [0x1446bf7af9df857b23a725646d94f9ec49802227](https://etherscan.io/address/0x1446bf7af9df857b23a725646d94f9ec49802227#tokentxns)
+* The account [0x00275cb0fc5b45ef9ce04bb3fe606a373e7dcbf7](https://etherscan.io/address/0x00275cb0fc5b45ef9ce04bb3fe606a373e7dcbf7#tokentxns)
+  transferring 40,000 BET to EtherDelta in tx [0x51aa5300](https://etherscan.io/tx/0x51aa5300635bb4132cbf90e01ebe36a4558639e762a9c14a8019da5d34f56f36)
+* The account [0xeaeda23a02af10d7610b0cda51f9758cb1ea6b89](https://etherscan.io/address/0xeaeda23a02af10d7610b0cda51f9758cb1ea6b89#tokentxns)
+  transferring 274 BET to [0x925ebfdb3a4dc301e4de2920c3ab81653dc591e7](https://etherscan.io/address/0x925ebfdb3a4dc301e4de2920c3ab81653dc591e7#tokentxns)
+  in tx [0x434764de](https://etherscan.io/tx/0x434764ded1ae3aa57972a32477a576134929feb2075388f1c39f96b4cd546443)
+
+<br />
+
+### Upgrade Transaction Fees
+The cost of the transaction fees to perform this upgrade is 0.423695418 ETH - [breakdown](upgradeTokenContract/UpgradeTransactionFees.xls).
+
+<br />
+
+### Upgrade Checklist
+
+The following steps have been performed:
 
 * [x] DC to inform users to stop sending contributions to the halt transfers of the old crowdsale/token contract, and that this old
   contract will be obsolete
 * [x] BPB to extract the token balances for all accounts at the specified block - snapshot at block=4065064 as the last contribution to the
-  crowdsale/token contract was [0xee35dabb](https://etherscan.io/tx/0xee35dabb1663412a4194aaddfe65371133710f5f4880e7413d43cb534680994c).
-* [x] BPB to deploy new token contract
-* [x] BPB to fill the new token contract with the token balances for all accounts
-* [ ] BPB to reconcile the token numbers between the old and new token contracts
-* [ ] BPB to seal the new token contract
-* [ ] BPB to call `token.transferOwnership(...)` to transfer the contract to Dao.Casino's account
-* [ ] DC to call `token.acceptOwnership()` to accept the transfer of the contract
+  crowdsale/token contract was [0xee35dabb](https://etherscan.io/tx/0xee35dabb1663412a4194aaddfe65371133710f5f4880e7413d43cb534680994c)
+* [x] BPB deployed new token contract to [https://etherscan.io/address/0x8aa33a7899fcc8ea5fbe6a608a109c3893a1b8b2#code](https://etherscan.io/address/0x8aa33a7899fcc8ea5fbe6a608a109c3893a1b8b2#code)
+* [x] BPB fill the new token contract with the token balances for all accounts
+* [x] BPB reconciled the token numbers between the old and new token contracts
+* [x] BPB sealed the new token contract in tx [0x5507e44b](https://etherscan.io/tx/0x5507e44b89fc594a089d027e477234f0d5622754f8a29735b80898d154aea405)
+* [x] BPB called `token.transferOwnership(...)` to transfer the contract to Dao.Casino's multisig [0x1446bf7af9df857b23a725646d94f9ec49802227](https://etherscan.io/address/0x1446bf7af9df857b23a725646d94f9ec49802227)
+  in tx [0x78d73534](https://etherscan.io/tx/0x78d7353440a101bc7f098215be44b8468df725a925e80427738a1f0590e1d852)
+* [ ] DC to call `token.acceptOwnership()` to accept the transfer of the contract from their multisig [0x1446bf7af9df857b23a725646d94f9ec49802227](https://etherscan.io/address/0x1446bf7af9df857b23a725646d94f9ec49802227)
 * [ ] DC to confirm the new token contract details, and announce the address of the new token contract to the users, EtherScan and any exchanges 
 
 <br />
