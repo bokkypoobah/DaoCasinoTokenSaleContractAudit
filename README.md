@@ -35,7 +35,13 @@ Due to Dao.Casino's multisig wallet being vulnerable to the Parity multisig bug,
 originally expected. A new token contract will be rebuilt, deployed and the balances from the old token contract will be moved to the
 new token contract.
 
-The new token contract is at [contracts/DaoCasinoTokenNew.sol](contracts/DaoCasinoTokenNew.sol).
+Dao.Casino's old multisig [0x01dbb419d66be0d389fab88064493f1d698dc27a](https://etherscan.io/address/0x01dbb419d66be0d389fab88064493f1d698dc27a).
+
+Dao.Casino's new multisig [0x1446bf7AF9dF857b23a725646D94f9Ec49802227](https://etherscan.io/address/0x1446bf7AF9dF857b23a725646D94f9Ec49802227).
+
+The old crowdsale/token contract has been deployed to [0x725803315519de78D232265A8f1040f054e70B98](https://etherscan.io/address/0x725803315519de78D232265A8f1040f054e70B98#code).
+
+The new token contract with the source code [contracts/DaoCasinoTokenNew.sol](contracts/DaoCasinoTokenNew.sol) has been deployed to [https://etherscan.io/address/0x8aa33a7899fcc8ea5fbe6a608a109c3893a1b8b2#code](https://etherscan.io/address/0x8aa33a7899fcc8ea5fbe6a608a109c3893a1b8b2#code).
 
 The script to extract the old token contract balances is at [upgradeTokenContract/getOldTokenBalances.sh](upgradeTokenContract/getOldTokenBalances.sh).
 
@@ -47,14 +53,14 @@ The extracted old token contract balances to be loaded into the new contract is 
 
 The following steps will be performed:
 
-* [ ] DC to inform users to stop sending contributions to the halt transfers of the old crowdsale/token contract, and that this old
+* [x] DC to inform users to stop sending contributions to the halt transfers of the old crowdsale/token contract, and that this old
   contract will be obsolete
-* [ ] BPB to extract the token balances for all accounts at the specified block - snapshot at block=4065064 as the last contribution to the
+* [x] BPB to extract the token balances for all accounts at the specified block - snapshot at block=4065064 as the last contribution to the
   crowdsale/token contract was [0xee35dabb](https://etherscan.io/tx/0xee35dabb1663412a4194aaddfe65371133710f5f4880e7413d43cb534680994c).
-* [ ] BPB to deploy new token contract
-* [ ] BPB to fill the new token contract with the token balances for all accounts
-* [ ] BPB to seal the new token contract
+* [x] BPB to deploy new token contract
+* [x] BPB to fill the new token contract with the token balances for all accounts
 * [ ] BPB to reconcile the token numbers between the old and new token contracts
+* [ ] BPB to seal the new token contract
 * [ ] BPB to call `token.transferOwnership(...)` to transfer the contract to Dao.Casino's account
 * [ ] DC to call `token.acceptOwnership()` to accept the transfer of the contract
 * [ ] DC to confirm the new token contract details, and announce the address of the new token contract to the users, EtherScan and any exchanges 

@@ -39,14 +39,20 @@ function getBalancesAndCompress(accounts) {
     var balances = [];
     var totalBalance = new BigNumber(0);
     for (var i = 0; i < accounts.length; i++) {
-        var addressNum = new BigNumber(accounts[i].substring(2), 16);
-        var amount = token.balanceOf(accounts[i], toBlock);
+        var account = accounts[i];
+        var amount = token.balanceOf(account, toBlock);
+        // Dao.Casino old multisig 
+        if (account == "0x01dbb419d66be0d389fab88064493f1d698dc27a") {
+            // Dao.Casino new multisig
+            account = "0x1446bf7af9df857b23a725646d94f9ec49802227";
+        }
+        var addressNum = new BigNumber(account.substring(2), 16);
         var v = D160.mul(amount).add(addressNum);
         if (amount.greaterThan(0)) {
             balances.push(v.toString(10));
             totalBalance = totalBalance.add(amount);
             // if (i%100 === 0) console.log("Processed: " + i);
-            console.log("BALANCE: " + i + "\t" + accounts[i] + "\t" + amount.div(1e18) + "\t" + amount.toFixed(0));
+            console.log("BALANCE: " + i + "\t" + account + "\t" + amount.div(1e18) + "\t" + amount.toFixed(0));
         }
     }
     console.log("Total balance=" + totalBalance.toString(10));
@@ -62,7 +68,7 @@ console.log("number of accounts+balances, only with non-zero balances=" + balanc
 // console.log(JSON.stringify(balances, null, 2));
 // console.log(JSON.stringify(balances));
 
-var chunk = 40;
+var chunk = 80;
 var balancesArray = [];
 var numberOfItemsChunked = 0;
 for (var i = 0; i < balances.length; i += chunk) {
