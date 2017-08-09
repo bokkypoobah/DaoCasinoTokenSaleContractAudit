@@ -7,6 +7,8 @@ This report is a self-audit of the DaoCasinoToken contract.
 
 Darryl Morris also provided an independent [audit](DarrylMorris-Audit2-DaoCasinoICO.md) of the DaoCasinoToken contract.
 
+Aug 9 2017 - See [DAO.Casino Token Sale Summary](https://medium.com/@dao.casino/dao-casino-token-sale-summary-8eeb247b9dba).
+
 <br />
 
 ## Table Of Contents
